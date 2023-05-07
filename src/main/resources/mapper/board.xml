@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.BoardMapper">
+	<resultMap type="BoardDto" id="board">
+		<result column="board_no" property="boardNo" />
+		<result column="board_type" property="boardType" />
+		<result column="create_time" property="createTime" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="like_count" property="likeCount" />
+		<result column="user_no" property="userNo" />
+		<result column="name" property="userName" />
+	</resultMap>
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<select id="listArticle" parameterType="map" resultMap="board">
+		select b.board_type, b.subject subject, b.content content,
+		b.create_time create_time, count(bl.like_no) like_count
+		from board b
+		left join board_like bl
+		on b.board_no = bl.board_no
+		where b.board_type =
+		#{boardType}
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+		group by b.board_no
+		order by b.board_no desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<insert id="writeArticle" parameterType="boardDto">
+		insert into board
+		(board_no, board_type, create_time, subject, content, user_no)
+		values
+		(null,#{boardType}, now(),#{subject}, #{content}, #{userNo})
+	</insert>
+
+	<select id="getArticle" parameterType="int"
+		resultMap="board">
+		select b.board_no, b.board_type, b.create_time, b.subject, b.content,
+		b.user_no, m.name name
+		from board b, user m
+		where b.user_no = m.user_no
+		and b.board_no = #{boardNo}
+	</select>
+	
+	<update id="modifyArticle" parameterType="boardDto">
+		update board
+		set subject = #{subject}, content = #{content}
+		where board_no = #{boardNo}
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from board
+		where board_no = #{boardNo}
+	</delete>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.UserMapper">
+
+	<resultMap type="userDto" id="user">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="age" property="age"/>
+		<result column="gender" property="gender"/>
+		<result column="grade" property="grade"/>
+		<result column="sido_no" property="sidoNo"/>
+		<result column="gugun_no" property="gugunNo"/>
+	</resultMap>
+	
+	<select id="getUser" parameterType="String" resultMap="user">
+		select id, name, email, age, gender, grade, sido_no, gugun_no
+		from user
+		where id = #{id}
+	</select>
+	
+	<insert id="joinUser" parameterType="UserDto">
+		insert into user
+		values (null, #{id}, #{name}, #{password}, #{email}, #{age}, #{gender},now(),'U', #{sidoNo},#{gugunNo})
+	</insert>
+	
+	<delete id="deleteUser" parameterType="String">
+		delete from user
+		where id = #{id}
+	</delete>
+	
+	<update id="modifyUser" parameterType="UserDto">
+		update user 
+		set name = #{name},  
+		password = #{password},  
+		email = #{email},
+		age = #{age},  
+		sido_no = #{sidoNo},  
+		gugun_no = #{gugunNo}
+		where id = #{id}
+	</update>
+	
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(id)
+		from user
+		where id = #{id}
+	</select>
+
+	
+	
+</mapper>
