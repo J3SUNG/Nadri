@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enjoy Trip</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="./user.json"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Enjoy Trip</h1>
+      <p>
+        <router-link to="/login">로그인</router-link>
+        <router-link to="/signup">회원가입</router-link>
+        <router-link to="/map">지도</router-link>
+        <router-link to="/board">게시판</router-link>
+      </p>
+      <router-view></router-view>
+    </div>
+  </body>
+  <script>
+    const cors = require("cors");
+    import user from "@/user.json";
+
+    const login = {
+      template:
+        "<div><header>Login Page</header><main><form><label>Login</label><input></input><br><label>Password</label><input></input><br><button>로그인</button></form></main></div>",
+    };
+    const signup = { template: "<div>Signup Page</div>" };
+    const map = { template: "<div>Map Page</div>" };
+    const board = {
+      template: "<div><div> <p>{{ user }}</p> </div></div>",
+    };
+
+    const routes = [
+      { path: "/login", component: login },
+      { path: "/signup", component: signup },
+      { path: "/map", component: map },
+      { path: "/board", component: board },
+    ];
+
+    const router = new VueRouter({
+      routes: routes,
+    });
+
+    new Vue({
+      router: router,
+      el: "#app",
+      data: () => {
+        user: user;
+      },
+    }).$mount("#app");
+  </script>
+</html>
