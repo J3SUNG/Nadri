@@ -1,0 +1,26 @@
+{
+  "name": "enjoy_trip",
+  "version": "1.0.0",
+  "description": "Enjoy Trip",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J3SUNG/Enjoy_Trip.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J3SUNG/Enjoy_Trip/issues"
+  },
+  "homepage": "https://github.com/J3SUNG/Enjoy_Trip#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-router": "^5.0.8"
+  }
+}
