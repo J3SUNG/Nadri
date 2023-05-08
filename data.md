@@ -27,3 +27,18 @@ v-on - directive를 사용하여 DOM 이벤트를 듣고 트리거 될 때 JavaS
 ref, $refs - $refs 속성을 이용해 DOM에 접근할 수 있다. 권장 X
 
 class binding - element의 class와 style을 변경
+
+Component - HTML Element를 확장하여 재사용 가능한 코드를 캡슐화.
+전역 컴포넌트 - Vue.component(tagName, options), 케밥 표기법(전부 소문자)
+
+Component간 통신 - 상위(부모) - 하위(자식) 컴포넌트 간의 data 전달 방법
+부모 -> 자식 - props라는 특별한 속성을 전달 (Pass Props), 정적 props / 동적 props
+자식 -> 부모 - event로만 전달 가능 (Emit Event)
+
+사용자 정의 이벤트
+$emit - 하위 컴포넌트에서 상위 컴포넌트가 지정한 이벤트를 발생
+v-on - 상위 컴포넌트는 하위 컴포넌트가 발생한 이벤트를 수신하여 data 처리
+이벤트 발생 - this.$emit("이벤트명");
+이벤트 수신 - <child v-on:이벤트명="상위 컴포넌트 메소드명"></child>
+
+비 상하위간 통신 - 비어 있는 Vue Instance 객체를 Event Bus로 사용, 복잡해질 경우 상태관리 라이브러리 Vuex 사용 권장
