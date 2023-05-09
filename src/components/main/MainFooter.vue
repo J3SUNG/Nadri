@@ -1,6 +1,5 @@
 <template>
   <footer class="footer">
-    <header class=""></header>
     <h4 class="footer__team">@ Enjoy Trip Team. All rights reserved.</h4>
     <p class="footer__member">Member : JeSeong Lee / YuJeong Kim</p>
     <p class="footer__contact">Contact : wptjd6141@naver.com / kyj8441@gmail.com</p>

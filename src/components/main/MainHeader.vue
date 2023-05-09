@@ -1,9 +1,9 @@
 <template>
   <header class="header">
-    <header class="logo">
+    <div class="logo">
       <img class="logo__img" alt="page logo" src="@/assets/logo.png" />
       <h3 class="logo__text">Enjoy Trip!</h3>
-    </header>
+    </div>
     <nav class="nav">
       <router-link to="/">Home</router-link> | <router-link to="/map">Map</router-link> |
       <router-link to="/board">Board</router-link>
@@ -27,6 +27,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 100px;
+  border-bottom: 1px solid black;
 }
 .logo {
   display: flex;
