@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <main-header />
-    <router-view />
-    <footer>
-      <main-footer />
-    </footer>
+    <main-header id="header" />
+    <main id="main">
+      <router-view />
+    </main>
+    <main-footer id="footer" />
   </div>
 </template>
 
@@ -22,24 +22,22 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0px;
+  padding: 0px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100vw;
+  height: 100vh;
 }
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+#main {
+  width: 100%;
+  height: 500px;
+  background-color: beige;
 }
 </style>

@@ -23,7 +23,7 @@ computed - 특정 데이터의 변경사항을 실시간으로 처리. 변경이
 watch - Vue Instance의 특정 property가 변경될 때 실행할 콜백 함수 설정. (현재값, 이전값)
 
 event - DOM Event를 청취하기 위해 v-on directive 사용
-v-on - directive를 사용하여 DOM 이벤트를 듣고 트리거 될 때 JavaScript를 실행, $event
+v-on - directive를 사용하여 DOM 이벤트를 듣고 트리거 될 때 JavaScript를 실행, $event, @로 대체 가능
 ref, $refs - $refs 속성을 이용해 DOM에 접근할 수 있다. 권장 X
 
 class binding - element의 class와 style을 변경
