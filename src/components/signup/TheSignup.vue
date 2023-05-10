@@ -6,11 +6,11 @@
       </div>
       <label class="signup__label signup__label-id">아이디</label>
       <input v-model="id" class="signup__input signup__input-id" placeholder="ID" />
-      <p class="signup__check signup__check-id">사용가능한 아이디 입니다.</p>
+      <p class="signup__check signup__check-id">{{ idText }}</p>
 
       <label class="signup__label signup__label-pw">비밀번호</label>
       <input v-model="password" class="signup__input signup__input-pw" placeholder="Password" />
-      <p class="signup__check signup__check-pw">사용가능한 비밀번호 입니다.</p>
+      <p class="signup__check signup__check-pw">{{ pwText }}</p>
 
       <label class="signup__label signup__label-pw">비밀번호 확인</label>
       <input
@@ -18,11 +18,11 @@
         class="signup__input signup__input-pw-confirm"
         placeholder="Password Confirm"
       /><br />
-      <p class="signup__check signup__check-pw-confrim">사용가능한 비밀번호 입니다.</p>
+      <p class="signup__check signup__check-pw-confrim">{{ pwConText }}</p>
 
       <label class="signup__label signup__label-email">이메일</label>
       <input v-model="email" class="signup__input signup__input-email" placeholder="Email" />
-      <p class="signup__check signup__check-email">사용가능한 이메일 입니다.</p>
+      <p class="signup__check signup__check-email">{{ emailText }}</p>
 
       <label class="signup__label signup__label-nickname">이메일</label>
       <input
@@ -30,7 +30,7 @@
         class="signup__input signup__input-nickname"
         placeholder="Nickname"
       />
-      <p class="signup__check signup__check-nickname">사용가능한 이메일 입니다.</p>
+      <p class="signup__check signup__check-nickname">{{ nickText }}</p>
 
       <button class="signup__btn signup__signup-btn">회원가입</button>
       <hr class="signup__hr" />
@@ -46,6 +46,12 @@ import TheLogo from "../logo/TheLogo.vue";
 export default {
   name: "TheSignup",
   components: { TheLogo },
+  // filters: {
+  //   checkId: function (id) {
+  //     if (!id) idChk=false;
+  //    return false;
+  //   },
+  // },
   data() {
     return {
       id: "",
@@ -53,11 +59,16 @@ export default {
       passwordConfirm: "",
       email: "",
       nickname: "",
-      idChk: true,
-      pwChk: true,
-      pwConChk: true,
-      emailChk: true,
-      chkNick: true,
+      idChk: true, // 이미사용중이거나, 사용할 수 없는 아이디 형식입니다
+      pwChk: true, // 사용할수 없는 비밀번호 입니다.
+      pwConChk: true, // 두 비밀번호가 일치하지 않습니다.
+      emailChk: true, // 이메일 형식이 옳바르지 않습니다.
+      chkNick: true, // 이미사용중이거나, 사용할 수 없는 닉네임 형식입니다
+      idText: "사용가능한 아이디 입니다.",
+      pwText: "사용가능한 비밀번호 입니다.",
+      pwConText: "사용가능한 비밀번호 입니다.",
+      emailText: "사용가능한 이메일 입니다.",
+      nickText: "사용가능한 닉네임 입니다.",
     };
   },
 };
