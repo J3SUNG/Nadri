@@ -4,6 +4,8 @@ button 이동 막기 prevent
 로고 클릭시 홈화면으로 이동
 url에서 접근시 안되도록 하기(확인필요)
 테스트 객체 생성(회원정보, 게시판)(json)
+password '\*'로 처리
+input에 적절하지 않은 값이 들어왔을때 알림메시지
 
 nav기능들 li태그로 처리하기
 header, footer 꾸미기
