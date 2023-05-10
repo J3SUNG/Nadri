@@ -2,13 +2,13 @@
   <header class="header">
     <TheLogo />
     <nav class="header__nav">
-      <router-link :to="{ name: 'AppHome' }">Home</router-link> |
-      <router-link :to="{ name: 'AppMap' }">Map</router-link> |
-      <router-link :to="{ name: 'AppBoard' }">Board</router-link>
+      <router-link :to="{ name: 'AppHome' }">홈</router-link> |
+      <router-link :to="{ name: 'AppMap' }">지도</router-link> |
+      <router-link :to="{ name: 'AppBoard' }">게시판</router-link>
     </nav>
     <aside class="header__login">
-      <router-link :to="{ name: 'AppLogin' }">Login</router-link> |
-      <router-link :to="{ name: 'AppSignup' }">Signup</router-link>
+      <router-link :to="{ name: 'AppLogin' }">로그인</router-link> |
+      <router-link :to="{ name: 'AppSignup' }">회원가입</router-link>
     </aside>
   </header>
 </template>

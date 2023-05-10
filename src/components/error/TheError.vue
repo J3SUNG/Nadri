@@ -1,5 +1,5 @@
 <template>
-  <main class="error">
+  <div class="error">
     <div class="error__box">
       <TheLogo />
       <p class="error__code">
@@ -8,7 +8,7 @@
       </p>
       <router-link to="/"> <p class="error__home">Enjoy Trip으로 돌아가기</p></router-link>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>

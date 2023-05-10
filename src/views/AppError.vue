@@ -1,7 +1,5 @@
 <template>
-  <div class="error">
-    <TheError />
-  </div>
+  <TheError />
 </template>
 
 <script>

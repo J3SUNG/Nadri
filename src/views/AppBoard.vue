@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <h2>...</h2>
-    <board-list></board-list>
-  </div>
+  <board-list></board-list>
 </template>
 
 <script>
 import BoardList from "@/components/board/BoardList.vue";
 
 export default {
-  components: { BoardList },
   name: "AppBoard",
+  components: { BoardList },
   BoardList,
 };
 </script>

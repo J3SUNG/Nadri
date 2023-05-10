@@ -1,7 +1,5 @@
 <template>
-  <div class="login">
-    <TheLogin msg="login Page" />
-  </div>
+  <TheLogin />
 </template>
 
 <script>

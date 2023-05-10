@@ -1,18 +1,19 @@
 <template>
-  <main class="login">
+  <div class="login">
     <form class="login__form">
       <div class="login__logo">
         <TheLogo />
       </div>
-      <input class="login__input login__input-id" placeholder="ID" /><br />
-      <input class="login__input login__input-pw" placeholder="Password" /><br />
+      <input v-model="id" class="login__input login__input-id" placeholder="ID" />
+      <input v-model="password" class="login__input login__input-pw" placeholder="Password" />
       <button class="login__btn login__login-btn">로그인</button>
-      <a class="login__find-pw" href="#">비밀번호를 잊으셨나요?</a><br /><br />
+      <router-link class="login__find-pw" :to="{ name: 'AppFindPassword' }"
+        >비밀번호를 잊으셨나요?</router-link
+      >
       <hr class="login__hr" />
-      <br />
-      <button class="login__btn login__signup-btn">새 계정 만들기</button>
+      <button class="login__btn login__signup-btn">회원가입</button>
     </form>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -21,24 +22,34 @@ import TheLogo from "../logo/TheLogo.vue";
 export default {
   name: "TheLogin",
   components: { TheLogo },
+  data() {
+    return {
+      id: "",
+      password: "",
+    };
+  },
 };
 </script>
 
 <style>
 .login {
-  height: 85%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .login__form {
+  display: flex;
   border-radius: 20px;
   padding: 30px;
   width: 500px;
   background-color: white;
   box-shadow: 0px 0px 5px #444;
+  flex-direction: column;
+  align-items: center;
 }
 .login__logo {
+  align-self: flex-start;
   margin-bottom: 10px;
 }
 .login__input {
@@ -57,10 +68,10 @@ export default {
   background-color: rgb(255, 140, 0);
 }
 .login__login-btn {
-  width: 100px;
+  width: 300px;
 }
 .login__signup-btn {
-  width: 170px;
+  width: 150px;
 }
 .login__find-pw {
   color: orange;
@@ -69,7 +80,7 @@ export default {
   color: rgb(255, 140, 0);
 }
 .login__hr {
-  margin: 0 10px;
-  color: #444;
+  width: 100%;
+  margin: 20px 0px;
 }
 </style>

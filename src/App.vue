@@ -50,12 +50,11 @@ button {
   color: #2c3e50;
   width: 100vw;
   height: 100vh;
+  background-color: whitesmoke;
 }
 #main {
-  padding-top: 120px;
   width: 100%;
-  height: 80vh;
-  background-color: whitesmoke;
+  height: 100%;
 }
 a {
   text-decoration: none;
