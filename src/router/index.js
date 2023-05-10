@@ -5,6 +5,7 @@ import AppLogin from "@/views/AppLogin.vue";
 import AppBoard from "@/views/AppBoard.vue";
 import AppMap from "@/views/AppMap.vue";
 import AppSignup from "@/views/AppSignup.vue";
+import AppError from "@/views/AppError.vue";
 
 Vue.use(VueRouter);
 
@@ -21,7 +22,7 @@ const routes = [
   },
   {
     path: "/board",
-    name: "AppLBoard",
+    name: "AppBoard",
     component: AppBoard,
   },
   {
@@ -33,6 +34,11 @@ const routes = [
     path: "/signup",
     name: "AppSignup",
     component: AppSignup,
+  },
+  {
+    path: "/*",
+    name: "AppError",
+    component: AppError,
   },
 ];
 

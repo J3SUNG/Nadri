@@ -22,9 +22,25 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap");
+
 body {
+  overflow-x: hidden;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button {
   margin: 0px;
   padding: 0px;
+  font-family: "IBM Plex Sans KR", sans-serif;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -36,8 +52,14 @@ body {
   height: 100vh;
 }
 #main {
+  padding-top: 120px;
   width: 100%;
-  height: 500px;
-  background-color: beige;
+  height: 80vh;
+  background-color: whitesmoke;
+}
+a {
+  text-decoration: none;
+  color: orange;
+  font-weight: bold;
 }
 </style>

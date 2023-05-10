@@ -14,6 +14,7 @@ export default {
 
 <style>
 .footer {
+  height: 100px;
   margin: 0px;
   padding: 10px;
   color: lightgray;
@@ -21,5 +22,6 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  box-shadow: 0px 0px 5px #444;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1 class="underline">도서 목록</h1>
+    <h1>자유 게시판</h1>
     <div style="text-align: right">
       <button @click="movePage">도서 등록</button>
     </div>
-    <div v-if="articles.length">
-      <table id="article-list">
+    <div v-if="boards.length">
+      <table class="board-list">
         <colgroup>
           <col style="width: 5%" />
           <col style="width: 65%" />
@@ -24,9 +24,9 @@
         </thead>
         <tbody>
           <board-list-item
-            v-for="article in articles"
-            :key="article.articleNo"
-            :article="article"
+            v-for="board in boards"
+            :key="board.articleNo"
+            :board="board"
           ></board-list-item>
         </tbody>
       </table>
@@ -47,25 +47,25 @@ export default {
     return {};
   },
   created() {
-    this.articles = [
+    this.boards = [
       {
         articleNo: 10,
-        userName: "안효인",
-        subject: "안녕하세요",
+        userName: "제티",
+        subject: "우유엔 제티!",
         hit: 10,
         registerTime: "2023-05-08 17:03:15",
       },
       {
         articleNo: 9,
-        userName: "김싸피",
-        subject: "안녕하세요2",
+        userName: "콜라",
+        subject: "코카콜라 맛있다.",
         hit: 102,
         registerTime: "2023-05-08 14:13:15",
       },
       {
         articleNo: 8,
-        userName: "박싸피",
-        subject: "안녕하세요7",
+        userName: "사이다",
+        subject: "시원한 사이다!",
         hit: 24,
         registerTime: "2023-05-07 11:03:15",
       },

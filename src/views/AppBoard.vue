@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Vue를 이용한 게시판</h2>
+    <h2>...</h2>
     <board-list></board-list>
   </div>
 </template>
@@ -53,18 +53,18 @@ button,
   cursor: pointer;
 }
 
-#article-list {
+.post-list {
   border-collapse: collapse;
   width: 100%;
 }
 
-#article-list thead {
+.post-list thead {
   background-color: #ccc;
   font-weight: bold;
 }
 
-#article-list td,
-#article-list th {
+.post-list td,
+.post-list th {
   text-align: center;
   border-bottom: 1px solid #ddd;
   height: 50px;

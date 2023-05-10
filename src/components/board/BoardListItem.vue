@@ -1,10 +1,10 @@
 <template>
   <tr>
-    <td>{{ article.articleNo }}</td>
-    <td>{{ article.subject }}</td>
-    <td>{{ article.userName }}</td>
-    <td>{{ article.hit }}</td>
-    <td>{{ article.registerTime }}</td>
+    <td>{{ board.articleNo }}</td>
+    <td>{{ board.subject }}</td>
+    <td>{{ board.userName }}</td>
+    <td>{{ board.hit }}</td>
+    <td>{{ board.registerTime }}</td>
   </tr>
 </template>
 
@@ -12,7 +12,7 @@
 export default {
   name: "BoardListItem",
   props: {
-    article: Object,
+    board: Object,
   },
 };
 </script>
