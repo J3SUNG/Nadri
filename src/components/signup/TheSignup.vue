@@ -11,6 +11,7 @@
         class="signup__input signup__input-id"
         placeholder="ID"
         pattern="^([a-z0-9_]){6,16}$"
+        @input="TestInput"
       />
       <p class="signup__check signup__check-id">{{ idText }}</p>
 
@@ -84,6 +85,11 @@ export default {
       emailText: "사용가능한 이메일 입니다.",
       nickText: "사용가능한 닉네임 입니다.",
     };
+  },
+  methods: {
+    TestInput: function (event) {
+      console.log(event.currentTarget.validity);
+    },
   },
   computed: {
     validate: function () {
