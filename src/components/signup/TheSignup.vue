@@ -11,9 +11,18 @@
         class="signup__input signup__input-id"
         placeholder="ID"
         pattern="^([a-z0-9_]){6,16}$"
-        @input="TestInput"
+        @input="CheckValidate"
       />
-      <p class="signup__check signup__check-id">{{ idText }}</p>
+      <p
+        :class="{
+          'signup__check--green': attrChk[0],
+          'signup__check--red': !attrChk[0],
+          signup__check: true,
+          'signup__check-id': true,
+        }"
+      >
+        {{ attrText[0] }}
+      </p>
 
       <label class="signup__label signup__label-pw">비밀번호</label>
       <input
@@ -21,9 +30,19 @@
         type="password"
         class="signup__input signup__input-pw"
         placeholder="Password"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$"
+        @input="CheckValidate"
       />
-      <p class="signup__check signup__check-pw">{{ pwText }}</p>
+      <p
+        :class="{
+          'signup__check--green': attrChk[1],
+          'signup__check--red': !attrChk[1],
+          signup__check: true,
+          'signup__check-pw': true,
+        }"
+      >
+        {{ attrText[1] }}
+      </p>
 
       <label class="signup__label signup__label-pw">비밀번호 확인</label>
       <input
@@ -31,9 +50,19 @@
         type="password"
         class="signup__input signup__input-pw-confirm"
         placeholder="Password Confirm"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$"
+        @input="CheckValidate"
       /><br />
-      <p class="signup__check signup__check-pw-confrim">{{ pwConText }}</p>
+      <p
+        :class="{
+          'signup__check--green': attrChk[2],
+          'signup__check--red': !attrChk[2],
+          signup__check: true,
+          'signup__check-pw-confirm': true,
+        }"
+      >
+        {{ attrText[2] }}
+      </p>
 
       <label class="signup__label signup__label-email">이메일</label>
       <input
@@ -41,8 +70,19 @@
         type="email"
         class="signup__input signup__input-email"
         placeholder="Email"
+        pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}"
+        @input="CheckValidate"
       />
-      <p class="signup__check signup__check-email">{{ emailText }}</p>
+      <p
+        :class="{
+          'signup__check--green': attrChk[3],
+          'signup__check--red': !attrChk[3],
+          signup__check: true,
+          'signup__check-email': true,
+        }"
+      >
+        {{ attrText[3] }}
+      </p>
 
       <label class="signup__label signup__label-nickname">닉네임</label>
       <input
@@ -50,8 +90,19 @@
         type="text"
         class="signup__input signup__input-nickname"
         placeholder="Nickname"
+        pattern="^([a-z0-9_]){2,16}$"
+        @input="CheckValidate"
       />
-      <p class="signup__check signup__check-nickname">{{ nickText }}</p>
+      <p
+        :class="{
+          'signup__check--green': attrChk[4],
+          'signup__check--red': !attrChk[4],
+          signup__check: true,
+          'signup__check-nickname': true,
+        }"
+      >
+        {{ attrText[4] }}
+      </p>
 
       <button class="signup__btn signup__signup-btn">회원가입</button>
       <hr class="signup__hr" />
@@ -74,21 +125,32 @@ export default {
       passwordConfirm: "",
       email: "",
       nickname: "",
-      idChk: 0, // 이미사용중이거나, 사용할 수 없는 아이디 형식입니다
-      pwChk: 0, // 사용할수 없는 비밀번호 입니다.
-      pwConChk: 0, // 두 비밀번호가 일치하지 않습니다.
-      emailChk: 0, // 이메일 형식이 옳바르지 않습니다.
-      chkNick: 0, // 이미사용중이거나, 사용할 수 없는 닉네임 형식입니다
-      idText: "사용가능한 아이디 입니다.",
-      pwText: "사용가능한 비밀번호 입니다.",
-      pwConText: "사용가능한 비밀번호 입니다.",
-      emailText: "사용가능한 이메일 입니다.",
-      nickText: "사용가능한 닉네임 입니다.",
+      attrChk: [true, true, true, true, true],
+      attrText: ["ㅤ", "ㅤ", "ㅤ", "ㅤ", "ㅤ"],
+      attr: ["아이디", "비밀번호", "비밀번호", "이메일", "닉네임"],
     };
   },
   methods: {
-    TestInput: function (event) {
-      console.log(event.currentTarget.validity);
+    CheckValidate: function (event) {
+      let index = 0;
+      if (event.target.classList[1] === "signup__input-id") {
+        index = 0;
+      } else if (event.target.classList[1] === "signup__input-pw") {
+        index = 1;
+      } else if (event.target.classList[1] === "signup__input-pw-confirm") {
+        index = 2;
+      } else if (event.target.classList[1] === "signup__input-email") {
+        index = 3;
+      } else if (event.target.classList[1] === "signup__input-nickname") {
+        index = 4;
+      }
+      if (event.currentTarget.validity.patternMismatch) {
+        this.attrText[index] = `사용할 수 없는 ${this.attr[index]} 입니다.`;
+        this.attrChk[index] = false;
+      } else {
+        this.attrText[index] = `사용가능한 ${this.attr[index]} 입니다.`;
+        this.attrChk[index] = true;
+      }
     },
   },
   computed: {
@@ -168,5 +230,11 @@ export default {
 }
 .signup__input:valid {
   border-color: green;
+}
+.signup__check--red {
+  color: red;
+}
+.signup__check--green {
+  color: green;
 }
 </style>
