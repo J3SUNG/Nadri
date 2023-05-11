@@ -1,0 +1,26 @@
+[
+  {
+    "board_no": 1,
+    "board_type": 0,
+    "create_time": "2023-05-03",
+    "subject": "Hi",
+    "content": "hahaha",
+    "user_no": 12
+  },
+  {
+    "board_no": 2,
+    "board_type": 0,
+    "create_time": "2023-05-03",
+    "subject": "Hey",
+    "content": "Yeah",
+    "user_no": 12
+  },
+  {
+    "board_no": 3,
+    "board_type": 0,
+    "create_time": "2023-05-03",
+    "subject": "Oh",
+    "content": "NMY",
+    "user_no": 12
+  }
+]
