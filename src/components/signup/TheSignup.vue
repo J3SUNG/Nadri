@@ -30,7 +30,7 @@
         type="password"
         class="signup__input signup__input-pw"
         placeholder="Password"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,16}$"
         @input="CheckValidate"
       />
       <p
@@ -50,7 +50,7 @@
         type="password"
         class="signup__input signup__input-pw-confirm"
         placeholder="Password Confirm"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,16}$"
         @input="CheckValidate"
       /><br />
       <p
@@ -144,7 +144,8 @@ export default {
       } else if (event.target.classList[1] === "signup__input-nickname") {
         index = 4;
       }
-      if (event.currentTarget.validity.patternMismatch) {
+      console.log(event.target.value);
+      if (event.currentTarget.validity.patternMismatch || event.target.value === "") {
         this.attrText[index] = `사용할 수 없는 ${this.attr[index]} 입니다.`;
         this.attrChk[index] = false;
       } else {

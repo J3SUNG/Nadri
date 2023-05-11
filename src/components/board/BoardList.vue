@@ -8,24 +8,30 @@
       <table class="board-list">
         <colgroup>
           <col style="width: 5%" />
-          <col style="width: 65%" />
-          <col style="width: 10%" />
           <col style="width: 5%" />
-          <col style="width: 15%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 55%" />
+          <col style="width: 5%" />
+          <col style="width: 5%" />
+          <col style="width: 5%" />
         </colgroup>
         <thead>
           <tr>
             <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>조회수</th>
+            <th>타입</th>
             <th>작성일</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>좋아요</th>
+            <th>작성자번호</th>
+            <th>작성자</th>
           </tr>
         </thead>
         <tbody>
           <board-list-item
             v-for="board in boards"
-            :key="board.articleNo"
+            :key="board.boardNo"
             :board="board"
           ></board-list-item>
         </tbody>
@@ -37,6 +43,9 @@
 
 <script>
 import BoardListItem from "./BoardListItem.vue";
+import axios from "axios";
+
+let testUrl = `http://192.168.31.78/board?map=asdf`;
 
 export default {
   name: "BoardList",
@@ -44,32 +53,14 @@ export default {
     BoardListItem,
   },
   data() {
-    return {};
+    return {
+      boards: [],
+    };
   },
   created() {
-    this.boards = [
-      {
-        articleNo: 10,
-        userName: "제티",
-        subject: "우유엔 제티!",
-        hit: 10,
-        registerTime: "2023-05-08 17:03:15",
-      },
-      {
-        articleNo: 9,
-        userName: "콜라",
-        subject: "코카콜라 맛있다.",
-        hit: 102,
-        registerTime: "2023-05-08 14:13:15",
-      },
-      {
-        articleNo: 8,
-        userName: "사이다",
-        subject: "시원한 사이다!",
-        hit: 24,
-        registerTime: "2023-05-07 11:03:15",
-      },
-    ];
+    axios.get(testUrl).then((response) => {
+      this.boards = response.data;
+    });
   },
   methods: {
     movePage() {},

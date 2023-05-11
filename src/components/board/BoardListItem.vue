@@ -1,10 +1,13 @@
 <template>
   <tr>
-    <td>{{ board.articleNo }}</td>
+    <td>{{ board.boardNo }}</td>
+    <td>{{ board.boardType }}</td>
+    <td>{{ board.createTime }}</td>
     <td>{{ board.subject }}</td>
+    <td>{{ board.content }}</td>
+    <td>{{ board.likeCount }}</td>
+    <td>{{ board.userNo }}</td>
     <td>{{ board.userName }}</td>
-    <td>{{ board.hit }}</td>
-    <td>{{ board.registerTime }}</td>
   </tr>
 </template>
 
