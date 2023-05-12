@@ -1,15 +1,25 @@
 <template>
   <header class="header">
-    <TheLogo />
-    <nav class="header__nav">
-      <router-link :to="{ name: 'AppHome' }">홈</router-link> |
-      <router-link :to="{ name: 'AppMap' }">지도</router-link> |
-      <router-link :to="{ name: 'AppBoard' }">게시판</router-link>
-    </nav>
-    <aside class="header__login">
-      <router-link :to="{ name: 'AppLogin' }">로그인</router-link> |
-      <router-link :to="{ name: 'AppSignup' }">회원가입</router-link>
-    </aside>
+    <div class="header__box">
+      <TheLogo />
+      <nav class="header__nav">
+        <ul>
+          <li><router-link :to="{ name: 'AppHome' }">홈</router-link> |</li>
+          <li><router-link :to="{ name: 'AppMap' }">지도</router-link> |</li>
+          <li>
+            <router-link :to="{ name: 'AppBoard' }">게시판</router-link>
+          </li>
+        </ul>
+      </nav>
+      <aside class="header__login">
+        <ul>
+          <li><router-link :to="{ name: 'AppLogin' }">로그인</router-link> |</li>
+          <li>
+            <router-link :to="{ name: 'AppSignup' }">회원가입</router-link>
+          </li>
+        </ul>
+      </aside>
+    </div>
   </header>
 </template>
 
@@ -24,14 +34,20 @@ export default {
 
 <style>
 .header {
-  width: 100vw;
+  width: 100%;
   height: 100px;
   position: fixed;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   box-shadow: 0px 0px 5px #444;
   background-color: white;
+}
+.header__box {
+  width: 1140px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .header__nav {
   padding: 30px;

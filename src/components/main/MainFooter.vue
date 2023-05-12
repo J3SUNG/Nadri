@@ -1,8 +1,10 @@
 <template>
   <footer class="footer">
-    <h4 class="footer__team">@ Enjoy Trip Team. All rights reserved.</h4>
-    <p class="footer__member">Member : JeSeong Lee / YuJeong Kim</p>
-    <p class="footer__contact">Contact : wptjd6141@naver.com / kyj8441@gmail.com</p>
+    <div class="footer__box">
+      <h4 class="footer__team">@ Enjoy Trip Team. All rights reserved.</h4>
+      <p class="footer__member">Member : JeSeong Lee / YuJeong Kim</p>
+      <p class="footer__contact">Contact : wptjd6141@naver.com / kyj8441@gmail.com</p>
+    </div>
   </footer>
 </template>
 
@@ -14,17 +16,25 @@ export default {
 
 <style>
 .footer {
-  position: fixed;
+  display: flex;
+  justify-content: center;
   width: 100%;
   bottom: 0;
   height: 100px;
   margin: 0px;
-  padding: 10px;
+  padding: 0px;
   color: lightgray;
   background-color: black;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  position: fixed;
   box-shadow: 0px 0px 5px #444;
+}
+.footer__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1140px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
 }
 </style>

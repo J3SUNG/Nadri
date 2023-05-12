@@ -2,7 +2,9 @@
   <div id="app">
     <main-header id="header" />
     <main id="main">
-      <router-view />
+      <div id="main__box">
+        <router-view />
+      </div>
     </main>
     <main-footer id="footer" />
   </div>
@@ -48,17 +50,31 @@ button {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  background-color: whitesmoke;
+  background-color: #f6f1f1;
 }
 #main {
+  display: flex;
+  justify-content: center;
   width: 100%;
+  height: 100%;
+}
+#main__box {
+  width: 1140px;
   height: 100%;
 }
 a {
   text-decoration: none;
-  color: orange;
+  color: #146c94;
   font-weight: bold;
+}
+ul {
+  display: flex;
+  flex-direction: row;
+}
+li {
+  list-style: none;
+  padding-left: 0px;
 }
 </style>

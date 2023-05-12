@@ -73,11 +73,8 @@ export default {
 .login__signup-btn {
   width: 150px;
 }
-.login__find-pw {
-  color: orange;
-}
 .login__find-pw:hover {
-  color: rgb(255, 140, 0);
+  color: #19a7ce;
 }
 .login__hr {
   width: 100%;
