@@ -43,9 +43,7 @@
 
 <script>
 import BoardListItem from "./BoardListItem.vue";
-import axios from "axios";
-
-let testUrl = `http://192.168.31.78/board?map=asdf`;
+import http from "@/util/http-common";
 
 export default {
   name: "BoardList",
@@ -55,10 +53,11 @@ export default {
   data() {
     return {
       boards: [],
+      map: "asdzzzzf",
     };
   },
   created() {
-    axios.get(testUrl).then((response) => {
+    http.get(`board?map=${this.map}`).then((response) => {
       this.boards = response.data;
     });
   },

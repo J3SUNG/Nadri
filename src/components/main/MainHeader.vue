@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import TheLogo from "../logo/TheLogo.vue";
+import TheLogo from "@/components/logo/TheLogo.vue";
 
 export default {
   name: "MainHeader",

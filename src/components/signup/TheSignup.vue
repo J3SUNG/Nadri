@@ -11,6 +11,7 @@
         class="signup__input signup__input-id"
         placeholder="ID"
         pattern="^([a-z0-9_]){6,16}$"
+        title="형식: 6~16글자, 영어와 숫자를 포함한 아이디를 입력하세요."
         @input="CheckValidate"
         required="required"
       />
@@ -31,7 +32,8 @@
         type="password"
         class="signup__input signup__input-pw"
         placeholder="Password"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,16}$"
+        pattern="^[A-Za-z\d$@$!%*#?&]{6,16}$"
+        title="형식: 6~16글자, 영어, 숫자, 특수문자를 사용하실 수 있습니다. 영어와 숫자를 포함한 비밀번호를 입력하세요."
         @input="CheckValidate"
         required="required"
       />
@@ -52,7 +54,7 @@
         type="password"
         class="signup__input signup__input-pw-confirm"
         placeholder="Password Confirm"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,16}$"
+        pattern="^[A-Za-z\d$@$!%*#?&]{6,16}$"
         @input="CheckValidate"
         required="required"
       /><br />
@@ -108,8 +110,16 @@
       >
         {{ attrText[4] }}
       </p>
-
-      <button class="signup__btn signup__signup-btn">회원가입</button>
+      <button
+        :class="{
+          'sginup__btn__non-active': activeButton,
+          signup__btn: true,
+          'signup__signup-btn': true,
+        }"
+        @click="signupClick"
+      >
+        회원가입
+      </button>
       <hr class="signup__hr" />
       <p class="signup__login-text">계정이 있으신가요?</p>
       <router-link class="signup__login-btn" :to="{ name: 'AppLogin' }">로그인</router-link>
@@ -130,9 +140,10 @@ export default {
       passwordConfirm: "",
       email: "",
       nickname: "",
-      attrChk: [true, true, true, true, true],
+      attrChk: [false, false, false, false, false],
       attrText: ["ㅤ", "ㅤ", "ㅤ", "ㅤ", "ㅤ"],
       attr: ["아이디", "비밀번호", "비밀번호", "이메일", "닉네임"],
+      activeButton: false,
     };
   },
   methods: {
@@ -160,15 +171,19 @@ export default {
         this.attrText[index] = `사용가능한 ${this.attr[index]} 입니다.`;
         this.attrChk[index] = true;
       }
+
+      if (this.attrChk[0] & this.attrChk[1] & this.attrChk[2] & this.attrChk[3] & this.attrChk[4]) {
+        this.activeButton = false;
+      } else {
+        this.activeButton = true;
+      }
+    },
+    signupClick: function (event) {
+      event.preventDefault();
     },
   },
-  computed: {
-    validate: function () {
-      // 서버로 데이터 전송
-      // reuslt에 결과값, 0 성공, 1 실패
-      // result
-      return this.message.split("").reverse().join("");
-    },
+  mounted() {
+    this.activeButton = true;
   },
 };
 </script>
@@ -245,5 +260,9 @@ export default {
 }
 .signup__check--green {
   color: green;
+}
+.sginup__btn__non-active {
+  pointer-events: none;
+  opacity: 0.6;
 }
 </style>

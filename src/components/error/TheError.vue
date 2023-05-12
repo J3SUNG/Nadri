@@ -6,7 +6,9 @@
         죄송합니다. 페이지를 사용할 수 없습니다. <br />
         클릭하신 링크가 잘못되었거나 페이지가 삭제되었습니다.
       </p>
-      <router-link to="/"> <p class="error__home">Enjoy Trip으로 돌아가기</p></router-link>
+      <router-link :to="{ name: 'AppHome' }">
+        <p class="error__home">Enjoy Trip으로 돌아가기</p></router-link
+      >
     </div>
   </div>
 </template>
