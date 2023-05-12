@@ -26,6 +26,16 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap");
 
+:root {
+  --color1-blue: #587fff;
+  --color2-purple: #b6b9f0;
+  --color3-lightblue: #edeeff;
+  --color4-brown: #c0a975;
+  --color5-white: #ffffff;
+  --color6-darkgray: #444;
+  --color7-lightgray: lightgray;
+  --color8-black: black;
+}
 body {
   overflow-x: hidden;
 }
@@ -49,10 +59,9 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   width: 100%;
   height: 100vh;
-  background-color: #f6f1f1;
+  background-color: var(--color3-lightblue);
 }
 #main {
   display: flex;
@@ -64,11 +73,6 @@ button {
   width: 1140px;
   height: 100%;
 }
-a {
-  text-decoration: none;
-  color: #146c94;
-  font-weight: bold;
-}
 ul {
   display: flex;
   flex-direction: row;
@@ -76,5 +80,40 @@ ul {
 li {
   list-style: none;
   padding-left: 0px;
+}
+a {
+  text-decoration: none;
+  color: var(--color1-blue);
+  font-weight: bold;
+}
+a:hover {
+  opacity: 0.9;
+}
+button {
+  background-color: var(--color1-blue);
+  padding: 14px 20px;
+  margin: 8px 10px;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  border: solid 0px var(--color6-darkgray);
+  color: var(--color5-white);
+}
+button:hover {
+  opacity: 0.9;
+}
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid var(--color6-darkgray);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: medium;
+}
+label {
+  display: inline-block;
+  width: 80px;
 }
 </style>

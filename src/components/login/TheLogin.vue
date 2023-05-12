@@ -43,8 +43,8 @@ export default {
   border-radius: 20px;
   padding: 30px;
   width: 500px;
-  background-color: white;
-  box-shadow: 0px 0px 5px #444;
+  background-color: var(--color5-white);
+  box-shadow: 0px 0px 5px var(--color6-darkgray);
   flex-direction: column;
   align-items: center;
 }
@@ -58,23 +58,15 @@ export default {
   padding: 15px;
 }
 .login__btn {
-  background-color: orange;
-  color: white;
   font-weight: bold;
   border: 0px;
   border-radius: 8px;
-}
-.login__btn:hover {
-  background-color: rgb(255, 140, 0);
 }
 .login__login-btn {
   width: 300px;
 }
 .login__signup-btn {
   width: 150px;
-}
-.login__find-pw:hover {
-  color: #19a7ce;
 }
 .login__hr {
   width: 100%;

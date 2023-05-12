@@ -199,8 +199,8 @@ export default {
   border-radius: 20px;
   padding: 30px;
   width: 500px;
-  background-color: white;
-  box-shadow: 0px 0px 5px #444;
+  background-color: var(--color5-white);
+  box-shadow: 0px 0px 5px var(--color6-darkgray);
 }
 .signup__logo {
   margin-bottom: 20px;
@@ -222,24 +222,15 @@ export default {
   margin-bottom: 14px;
 }
 .signup__btn {
-  background-color: orange;
-  color: white;
   font-weight: bold;
   border: 0px;
   border-radius: 8px;
-}
-.signup__btn:hover {
-  background-color: rgb(255, 140, 0);
 }
 .signup__signup-btn {
   width: 120px;
 }
 .signup__login-btn {
   width: 10px;
-  color: orange;
-}
-.signup__login-btn:hover {
-  color: rgb(255, 140, 0);
 }
 .signup__login-text {
   display: inline-block;
@@ -247,7 +238,7 @@ export default {
 }
 .signup__hr {
   margin: 15px 10px;
-  color: #444;
+  color: var(--color6-darkgray);
 }
 .signup__input:invalid {
   border-color: red;
@@ -263,6 +254,6 @@ export default {
 }
 .sginup__btn__non-active {
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 </style>

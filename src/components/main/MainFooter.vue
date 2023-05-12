@@ -23,10 +23,10 @@ export default {
   height: 100px;
   margin: 0px;
   padding: 0px;
-  color: lightgray;
-  background-color: black;
+  color: var(--color7-lightgray);
+  background-color: var(--color8-black);
   position: fixed;
-  box-shadow: 0px 0px 5px #444;
+  box-shadow: 0px 0px 5px var(--color6-darkgray);
 }
 .footer__box {
   display: flex;

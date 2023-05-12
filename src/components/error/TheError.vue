@@ -33,9 +33,9 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--color5-white);
   border-radius: 20px;
-  box-shadow: 0px 0px 5px #444;
+  box-shadow: 0px 0px 5px var(--color6-darkgray);
   font-weight: bold;
 }
 .error__code {
@@ -44,8 +44,5 @@ export default {
 }
 .error__home {
   font-size: 24px;
-}
-.error__home:hover {
-  color: rgb(255, 203, 106);
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="logo" @click="logoClick">
     <img class="logo__img" alt="page logo" src="@/assets/flounder.png" />
-    <h3 class="logo__text">놀러 가자미</h3>
+    <h3 class="logo__text">놀러가자미</h3>
   </div>
 </template>
 

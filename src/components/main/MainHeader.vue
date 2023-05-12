@@ -4,17 +4,26 @@
       <TheLogo />
       <nav class="header__nav">
         <ul>
-          <li><router-link :to="{ name: 'AppHome' }">홈</router-link> |</li>
-          <li><router-link :to="{ name: 'AppMap' }">지도</router-link> |</li>
-          <li>
+          <li class="header__nav__item">
+            <router-link :to="{ name: 'AppMap' }">놀러가자</router-link>
+          </li>
+          <li class="header__nav__item">
+            <router-link :to="{ name: 'AppBoard' }">계획세우기</router-link>
+          </li>
+          <li class="header__nav__item">
+            <router-link :to="{ name: 'AppMap' }">공지사항</router-link>
+          </li>
+          <li class="header__nav__item">
             <router-link :to="{ name: 'AppBoard' }">게시판</router-link>
           </li>
         </ul>
       </nav>
       <aside class="header__login">
         <ul>
-          <li><router-link :to="{ name: 'AppLogin' }">로그인</router-link> |</li>
-          <li>
+          <li class="header__login__item">
+            <router-link :to="{ name: 'AppLogin' }">로그인</router-link>
+          </li>
+          <li class="header__login__item">
             <router-link :to="{ name: 'AppSignup' }">회원가입</router-link>
           </li>
         </ul>
@@ -39,8 +48,8 @@ export default {
   position: fixed;
   display: flex;
   justify-content: center;
-  box-shadow: 0px 0px 5px #444;
-  background-color: white;
+  box-shadow: 0px 0px 5px var(--color6-darkgray);
+  background-color: var(--color5-white);
 }
 .header__box {
   width: 1140px;
@@ -52,15 +61,13 @@ export default {
 .header__nav {
   padding: 30px;
 }
-
-.header__nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.header__nav__item {
+  font-size: 18px;
+  margin: 0px 20px;
 }
-.header__nav a:hover {
-  color: rgb(255, 203, 106);
-}
-.header__nav a.router-link-exact-active {
-  color: orange;
+.header__login__item > a {
+  font-size: 18px;
+  margin: 0px 10px;
+  color: var(--color4-brown);
 }
 </style>

@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       boards: [],
-      map: "asdzzzzf",
+      map: "asdzzf",
     };
   },
   created() {
