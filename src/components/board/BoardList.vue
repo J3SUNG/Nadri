@@ -79,7 +79,6 @@ export default {
 <style>
 .board {
   margin-top: 100px;
-  background-color: yellowgreen;
   width: 100%;
   height: 100%;
 }
