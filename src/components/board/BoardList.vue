@@ -1,8 +1,15 @@
 <template>
-  <div>
+  <div class="board">
     <h1>자유 게시판</h1>
     <div style="text-align: right">
-      <button @click="movePage">도서 등록</button>
+      <button @click="movePage">게시글 작성</button>
+    </div>
+    <div class="board__cards">
+      <board-card />
+      <board-card />
+      <board-card />
+      <board-card />
+      <board-card />
     </div>
     <div v-if="boards.length">
       <table class="board-list">
@@ -43,12 +50,14 @@
 
 <script>
 import BoardListItem from "./BoardListItem.vue";
-import http from "@/util/http-common";
+// import http from "@/util/http-common";
+import BoardCard from "./BoardCard.vue";
 
 export default {
   name: "BoardList",
   components: {
     BoardListItem,
+    BoardCard,
   },
   data() {
     return {
@@ -57,9 +66,9 @@ export default {
     };
   },
   created() {
-    http.get(`board?map=${this.map}`).then((response) => {
-      this.boards = response.data;
-    });
+    // http.get(`board?map=${this.map}`).then((response) => {
+    //   this.boards = response.data;
+    // });
   },
   methods: {
     movePage() {},
@@ -67,4 +76,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.board {
+  margin-top: 100px;
+  background-color: yellowgreen;
+  width: 100%;
+  height: 100%;
+}
+.board__cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>
