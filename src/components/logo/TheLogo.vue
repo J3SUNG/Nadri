@@ -37,7 +37,7 @@ export default {
     },
   },
   mounted() {
-    this.interval = setInterval(this.hello, 1000);
+    this.interval = setInterval(this.hello, 2000);
   },
 };
 </script>
@@ -46,7 +46,6 @@ export default {
 .logo {
   display: flex;
   align-items: center;
-  transition: all 1s;
 }
 .logo:hover {
   cursor: pointer;
@@ -54,6 +53,15 @@ export default {
 .logo__img {
   width: 50px;
   height: 50px;
+  animation: slippery 1s linear 0s infinite alternate;
+}
+@keyframes slippery {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .logo__text {
   margin-left: 10px;
