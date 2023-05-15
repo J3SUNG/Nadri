@@ -10,8 +10,16 @@ export default {
   name: "TheLogo",
   data() {
     return {
-      img: require("@/assets/flounder.png"),
-      imgList: ["@/assets/flounder.png", "@/assets/street.png"],
+      img: "",
+      imgList: [
+        require("@/assets/logo_beach.png"),
+        require("@/assets/logo_street.png"),
+        require("@/assets/logo_aurora.png"),
+        require("@/assets/logo_mountains.png"),
+        require("@/assets/logo_desert.png"),
+        require("@/assets/logo_waterfall.png"),
+      ],
+      num: 0,
     };
   },
   methods: {
@@ -20,6 +28,16 @@ export default {
         this.$router.push({ name: "AppHome" });
       }
     },
+    hello() {
+      this.img = this.imgList[this.num];
+      ++this.num;
+      if (this.num >= this.imgList.length) {
+        this.num = 0;
+      }
+    },
+  },
+  mounted() {
+    this.interval = setInterval(this.hello, 1000);
   },
 };
 </script>
@@ -28,6 +46,7 @@ export default {
 .logo {
   display: flex;
   align-items: center;
+  transition: all 1s;
 }
 .logo:hover {
   cursor: pointer;

@@ -81,5 +81,7 @@ export default {
 .board__cards {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 </style>
