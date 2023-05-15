@@ -10,7 +10,7 @@ export default {
   name: "TheLogo",
   data() {
     return {
-      img: "",
+      img: require("@/assets/logo_waterfall.png"),
       imgList: [
         require("@/assets/logo_beach.png"),
         require("@/assets/logo_street.png"),
