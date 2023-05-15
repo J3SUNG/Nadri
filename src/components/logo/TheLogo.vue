@@ -1,6 +1,6 @@
 <template>
   <div class="logo" @click="logoClick">
-    <img class="logo__img" alt="page logo" src="@/assets/flounder.png" />
+    <img class="logo__img" alt="page logo" :src="img" />
     <h3 class="logo__text">놀러가자미</h3>
   </div>
 </template>
@@ -8,6 +8,12 @@
 <script>
 export default {
   name: "TheLogo",
+  data() {
+    return {
+      img: require("@/assets/flounder.png"),
+      imgList: ["@/assets/flounder.png", "@/assets/street.png"],
+    };
+  },
   methods: {
     logoClick() {
       if (this.$route.path !== "/") {

@@ -5,11 +5,7 @@
       <button @click="movePage">게시글 작성</button>
     </div>
     <div class="board__cards">
-      <board-card />
-      <board-card />
-      <board-card />
-      <board-card />
-      <board-card />
+      <board-card v-for="item in boards" :itemData="item" :key="item.boardNo" />
     </div>
     <div v-if="boards.length">
       <table class="board-list">
@@ -50,7 +46,7 @@
 
 <script>
 import BoardListItem from "./BoardListItem.vue";
-// import http from "@/util/http-common";
+import http from "@/util/http-common";
 import BoardCard from "./BoardCard.vue";
 
 export default {
@@ -62,13 +58,13 @@ export default {
   data() {
     return {
       boards: [],
-      map: "asdzzf",
+      type: "1",
     };
   },
   created() {
-    // http.get(`board?map=${this.map}`).then((response) => {
-    //   this.boards = response.data;
-    // });
+    http.get(`board?type=${this.type}`).then((response) => {
+      this.boards = response.data;
+    });
   },
   methods: {
     movePage() {},

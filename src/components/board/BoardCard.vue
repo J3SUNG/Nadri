@@ -3,14 +3,14 @@
     <div class="board__card__header">
       <img class="board__writer_img" :src="cardData.img" />
       <div class="board__card__header__text">
-        <h3 class="board__card__title">{{ cardData.title }}</h3>
-        <p class="board__card__writer">{{ cardData.writer }}, {{ cardData.createTime }}</p>
+        <h3 class="board__card__title">{{ itemData.subject }}</h3>
+        <p class="board__card__writer">{{ itemData.userName }}, {{ itemData.createTime }}</p>
       </div>
     </div>
     <hr class="board__card__hr" />
     <div class="board__card__body">
       <p class="board__card__content">
-        {{ cardData.content }}
+        {{ itemData.content }}
       </p>
     </div>
   </div>
@@ -32,20 +32,30 @@ export default {
       },
     };
   },
+  props: ["itemData"],
 };
 </script>
 
 <style>
 .board__card {
-  width: 420px;
-  height: 180px;
+  width: 280px;
+  height: 160px;
   border: 1px solid var(--color8-black);
   box-shadow: 0px 0px 5px var(--color6-darkgray);
-  margin-left: 100px;
+  margin-left: 50px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
+  background-color: var(--color5-white);
+  transition: all 0.1s linear;
+  font-size: 12px;
+}
+.board__card:hover {
+  transform: scale(1.05);
+}
+.board__card:hover ~ * {
+  transform: scale(0.95);
 }
 .board__card__header {
   display: flex;
@@ -60,14 +70,14 @@ export default {
   text-align: left;
 }
 .board__card__title {
-  width: 260px;
+  width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .board__writer_img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 70%;
 }
 .board__card__hr {

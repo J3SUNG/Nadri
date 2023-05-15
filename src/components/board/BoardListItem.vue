@@ -20,4 +20,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.board__cards {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+</style>
