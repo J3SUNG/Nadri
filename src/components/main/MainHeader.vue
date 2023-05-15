@@ -8,10 +8,10 @@
             <router-link :to="{ name: 'AppMap' }">놀러가자</router-link>
           </li>
           <li class="header__nav__item">
-            <router-link :to="{ name: 'AppBoard' }">계획세우기</router-link>
+            <router-link :to="{ name: 'AppHome' }">계획세우기</router-link>
           </li>
           <li class="header__nav__item">
-            <router-link :to="{ name: 'AppMap' }">공지사항</router-link>
+            <router-link :to="{ name: 'AppNotify' }">공지사항</router-link>
           </li>
           <li class="header__nav__item">
             <router-link :to="{ name: 'AppBoard' }">게시판</router-link>
@@ -20,10 +20,10 @@
       </nav>
       <aside class="header__login">
         <ul>
-          <li class="header__login__item">
+          <li class="header__login__item header__login__item-login">
             <router-link :to="{ name: 'AppLogin' }">로그인</router-link>
           </li>
-          <li class="header__login__item">
+          <li class="header__login__item header__login__item-signup">
             <router-link :to="{ name: 'AppSignup' }">회원가입</router-link>
           </li>
         </ul>
@@ -65,9 +65,36 @@ export default {
   font-size: 18px;
   margin: 0px 20px;
 }
+.header__login__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .header__login__item > a {
+  position: relative;
   font-size: 18px;
-  margin: 0px 10px;
-  color: var(--color4-brown);
+  width: 100%;
+  padding: 15px 0px;
+}
+.header__login__item-login {
+  width: 100px;
+  height: 50px;
+  border-radius: 10px;
+  border: 3px solid var(--color1-blue);
+  background-color: var(--color1-blue);
+}
+.header__login__item-signup {
+  width: 100px;
+  height: 50px;
+  border: 3px solid var(--color1-blue);
+  border-radius: 10px;
+  background-color: var(--color5-white);
+  margin-left: 10px;
+}
+.header__login__item-login > a {
+  color: var(--color5-white);
+}
+.header__login__item-signup > a {
+  color: var(--color1-blue);
 }
 </style>

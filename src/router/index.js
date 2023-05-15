@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import AppHome from "@/views/AppHome.vue";
 import AppLogin from "@/views/AppLogin.vue";
 import AppBoard from "@/views/AppBoard.vue";
+import AppNotify from "@/views/AppNotify.vue";
 import AppMap from "@/views/AppMap.vue";
 import AppSignup from "@/views/AppSignup.vue";
 import AppError from "@/views/AppError.vue";
@@ -24,6 +25,11 @@ const routes = [
     path: "/board",
     name: "AppBoard",
     component: AppBoard,
+  },
+  {
+    path: "/notify",
+    name: "AppNotify",
+    component: AppNotify,
   },
   {
     path: "/map",

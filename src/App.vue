@@ -39,17 +39,7 @@ export default {
 body {
   overflow-x: hidden;
 }
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-a,
-button {
+* {
   margin: 0px;
   padding: 0px;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -72,6 +62,7 @@ button {
 #main__box {
   width: 1140px;
   height: 100%;
+  margin-top: 120px;
 }
 ul {
   display: flex;

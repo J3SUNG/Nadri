@@ -1,7 +1,10 @@
 <template>
   <div class="logo" @click="logoClick">
     <img class="logo__img" alt="page logo" :src="img" />
-    <h3 class="logo__text">놀러가자미</h3>
+    <div class="logo__right">
+      <h3 class="logo__text">놀러</h3>
+      <h3 class="logo__text logo__text__flounder">가자미</h3>
+    </div>
   </div>
 </template>
 
@@ -63,9 +66,14 @@ export default {
     opacity: 1;
   }
 }
-.logo__text {
+.logo__right {
   margin-left: 10px;
+}
+.logo__text {
+  display: inline-block;
   font-size: 20px;
   font-weight: bold;
+}
+.logo__right:hover {
 }
 </style>
