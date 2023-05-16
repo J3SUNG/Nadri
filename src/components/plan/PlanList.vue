@@ -5,7 +5,16 @@
       <button class="plan__write-button">계획 생성</button>
     </div>
     <div class="plan__cards">
-      <plan-card v-for="item in plans" :itemData="item" :key="item.planNo" />
+      <!-- <plan-card v-for="item in plans" :itemData="item" :key="item.planNo" /> -->
+      <plan-card />
+      <plan-card />
+      <plan-card />
+      <plan-card />
+      <plan-card />
+      <plan-card />
+      <plan-card />
+      <plan-card />
+      <plan-card />
     </div>
   </div>
 </template>
@@ -43,7 +52,6 @@ export default {
 .plan__cards {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 110px;
 }
 </style>

@@ -74,6 +74,4 @@ export default {
   font-size: 20px;
   font-weight: bold;
 }
-.logo__right:hover {
-}
 </style>

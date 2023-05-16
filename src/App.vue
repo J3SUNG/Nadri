@@ -54,18 +54,18 @@ table {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   width: 100%;
-  height: 100vh;
+  min-height: calc(100vh - 120px);
+  position: relative;
+  padding-bottom: 120px;
   background-color: var(--color3-lightblue);
 }
 #main {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100%;
 }
 #main__box {
   width: 1140px;
-  height: 100%;
   margin-top: 120px;
 }
 #header {

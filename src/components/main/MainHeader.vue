@@ -8,7 +8,7 @@
             <router-link :to="{ name: 'AppMap' }">놀러가자</router-link>
           </li>
           <li class="header__nav__item">
-            <router-link :to="{ name: 'AppHome' }">계획세우기</router-link>
+            <router-link :to="{ name: 'AppPlan' }">계획세우기</router-link>
           </li>
           <li class="header__nav__item">
             <router-link :to="{ name: 'AppNotify' }">공지사항</router-link>
