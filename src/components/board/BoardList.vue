@@ -11,7 +11,7 @@
 </template>
 
 <script>
-// import http from "@/util/http-common";
+import http from "@/util/http-common";
 import BoardCard from "./BoardCard.vue";
 
 export default {
@@ -26,9 +26,9 @@ export default {
     };
   },
   created() {
-    // http.get(`board?type=${this.type}`).then((response) => {
-    //   this.boards = response.data;
-    // });
+    http.get(`board?type=${this.type}`).then((response) => {
+      this.boards = response.data;
+    });
   },
 };
 </script>

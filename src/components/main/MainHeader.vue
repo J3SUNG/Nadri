@@ -77,15 +77,15 @@ export default {
   padding: 15px 0px;
 }
 .header__login__item-login {
-  width: 100px;
-  height: 50px;
+  width: 80px;
+  height: 40px;
   border-radius: 10px;
   border: 3px solid var(--color1-blue);
   background-color: var(--color1-blue);
 }
 .header__login__item-signup {
-  width: 100px;
-  height: 50px;
+  width: 80px;
+  height: 40px;
   border: 3px solid var(--color1-blue);
   border-radius: 10px;
   background-color: var(--color5-white);

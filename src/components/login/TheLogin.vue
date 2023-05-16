@@ -33,10 +33,10 @@ export default {
 
 <style>
 .login {
-  height: 100%;
+  margin-top: 100px;
+  height: 460px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .login__form {
   display: flex;

@@ -36,6 +36,7 @@ export default {
   --color7-lightgray: lightgray;
   --color8-black: black;
 }
+
 body {
   overflow-x: hidden;
 }
@@ -43,6 +44,9 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: "IBM Plex Sans KR", sans-serif;
+}
+table {
+  border-spacing: 0;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -63,6 +67,12 @@ body {
   width: 1140px;
   height: 100%;
   margin-top: 120px;
+}
+#header {
+  z-index: 10;
+}
+#footer {
+  z-index: 10;
 }
 ul {
   display: flex;
@@ -93,7 +103,8 @@ button {
 button:hover {
   opacity: 0.9;
 }
-input {
+input,
+select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

@@ -20,12 +20,11 @@ export default {
   justify-content: center;
   width: 100%;
   bottom: 0;
-  height: 100px;
+  height: 120px;
   margin: 0px;
   padding: 0px;
   color: var(--color7-lightgray);
   background-color: var(--color8-black);
-  position: fixed;
   box-shadow: 0px 0px 5px var(--color6-darkgray);
 }
 .footer__box {
