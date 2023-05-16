@@ -2,7 +2,7 @@
   <div class="board">
     <h1 class="board__title">게시판</h1>
     <div class="board__write">
-      <button class="board__write-button">게시글 작성</button>
+      <button class="board__write-button" @click="moveBoardCreate">게시글 작성</button>
     </div>
     <div class="board__cards">
       <board-card v-for="item in boards" :itemData="item" :key="item.boardNo" />
@@ -29,6 +29,11 @@ export default {
     http.get(`board?type=${this.type}`).then((response) => {
       this.boards = response.data;
     });
+  },
+  methods: {
+    moveBoardCreate() {
+      this.$router.push({ name: "AppBoardCreate" });
+    },
   },
 };
 </script>

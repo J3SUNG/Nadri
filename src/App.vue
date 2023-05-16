@@ -48,6 +48,9 @@ body {
 table {
   border-spacing: 0;
 }
+textarea {
+  resize: none;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

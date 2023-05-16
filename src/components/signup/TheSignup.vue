@@ -253,6 +253,6 @@ export default {
 }
 .sginup__btn__non-active {
   pointer-events: none;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 </style>
