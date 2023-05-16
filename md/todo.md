@@ -56,3 +56,5 @@ login, signup 버튼 수정
 확대시 헤더부분 넘어감
 kakao map appkey env에 저장하기
 맵 틀 구현
+footer 아래 고정
+계획 페이지 구현
