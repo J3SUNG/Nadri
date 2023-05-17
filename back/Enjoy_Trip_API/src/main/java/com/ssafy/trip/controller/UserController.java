@@ -1,19 +1,20 @@
 package com.ssafy.trip.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -88,15 +89,17 @@ public class UserController {
 		return "회원 삭제";
 	}
 
-	@GetMapping("/idCheck/{id}")
+	@GetMapping("/check")
 	@ResponseBody
-	public String idCheck(@PathVariable("id") String id) throws Exception {
+	public String dupulicateCheck(@RequestParam("field") String field, @RequestParam("val") String val) throws Exception {
 		/**
-		 * PathVariable로 입력된 id의 중복 여부를 검사하기 위해
-		 * 결과값으로 해당 아이디의 개수를 반환한다.
+		 * col에 해당하는 항목의 val에 대해서 일치하는 데이터의 개수를 반환한다.
 		 */
-		logger.debug("idCheck id : {}", id);
-		int cnt = userService.idCheck(id);
+		logger.debug("check : {} || value : {}", field, val);
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("field",field);
+		map.put("val",val);
+		int cnt = userService.check(map);
 		return cnt + "";
 	}
 }

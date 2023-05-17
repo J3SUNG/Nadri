@@ -1,5 +1,7 @@
 package com.ssafy.trip.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int idCheck(String id) throws Exception {
-		return userMapper.idCheck(id);
+	public int check(Map<String, String> map) throws Exception {
+		return userMapper.check(map);
 	}
 }

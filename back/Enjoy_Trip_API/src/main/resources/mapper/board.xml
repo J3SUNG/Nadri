@@ -58,10 +58,13 @@
 	<select id="getArticle" parameterType="int"
 		resultMap="board">
 		select b.board_no, b.board_type, b.create_time, b.subject, b.content,
-		b.user_no, m.name name
-		from board b, user m
-		where b.user_no = m.user_no
-		and b.board_no = #{boardNo}
+		b.user_no, m.nickname nickname, count(bl.like_no) like_count
+		from board b 
+		join user m
+		on b.user_no = m.user_no
+		left join board_like bl
+		on b.board_no = bl.board_no
+		where b.board_no = #{boardNo}
 	</select>
 	
 	<update id="modifyArticle" parameterType="boardDto">

@@ -9,9 +9,9 @@ import com.ssafy.trip.model.dto.UserDto;
 
 @Mapper
 public interface UserMapper {
-	int idCheck(String id) throws SQLException;
 	void joinUser(UserDto userDto) throws SQLException;	
 	void deleteUser(String id) throws SQLException;
 	void modifyUser(UserDto userDto) throws SQLException;
 	UserDto getUser(String id) throws SQLException;
+	int check(Map<String, String> map);
 }

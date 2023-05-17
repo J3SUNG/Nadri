@@ -37,7 +37,7 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
-	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
+	@ApiOperation(value = "게시판 글목록", notes = "필수 : type / 모든 게시글의 정보를 반환한다. ", response = List.class)
 	@GetMapping
 	public List<BoardDto> list(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) BoardParameterDto boardParameterDto) throws Exception {
 		logger.debug("list parameter boardType : {}", boardParameterDto);

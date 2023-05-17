@@ -36,12 +36,12 @@
 		set email = #{email}, nickname = #{nickname}
 		where id = #{id}
 	</update>
-
-	<select id="idCheck" parameterType="String" resultType="int">
+	
+	<select id="check" parameterType="map" resultType="int">
 		select
-		count(id)
+		count(*)
 		from user
-		where id = #{id}
+		where ${field} = #{val}
 	</select>
 
 </mapper>
