@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.AttractionLikeMapper">
+	<select id="get" parameterType="map" resultType="Integer">
+		select count(*)
+from like_attraction
+where attraction_no = #{attrNo} and user_no = #{userNo}
+	</select>
+	<insert id="create" parameterType="map">
+		insert into like_attraction
+		values(null,now(),#{attrNo},#{userNo})
+	</insert>
+	<delete id="delete" parameterType="map">
+		delete from like_attraction
+		where attraction_no = #{attrNo} and user_no = #{userNo}
+	</delete>
+</mapper>

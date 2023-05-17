@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.BoardLikeMapper">
+	<select id="get" parameterType="map" resultType="Integer">
+		select count(*)
+from board_like
+where board_no = #{boardNo} and user_no = #{userNo}
+	</select>
+	<insert id="create" parameterType="map">
+		insert into board_like
+		values(null,now(),#{userNo},#{boardNo})
+	</insert>
+	<delete id="delete" parameterType="map">
+		delete from board_like
+		where board_no = #{boardNo} and user_no = #{userNo}
+	</delete>
+</mapper>
