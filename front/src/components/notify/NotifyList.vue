@@ -2,7 +2,7 @@
   <div class="notify">
     <h1>공지사항</h1>
     <div class="notify__write">
-      <button class="notify__write-button">게시글 작성</button>
+      <button class="notify__write-button" @click="moveNotifyCreate">게시글 작성</button>
     </div>
     <!-- <div v-if="boards.length"> -->
     <table>
@@ -53,7 +53,11 @@ export default {
     //   this.boards = response.data;
     // });
   },
-  methods: {},
+  methods: {
+    moveNotifyCreate() {
+      this.$router.push({ name: "AppNotifyCreate" });
+    },
+  },
 };
 </script>
 

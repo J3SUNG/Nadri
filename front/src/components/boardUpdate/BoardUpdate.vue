@@ -36,7 +36,10 @@ export default {
   },
   methods: {
     updateBoard() {
-      http.put(`board`, JSON.stringify(this.board)).then((response) => console.log(response));
+      http.put(`board`, JSON.stringify(this.board)).then((response) => {
+        this.$router.push({ name: "AppBoard" });
+        console.log(response);
+      });
     },
   },
 };

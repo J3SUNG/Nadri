@@ -7,6 +7,9 @@ import AppBoard from "@/views/AppBoard.vue";
 import AppBoardDetail from "@/views/AppBoardDetail.vue";
 import AppBoardCreate from "@/views/AppBoardCreate.vue";
 import AppBoardUpdate from "@/views/AppBoardUpdate.vue";
+import AppNotifyDetail from "@/views/AppNotifyDetail.vue";
+import AppNotifyCreate from "@/views/AppNotifyCreate.vue";
+import AppNotifyUpdate from "@/views/AppNotifyUpdate.vue";
 import AppPlan from "@/views/AppPlan.vue";
 import AppNotify from "@/views/AppNotify.vue";
 import AppMap from "@/views/AppMap.vue";
@@ -47,19 +50,29 @@ const routes = [
     component: AppBoardDetail,
   },
   {
+    path: "/boardUpdate/:boardNo",
+    name: "AppBoardUpdate",
+    component: AppBoardUpdate,
+  },
+  {
     path: "/boardCreate",
     name: "AppBoardCreate",
     component: AppBoardCreate,
   },
   {
-    path: "/boardDetail",
-    name: "AppBoardDetail",
-    component: AppBoardDetail,
+    path: "/notifyDetail/:boardNo",
+    name: "AppNotifyDetail",
+    component: AppNotifyDetail,
   },
   {
-    path: "/boardUpdate/:boardNo",
-    name: "AppBoardUpdate",
-    component: AppBoardUpdate,
+    path: "/notifyUpdate/:boardNo",
+    name: "AppNotifyUpdate",
+    component: AppNotifyUpdate,
+  },
+  {
+    path: "/notifyCreate",
+    name: "AppNotifyCreate",
+    component: AppNotifyCreate,
   },
   {
     path: "/notify",
