@@ -6,6 +6,7 @@ import AppFindPwd from "@/views/AppFindPwd.vue";
 import AppBoard from "@/views/AppBoard.vue";
 import AppBoardDetail from "@/views/AppBoardDetail.vue";
 import AppBoardCreate from "@/views/AppBoardCreate.vue";
+import AppBoardUpdate from "@/views/AppBoardUpdate.vue";
 import AppPlan from "@/views/AppPlan.vue";
 import AppNotify from "@/views/AppNotify.vue";
 import AppMap from "@/views/AppMap.vue";
@@ -41,6 +42,11 @@ const routes = [
     component: AppBoard,
   },
   {
+    path: "/boardDetail/:boardNo",
+    name: "AppBoardDetail",
+    component: AppBoardDetail,
+  },
+  {
     path: "/boardCreate",
     name: "AppBoardCreate",
     component: AppBoardCreate,
@@ -49,6 +55,11 @@ const routes = [
     path: "/boardDetail",
     name: "AppBoardDetail",
     component: AppBoardDetail,
+  },
+  {
+    path: "/boardUpdate/:boardNo",
+    name: "AppBoardUpdate",
+    component: AppBoardUpdate,
   },
   {
     path: "/notify",

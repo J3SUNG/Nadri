@@ -2,8 +2,8 @@
   <div class="logo" @click="logoClick">
     <img class="logo__img" alt="page logo" :src="img" />
     <div class="logo__right">
-      <h3 class="logo__text">놀러</h3>
-      <h3 class="logo__text logo__text__flounder">가자미</h3>
+      <h3 class="logo__text">Ki</h3>
+      <h3 class="logo__text logo__text__flounder">Wi</h3>
     </div>
   </div>
 </template>

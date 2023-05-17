@@ -2,24 +2,46 @@
   <div class="board-create">
     <h2 class="board-create__title">게시글 작성</h2>
     <div class="board-create__box">
-      <input class="board-create__subject" placeholder="글 제목" />
-      <textarea class="board-create__content" placeholder="내용을 입력하세요."></textarea>
+      <input class="board-create__subject" placeholder="글 제목" v-model="subject" />
+      <textarea
+        class="board-create__content"
+        placeholder="내용을 입력하세요."
+        v-model="content"
+      ></textarea>
       <div class="board-create__footer">
         <img class="board-create__button board-create__button-img" src="@/assets/file.png" />
         <!-- 서버에 요청 보내기 -->
-        <router-link
-          class="board-create__button board-create__button-a"
-          :to="{ name: 'AppBoardList' }"
+        <router-link class="board-create__button board-create__button-a" :to="{ name: 'AppBoard' }"
           >게시하기</router-link
         >
       </div>
     </div>
+    <button @click="createBoard"></button>
   </div>
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "BoardCreate",
+  data() {
+    return {
+      boardType: 1,
+      content: "a",
+      subject: "a",
+      // userNo: "",
+    };
+  },
+  methods: {
+    createBoard() {
+      let item = {
+        boardType: this.boardType,
+        content: this.content,
+        subject: this.subject,
+      };
+      http.post(`board`, JSON.stringify(item)).then((response) => console.log(response));
+    },
+  },
 };
 </script>
 

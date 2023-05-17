@@ -1,5 +1,5 @@
 <template>
-  <div class="board__card">
+  <div class="board__card" @click="moveBoardDetail">
     <div class="board__card__header">
       <img class="board__writer_img" :src="img" />
       <div class="board__card__header__text">
@@ -25,6 +25,11 @@ export default {
     };
   },
   props: ["itemData"],
+  methods: {
+    moveBoardDetail() {
+      this.$router.push({ name: "AppBoardDetail", params: { boardNo: this.itemData.boardNo } });
+    },
+  },
 };
 </script>
 
