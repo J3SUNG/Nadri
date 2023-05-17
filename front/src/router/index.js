@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AppHome from "@/views/AppHome.vue";
 import AppLogin from "@/views/AppLogin.vue";
+import AppFindPwd from "@/views/AppFindPwd.vue";
 import AppBoard from "@/views/AppBoard.vue";
 import AppBoardDetail from "@/views/AppBoardDetail.vue";
 import AppBoardCreate from "@/views/AppBoardCreate.vue";
@@ -23,6 +24,11 @@ const routes = [
     path: "/login",
     name: "AppLogin",
     component: AppLogin,
+  },
+  {
+    path: "/findPwd",
+    name: "AppFindPwd",
+    component: AppFindPwd,
   },
   {
     path: "/plan",
