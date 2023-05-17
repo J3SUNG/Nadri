@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.trip.model.mapper.TripMapper">
+	<resultMap type="TripDto" id="trip">
+		<result column="trip_no" property="tripNo"/>
+		<result column="order" property="order"/>
+		<result column="memo" property="memo"/>
+		<result column="plan_no" property="planNo"/>
+		<result column="attraction_no" property="attractionNo"/>
+	</resultMap>
+	
+	<select id="get" parameterType="int" resultMap="trip">
+		select * 
+		from trip
+		where trip_no = #{tripNo}
+	</select>
+	
+	<select id="list" parameterType="int" resultMap="trip">
+		select * 
+		from trip
+		where plan_no = #{planNo}
+	</select>
+
+	<insert id="write" parameterType="TripDto">
+		insert into trip 
+		values(null,#{order},#{memo},#{planNo},#{attractionNo});
+	</insert>
+	
+	<update id="modify" parameterType="TripDto">
+		update trip
+		set order = #{order}, memo = #{memo}, plan_no = #{planNo}, attraction_no = #{attractionNo}
+		where trip_no = #{tripNo}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from trip
+		where trip_no = #{tripNo}
+	</delete>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.trip.model.mapper.PlanMapper">
+	<resultMap type="PlanDto" id="plan">
+		<result column="plan_no" property="planNo"/>
+		<result column="create_time" property="createTime"/>
+		<result column="title" property="title"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="read_count" property="readCount"/>
+		<result column="user_no" property="userNo"/>
+	</resultMap>
+	
+	<select id="get" parameterType="int" resultMap="plan">
+		select * 
+		from plan
+		where plan_no = #{planNo}
+	</select>
+	
+	<select id="list" resultMap="plan">
+		select * 
+		from plan
+	</select>
+	
+	<insert id="write" parameterType="PlanDto">
+		insert into plan 
+		values(null,now(),#{title},#{content},#{startDate},
+		#{endDate},#{readCount},#{userNo});
+	</insert>
+
+	<update id="modify" parameterType="PlanDto">
+		update plan
+		set title = #{title}, content = #{content}, start_date = #{startDate}, end_date = #{endDate}
+		where plan_no = #{planNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from plan
+		where plan_no = #{planNo}
+	</delete>
+</mapper>
