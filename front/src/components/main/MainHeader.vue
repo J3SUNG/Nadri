@@ -5,16 +5,16 @@
       <nav class="header__nav">
         <ul>
           <li class="header__nav__item">
-            <router-link :to="{ name: 'AppMap' }">놀러가자</router-link>
+            <router-link :to="{ name: 'AppMap' }">여행지정보</router-link>
           </li>
           <li class="header__nav__item">
-            <router-link :to="{ name: 'AppPlan' }">계획세우기</router-link>
+            <router-link :to="{ name: 'AppPlan' }">여행노트</router-link>
+          </li>
+          <li class="header__nav__item">
+            <router-link :to="{ name: 'AppBoard' }">커뮤니티</router-link>
           </li>
           <li class="header__nav__item">
             <router-link :to="{ name: 'AppNotify' }">공지사항</router-link>
-          </li>
-          <li class="header__nav__item">
-            <router-link :to="{ name: 'AppBoard' }">게시판</router-link>
           </li>
         </ul>
       </nav>
@@ -44,12 +44,12 @@ export default {
 <style>
 .header {
   width: 100%;
-  height: 100px;
+  height: 80px;
   position: fixed;
   display: flex;
   justify-content: center;
-  box-shadow: 0px 0px 5px var(--color6-darkgray);
-  background-color: var(--color5-white);
+  box-shadow: 0px 0px 5px var(--color-darkgray);
+  background-color: var(--color-white);
 }
 .header__box {
   width: 1140px;
@@ -62,8 +62,26 @@ export default {
   padding: 30px;
 }
 .header__nav__item {
-  font-size: 18px;
+  font-size: 22px;
   margin: 0px 20px;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+}
+.header__nav__item a::after {
+  content: "";
+  position: absolute;
+  bottom: -23px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: var(--color-main);
+  transition: all 350ms;
+}
+.header__nav__item a:hover::after {
+  left: 0;
+  width: 100%;
+  height: 8px;
 }
 .header__login__item {
   display: flex;
@@ -72,7 +90,7 @@ export default {
 }
 .header__login__item > a {
   position: relative;
-  font-size: 18px;
+  font-size: px;
   width: 100%;
   padding: 15px 0px;
 }
@@ -80,21 +98,21 @@ export default {
   width: 80px;
   height: 40px;
   border-radius: 10px;
-  border: 3px solid var(--color1-blue);
-  background-color: var(--color1-blue);
+  border: 3px solid var(--color-main);
+  background-color: var(--color-main);
 }
 .header__login__item-signup {
   width: 80px;
   height: 40px;
-  border: 3px solid var(--color1-blue);
+  border: 3px solid var(--color-main);
   border-radius: 10px;
-  background-color: var(--color5-white);
+  background-color: var(--color-white);
   margin-left: 10px;
 }
 .header__login__item-login > a {
-  color: var(--color5-white);
+  color: var(--color-white);
 }
 .header__login__item-signup > a {
-  color: var(--color1-blue);
+  color: var(--color-main);
 }
 </style>

@@ -28,7 +28,6 @@ export default {
   created() {
     http.get(`board?type=${this.type}`).then((response) => {
       this.boards = response.data;
-      console.log(this.boards);
     });
   },
   methods: {

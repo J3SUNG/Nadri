@@ -33,9 +33,9 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: var(--color5-white);
+  background-color: var(--color-white);
   border-radius: 20px;
-  box-shadow: 0px 0px 5px var(--color6-darkgray);
+  box-shadow: 0px 0px 5px var(--color-darkgray);
   font-weight: bold;
 }
 .error__code {

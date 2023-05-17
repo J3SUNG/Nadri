@@ -1,9 +1,9 @@
 <template>
   <div class="logo" @click="logoClick">
-    <img class="logo__img" alt="page logo" :src="img" />
+    <!-- <img class="logo__img" alt="page logo" :src="img" /> -->
+    <img class="logo__img" alt="page logo" src="@/assets/parasol.png" />
     <div class="logo__right">
-      <h3 class="logo__text">Ki</h3>
-      <h3 class="logo__text logo__text__flounder">Wi</h3>
+      <h3 class="logo__text">나들이</h3>
     </div>
   </div>
 </template>
@@ -58,20 +58,21 @@ export default {
   height: 50px;
   animation: slippery 1s linear 0s infinite alternate;
 }
-@keyframes slippery {
+/* @keyframes slippery {
   0% {
     opacity: 0.6;
   }
   100% {
     opacity: 1;
   }
-}
+} */
 .logo__right {
   margin-left: 10px;
 }
 .logo__text {
   display: inline-block;
-  font-size: 20px;
   font-weight: bold;
+  font-family: "Gamja Flower";
+  font-size: 40px;
 }
 </style>

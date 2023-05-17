@@ -198,8 +198,8 @@ export default {
   border-radius: 20px;
   padding: 30px;
   width: 500px;
-  background-color: var(--color5-white);
-  box-shadow: 0px 0px 5px var(--color6-darkgray);
+  background-color: var(--color-white);
+  box-shadow: 0px 0px 5px var(--color-darkgray);
 }
 .signup__logo {
   margin-bottom: 20px;
@@ -237,7 +237,7 @@ export default {
 }
 .signup__hr {
   margin: 15px 10px;
-  color: var(--color6-darkgray);
+  color: var(--color-darkgray);
 }
 .signup__input:invalid {
   border-color: red;

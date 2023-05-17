@@ -37,14 +37,14 @@ export default {
 .board__card {
   width: 280px;
   height: 160px;
-  border: 1px solid var(--color8-black);
-  box-shadow: 0px 0px 5px var(--color6-darkgray);
+  border: 1px solid var(--color-black);
+  box-shadow: 0px 0px 5px var(--color-darkgray);
   margin-left: 50px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  background-color: var(--color5-white);
+  background-color: var(--color-white);
   transition: all 0.1s linear;
   font-size: 12px;
   text-align: left;
