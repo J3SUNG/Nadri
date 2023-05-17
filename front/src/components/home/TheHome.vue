@@ -1,5 +1,10 @@
 <template>
-  <div>Home</div>
+  <div class="home">
+    <div class="popular-place"></div>
+    <div class="thema"></div>
+    <div class="popular-board"></div>
+
+  </div>
 </template>
 
 <script>

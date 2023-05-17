@@ -229,11 +229,13 @@ export default {
   width: 120px;
 }
 .signup__login-btn {
+  color: var(--color-main);
   width: 10px;
 }
 .signup__login-text {
   display: inline-block;
   margin-right: 8px;
+  font-weight: bold;
 }
 .signup__hr {
   margin: 15px 10px;

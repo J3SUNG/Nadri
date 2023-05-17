@@ -68,6 +68,9 @@ export default {
   display: inline-block;
   position: relative;
 }
+.header__nav__item a:hover {
+  color: var(--color-main);
+}
 .header__nav__item a::after {
   content: "";
   position: absolute;
@@ -81,7 +84,7 @@ export default {
 .header__nav__item a:hover::after {
   left: 0;
   width: 100%;
-  height: 8px;
+  height: 5px;
 }
 .header__login__item {
   display: flex;
@@ -93,6 +96,7 @@ export default {
   font-size: px;
   width: 100%;
   padding: 15px 0px;
+  opacity: 1;
 }
 .header__login__item-login {
   width: 80px;

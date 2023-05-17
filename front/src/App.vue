@@ -88,10 +88,11 @@ li {
 a {
   text-decoration: none;
   font-weight: bold;
-  color: black;
+  color: var(--color-black);
+  opacity: 0.8;
 }
 a:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 button {
   background-color: var(--color-main);
