@@ -12,6 +12,10 @@ https://www.flaticon.com/free-icon/airplane_10307950?term=travel&related_id=1030
 네이버 - https://www.naver.com/
 당근마켓 - https://www.daangn.com/kr/car/
 여기어때 - https://www.goodchoice.kr/
+하트독 - http://hatdog.co.kr/pc_hatdog/
+대한민국 구석구석 - https://korean.visitkorea.or.kr/main/main.do
+스투비 셀프백 - http://www.stubbyplanner.com/
+여행이지 - https://www.kyowontour.com/
 
 # 참고한 사이트2
 
