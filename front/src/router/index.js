@@ -55,7 +55,7 @@ const routes = [
     component: AppBoardUpdate,
   },
   {
-    path: "/boardCreate",
+    path: "/boardCreate/:boardType",
     name: "AppBoardCreate",
     component: AppBoardCreate,
   },

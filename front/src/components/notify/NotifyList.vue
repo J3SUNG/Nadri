@@ -21,12 +21,12 @@
         </tr>
       </thead>
       <tbody>
-        <notify-list-item></notify-list-item>
-        <!-- <notify-list-item
-            v-for="board in boards"
-            :key="board.boardNo"
-            :board="board"
-          ></notify-list-item> -->
+        <!-- <notify-list-item></notify-list-item> -->
+        <notify-list-item
+          v-for="board in boards"
+          :key="board.boardNo"
+          :board="board"
+        ></notify-list-item>
       </tbody>
     </table>
     <!-- <div v-else>게시글이 없습니다.</div> -->
@@ -34,28 +34,28 @@
 </template>
 
 <script>
-// import http from "@/util/http-common";
+import http from "@/util/http-common";
 import NotifyListItem from "@/components/notify/NotifyListItem.vue";
 
 export default {
-  name: "BoardList",
+  name: "NotifyList",
   components: {
     NotifyListItem,
   },
   data() {
     return {
       boards: [],
-      type: "1",
+      type: "0",
     };
   },
   created() {
-    // http.get(`board?type=${this.type}`).then((response) => {
-    //   this.boards = response.data;
-    // });
+    http.get(`board?type=${this.type}`).then((response) => {
+      this.boards = response.data;
+    });
   },
   methods: {
     moveNotifyCreate() {
-      this.$router.push({ name: "AppNotifyCreate" });
+      this.$router.push({ name: "AppNotifyCreate", params: { boardType: this.type } });
     },
   },
 };

@@ -26,10 +26,9 @@ export default {
   name: "BoardCreate",
   data() {
     return {
-      boardType: 1,
-      content: "a",
-      subject: "a",
-      // userNo: "",
+      boardType: this.$route.params.boardType,
+      content: "",
+      subject: "",
     };
   },
   methods: {
@@ -39,7 +38,13 @@ export default {
         content: this.content,
         subject: this.subject,
       };
-      http.post(`board`, JSON.stringify(item)).then((response) => console.log(response));
+      http.post(`board`, JSON.stringify(item)).then(() => {
+        if (this.boardType === 1) {
+          this.$router.push({ name: "AppBoard" });
+        } else {
+          this.$router.push({ name: "AppNotify" });
+        }
+      });
     },
   },
 };

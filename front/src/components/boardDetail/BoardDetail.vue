@@ -33,9 +33,12 @@ export default {
     },
     deleteBoard() {
       console.log(this.board.boardNo);
-      http.delete(`board/${this.board.boardNo}`).then((response) => {
-        console.log(response);
-        this.$router.push({ name: "AppBoard" });
+      http.delete(`board/${this.board.boardNo}`).then(() => {
+        if (this.board.boardType === 1) {
+          this.$router.push({ name: "AppBoard" });
+        } else {
+          this.$router.push({ name: "AppNotify" });
+        }
       });
     },
   },

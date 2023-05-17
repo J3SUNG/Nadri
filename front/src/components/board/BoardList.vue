@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     moveBoardCreate() {
-      this.$router.push({ name: "AppBoardCreate" });
+      this.$router.push({ name: "AppBoardCreate", params: { boardType: this.type } });
     },
   },
 };

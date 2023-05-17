@@ -1,9 +1,9 @@
 <template>
-  <tr>
+  <tr class="notify__item" @click="moveNotifyDetail">
     <!-- <td>{{ board.boardNo }}</td> -->
     <!-- <td>{{ board.boardType }}</td> -->
     <td>{{ board.subject }}</td>
-    <td>{{ board.userName }}</td>
+    <td>{{ board.nickname }}</td>
     <td>{{ board.createTime }}</td>
     <td>{{ board.likeCount }}</td>
     <!-- <td>{{ board.content }}</td> -->
@@ -15,23 +15,18 @@
 export default {
   name: "NotifyListItem",
   props: {
-    // board: Object,
+    board: Object,
   },
-  data() {
-    return {
-      board: {
-        boardNo: 1,
-        boardType: 1,
-        createTime: "2023-05-16 00:37",
-        subject: "Hello",
-        content: "Hi",
-        likeCount: "11",
-        userNo: 12,
-        userName: "jetty",
-      },
-    };
+  methods: {
+    moveNotifyDetail() {
+      this.$router.push({ name: "AppNotifyDetail", params: { boardNo: this.board.boardNo } });
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.notify__item {
+  cursor: pointer;
+}
+</style>
