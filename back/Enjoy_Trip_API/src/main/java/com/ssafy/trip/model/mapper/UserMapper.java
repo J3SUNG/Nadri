@@ -14,4 +14,5 @@ public interface UserMapper {
 	void modifyUser(UserDto userDto) throws SQLException;
 	UserDto getUser(String id) throws SQLException;
 	int check(Map<String, String> map);
+	int authEmail(Map<String, String> map);
 }

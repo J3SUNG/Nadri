@@ -43,4 +43,10 @@ public class UserServiceImpl implements UserService {
 	public int check(Map<String, String> map) throws Exception {
 		return userMapper.check(map);
 	}
+
+	@Override
+	public boolean authEmail(Map<String, String> map) {
+		int count = userMapper.authEmail(map);
+		return count==1?true:false;
+	}
 }

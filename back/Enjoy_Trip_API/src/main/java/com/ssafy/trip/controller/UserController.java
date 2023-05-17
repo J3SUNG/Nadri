@@ -90,7 +90,6 @@ public class UserController {
 	}
 
 	@GetMapping("/check")
-	@ResponseBody
 	public String dupulicateCheck(@RequestParam("field") String field, @RequestParam("val") String val) throws Exception {
 		/**
 		 * col에 해당하는 항목의 val에 대해서 일치하는 데이터의 개수를 반환한다.
@@ -101,5 +100,28 @@ public class UserController {
 		map.put("val",val);
 		int cnt = userService.check(map);
 		return cnt + "";
+	}
+	
+	@GetMapping("/authEmail")
+	public String authEmail(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception{
+		if(email==null|id==null) {
+			return "fail";
+		}
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("email",email);
+		map.put("id",id);
+		if(userService.authEmail(map)) {
+			//일치하는 회원 확인됨.
+			
+			//인증번호 생성 : 랜덤한 4자리 숫자 생성, 세션?? 에 유효시간 3분으로 저장
+			//메일 전송
+			//사용자 입력 대기... 입력 들어옴
+			//현재 유지하고 있는 인증번호와 동일한지 확인
+			  //동일하면 성공
+			  //아니면 실패 반환
+		} else {
+			return "fail";
+		}
+		return "success";
 	}
 }

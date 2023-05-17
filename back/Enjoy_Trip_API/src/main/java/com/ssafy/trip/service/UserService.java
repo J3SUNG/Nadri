@@ -11,4 +11,5 @@ public interface UserService {
 	void modifyUser(UserDto userDto) throws Exception;
 	UserDto getUser(String id) throws Exception;
 	int check(Map<String, String> map) throws Exception;
+	boolean authEmail(Map<String, String> map);
 }

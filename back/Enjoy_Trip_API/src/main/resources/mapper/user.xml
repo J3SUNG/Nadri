@@ -43,5 +43,12 @@
 		from user
 		where ${field} = #{val}
 	</select>
+	
+	<select id="authEmail" parameterType="map" resultType="int">
+		select
+		count(*)
+		from user
+		where email = #{email} and id = #{id} 
+	</select>
 
 </mapper>
