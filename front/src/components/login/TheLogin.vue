@@ -11,7 +11,7 @@
         class="login__input login__input-pw"
         placeholder="Password"
       />
-      <button @click.prevent="clickLogin" class="login__btn login__login-btn">로그인</button>
+      <button @click.prevent="confirm" class="login__btn login__login-btn">로그인</button>
       <router-link class="login__find-pw" :to="{ name: 'AppFindPwd' }"
         >비밀번호를 잊으셨나요?</router-link
       >
@@ -23,7 +23,10 @@
 
 <script>
 import TheLogo from "../logo/TheLogo.vue";
-import http from "@/util/http-common";
+// import http from "@/util/http-common";
+import { mapState, mapActions } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "TheLogin",
@@ -34,21 +37,37 @@ export default {
       password: "",
     };
   },
+  computed: {
+    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
   methods: {
-    clickLogin() {
-      let userData = {
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      let user = {
         id: this.id,
-        pw: this.password,
+        password: this.password,
       };
-      http.post(`login`, JSON.stringify(userData)).then((response) => {
-        console.log(response);
-        if (response.data === "success") {
-          this.$router.push({ name: "AppHome" });
-        } else {
-          alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-        }
-      });
+      await this.userConfirm(user);
+      let token = sessionStorage.getItem("access-token");
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+      }
+      this.$router.push({ name: "AppHome" });
     },
+    // clickLogin() {
+    //   let userData = {
+    //     id: this.id,
+    //     pw: this.password,
+    //   };
+    //   http.post(`login`, JSON.stringify(userData)).then((response) => {
+    //     if (response.data === "success") {
+
+    //       this.$router.push({ name: "AppHome" });
+    //     } else {
+    //       alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+    //     }
+    //   });
+    // },
     moveSignup() {
       this.$router.push({ name: "AppSignup" });
     },
