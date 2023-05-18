@@ -130,10 +130,10 @@ export default {
 }
 @keyframes scaling {
   from {
-    transform: scale(1.3);
+    transform: scale(1);
   }
   to {
-    transform: scale(1);
+    transform: scale(1.3);
   }
 }
 .card__footer__text {

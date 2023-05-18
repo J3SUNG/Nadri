@@ -20,11 +20,22 @@
     <div class="board-deatil__function">
       <button @click="moveBoardList">목록</button>
       <div class="board-deatil__function-heart">
-        <TheHeart :heartCnt="this.board.likeCount" />
+        <img class="board-deatil__function-heart-img" @click="heartClick" :src="heart" />
+        <p class="board-deatil__function-heart-text">{{ this.board.likeCount }}</p>
       </div>
       <div class="board-detail__function-admin">
         <button @click="moveBoardUpdate">수정</button>
         <button @click="deleteBoard">삭제</button>
+      </div>
+    </div>
+    <hr class="board-detail__hr" />
+    <div class="board-deatil__comment">
+      <p class="board-deatil__comment-text">댓글</p>
+      <p class="board-deatil__comment-cnt">{{ commentCnt }}</p>
+      <div class="board-deatil__comment-box">
+        <input class="board-deatil__comment-input" /><button class="board-deatil__comment-button">
+          등록
+        </button>
       </div>
     </div>
   </div>
@@ -32,17 +43,17 @@
 
 <script>
 import http from "@/util/http-common";
-import TheHeart from "@/components/heart/TheHeart.vue";
 export default {
   name: "BoardDetail",
   data() {
     return {
       userImg: require("@/assets/jetty.jpg"),
       imgArr: [require("@/assets/dummy1.jpg"), require("@/assets/dummy2.jpg")],
-      heart: [require("@/assets/heartOn.png"), require("@/assets/heartOff.png")],
+      heart: require("@/assets/heartOff.png"),
       heartChk: false,
       title: "",
       board: "",
+      commentCnt: 0,
     };
   },
   created() {
@@ -73,8 +84,17 @@ export default {
         }
       });
     },
+    heartClick() {
+      this.heartChk = !this.heartChk;
+      if (!this.heartChk) {
+        --this.heartCnt;
+        this.heart = require("@/assets/heartOff.png");
+      } else {
+        ++this.heartCnt;
+        this.heart = require("@/assets/heartOn.png");
+      }
+    },
   },
-  components: { TheHeart },
 };
 </script>
 
@@ -119,6 +139,8 @@ export default {
   margin: 10px 0;
 }
 .board-deatil__main {
+  margin-left: 5%;
+  width: 90%;
   text-align: left;
 }
 .board-deatil__main-title {
@@ -134,7 +156,76 @@ export default {
   font-weight: bold;
 }
 .board-deatil__function {
+  margin: 30px 0px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+}
+.board-deatil__function button {
+  height: 40px;
+  padding: 0px 20px;
+  border-radius: 20px;
+  background: var(--color-white);
+  color: var(--color-black);
+  border: solid 3px var(--color-darkgray);
+}
+.board-deatil__function-heart {
+  display: flex;
+  align-items: center;
+}
+.board-deatil__function-heart-img {
+  margin-left: 40px;
+  width: 36px;
+  height: 36px;
+}
+.board-deatil__function-heart-text {
+  margin-left: 16px;
+  font-size: 28px;
+  font-weight: bold;
+}
+.board-deatil__function-heart-img:hover {
+  animation: scaling 1s ease-in-out infinite;
+}
+@keyframes scaling {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.3);
+  }
+}
+.board-deatil__comment {
+  margin-top: 40px;
+  text-align: left;
+}
+.board-deatil__comment-box {
+  padding: 15px;
+  width: 100%;
+  height: 135px;
+  text-align: right;
+  background-color: rgb(237, 237, 237);
+}
+.board-deatil__comment-text {
+  margin-left: 10px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+.board-deatil__comment-cnt {
+  margin-left: 10px;
+  display: inline-block;
+  color: var(--color-main);
+}
+.board-deatil__comment-input {
+  height: 100px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+.board-deatil__comment-button {
+  font-size: 16px;
+  width: 55px;
+  height: 30px;
+  padding: 0px;
+  margin: 10px 0px 0px 0px;
 }
 </style>

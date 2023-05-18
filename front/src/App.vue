@@ -43,6 +43,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-weight: bold;
   color: var(--color-darkgray);
 }
 table {
