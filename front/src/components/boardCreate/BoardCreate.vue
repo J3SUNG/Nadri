@@ -106,7 +106,7 @@ textarea:focus {
   padding: 0 2%;
   height: 60px;
   border: 0px solid var(--color-lightgray);
-  background__color: var(--color-white);
+  background-color: var(--color-white);
 }
 .board__create__button {
   width: 40px;

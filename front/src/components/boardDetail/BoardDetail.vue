@@ -37,13 +37,18 @@
           등록
         </button>
       </div>
+      <the-comment />
+      <the-comment />
+      <the-comment />
     </div>
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
+import TheComment from "../comment/TheComment.vue";
 export default {
+  components: { TheComment },
   name: "BoardDetail",
   data() {
     return {
@@ -53,14 +58,14 @@ export default {
       heartChk: false,
       title: "",
       board: "",
-      commentCnt: 0,
+      commentCnt: 3,
     };
   },
   created() {
     http.get(`board/${this.$route.params.boardNo}`).then((response) => {
       this.board = response.data;
       console.log(this.board);
-      if (this.boardType === 0) {
+      if (this.board.boardType === 1) {
         this.title = "커뮤니티";
       } else {
         this.title = "공지사항";
@@ -182,6 +187,7 @@ export default {
   margin-left: 16px;
   font-size: 28px;
   font-weight: bold;
+  color: var(--color-main);
 }
 .board-deatil__function-heart-img:hover {
   animation: scaling 1s ease-in-out infinite;
@@ -200,10 +206,10 @@ export default {
 }
 .board-deatil__comment-box {
   padding: 15px;
-  width: 100%;
+  width: calc(100%-30px);
   height: 135px;
   text-align: right;
-  background-color: rgb(237, 237, 237);
+  background-color: var(--color-lightwhite);
 }
 .board-deatil__comment-text {
   margin-left: 10px;

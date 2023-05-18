@@ -35,6 +35,7 @@ export default {
   --color-darkgray: #444;
   --color-lightgray: lightgray;
   --color-black: black;
+  --color-lightwhite: #ededed;
 }
 body {
   overflow-x: hidden;
