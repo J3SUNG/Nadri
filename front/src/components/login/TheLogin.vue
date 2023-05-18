@@ -5,19 +5,25 @@
         <TheLogo />
       </div>
       <input v-model="id" class="login__input login__input-id" placeholder="ID" />
-      <input v-model="password" class="login__input login__input-pw" placeholder="Password" />
-      <button class="login__btn login__login-btn">로그인</button>
+      <input
+        type="password"
+        v-model="password"
+        class="login__input login__input-pw"
+        placeholder="Password"
+      />
+      <button @click.prevent="clickLogin" class="login__btn login__login-btn">로그인</button>
       <router-link class="login__find-pw" :to="{ name: 'AppFindPwd' }"
         >비밀번호를 잊으셨나요?</router-link
       >
       <hr class="login__hr" />
-      <button class="login__btn login__signup-btn">회원가입</button>
+      <button @click.prevent="moveSignup" class="login__btn login__signup-btn">회원가입</button>
     </form>
   </div>
 </template>
 
 <script>
 import TheLogo from "../logo/TheLogo.vue";
+import http from "@/util/http-common";
 
 export default {
   name: "TheLogin",
@@ -27,6 +33,25 @@ export default {
       id: "",
       password: "",
     };
+  },
+  methods: {
+    clickLogin() {
+      let userData = {
+        id: this.id,
+        password: this.password,
+      };
+      http.post(`login`, JSON.stringify(userData)).then((response) => {
+        console.log(response);
+        if (response.data === "success") {
+          this.$router.push({ name: "AppHome" });
+        } else {
+          alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+        }
+      });
+    },
+    moveSignup() {
+      this.$router.push({ name: "AppSignup" });
+    },
   },
 };
 </script>

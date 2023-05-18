@@ -74,7 +74,7 @@ export default {
 .header__nav__item a::after {
   content: "";
   position: absolute;
-  bottom: -23px;
+  bottom: -24px;
   left: 50%;
   width: 0;
   height: 0;

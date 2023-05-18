@@ -6,14 +6,15 @@
       </div>
       <label class="signup__label signup__label-id">아이디</label>
       <input
-        v-model="id"
+        v-model="userData.id"
         type="text"
         class="signup__input signup__input-id"
         placeholder="ID"
         pattern="^([a-z0-9_]){6,16}$"
         title="형식: 6~16글자, 영어와 숫자를 포함한 아이디를 입력하세요."
-        @input="CheckValidate"
+        @input="checkValidate"
         required="required"
+        maxlength="16"
       />
       <p
         :class="{
@@ -28,14 +29,15 @@
 
       <label class="signup__label signup__label-pw">비밀번호</label>
       <input
-        v-model="password"
+        v-model="userData.password"
         type="password"
         class="signup__input signup__input-pw"
         placeholder="Password"
         pattern="^[A-Za-z\d$@$!%*#?&]{6,16}$"
         title="형식: 6~16글자, 영어, 숫자, 특수문자를 사용하실 수 있습니다. 영어와 숫자를 포함한 비밀번호를 입력하세요."
-        @input="CheckValidate"
+        @input="checkValidate"
         required="required"
+        maxlength="16"
       />
       <p
         :class="{
@@ -55,8 +57,10 @@
         class="signup__input signup__input-pw-confirm"
         placeholder="Password Confirm"
         pattern="^[A-Za-z\d$@$!%*#?&]{6,16}$"
-        @input="CheckValidate"
+        @input="checkValidate"
         required="required"
+        maxlength="16"
+        ref="pwdConfirm"
       /><br />
       <p
         :class="{
@@ -71,13 +75,14 @@
 
       <label class="signup__label signup__label-email">이메일</label>
       <input
-        v-model="email"
+        v-model="userData.email"
         type="email"
         class="signup__input signup__input-email"
         placeholder="Email"
         pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}"
-        @input="CheckValidate"
+        @input="checkValidate"
         required="required"
+        maxlength="30"
       />
       <p
         :class="{
@@ -92,13 +97,14 @@
 
       <label class="signup__label signup__label-nickname">닉네임</label>
       <input
-        v-model="nickname"
+        v-model="userData.nickname"
         type="text"
         class="signup__input signup__input-nickname"
         placeholder="Nickname"
         pattern="^([a-z0-9_]){2,16}$"
-        @input="CheckValidate"
+        @input="checkValidate"
         required="required"
+        maxlength="16"
       />
       <p
         :class="{
@@ -116,7 +122,7 @@
           signup__btn: true,
           'signup__signup-btn': true,
         }"
-        @click="signupClick"
+        @click.prevent="moveHome"
       >
         회원가입
       </button>
@@ -129,25 +135,48 @@
 
 <script>
 import TheLogo from "../logo/TheLogo.vue";
+import http from "@/util/http-common";
 
 export default {
   name: "TheSignup",
   components: { TheLogo },
   data() {
     return {
-      id: "",
-      password: "",
+      userData: {
+        id: "",
+        password: "",
+        email: "",
+        nickname: "",
+      },
       passwordConfirm: "",
-      email: "",
-      nickname: "",
       attrChk: [false, false, false, false, false],
       attrText: ["ㅤ", "ㅤ", "ㅤ", "ㅤ", "ㅤ"],
       attr: ["아이디", "비밀번호", "비밀번호", "이메일", "닉네임"],
       activeButton: false,
+      duplicateId: false,
     };
   },
   methods: {
-    CheckValidate: function (event) {
+    moveHome() {
+      if (
+        this.attrChk[0] &&
+        this.attrChk[1] &&
+        this.attrChk[2] &&
+        this.attrChk[3] &&
+        this.attrChk[4]
+      ) {
+        http.post(`user`, JSON.stringify(this.userData)).then((response) => {
+          console.log(response);
+          if (response.data === "success") {
+            alert(`환영합니다. ${this.userData.nickname}님.`);
+            this.$router.push({ name: "AppHome" });
+          } else {
+            alert("회원가입에 실패하였습니다. 다시 시도 해주세요.");
+          }
+        });
+      }
+    },
+    checkValidate(event) {
       let index = 0;
       if (event.target.classList[1] === "signup__input-id") {
         index = 0;
@@ -160,7 +189,6 @@ export default {
       } else if (event.target.classList[1] === "signup__input-nickname") {
         index = 4;
       }
-
       if (
         event.currentTarget.validity.patternMismatch ||
         event.currentTarget.validity.valueMissing
@@ -168,17 +196,76 @@ export default {
         this.attrText[index] = `사용할 수 없는 ${this.attr[index]} 입니다.`;
         this.attrChk[index] = false;
       } else {
-        this.attrText[index] = `사용가능한 ${this.attr[index]} 입니다.`;
+        this.attrText[index] = `ㅤ`;
         this.attrChk[index] = true;
       }
 
-      if (this.attrChk[0] & this.attrChk[1] & this.attrChk[2] & this.attrChk[3] & this.attrChk[4]) {
+      if (index === 0 && this.attrChk[0]) {
+        http.get(`user/check?field=id&val=${this.userData.id}`).then((response) => {
+          if (response.data !== "success") {
+            event.target.setCustomValidity("중복 된 아이디입니다.");
+            this.attrText[0] = `중복 된 아이디입니다.`;
+            this.attrChk[0] = false;
+            this.toggleButton();
+            this.$forceUpdate();
+          } else {
+            event.target.setCustomValidity("");
+          }
+        });
+      } else if ((index === 1 || index === 2) && (this.attrChk[1] || this.attrChk[2])) {
+        if (this.userData.password === this.passwordConfirm) {
+          this.$refs.pwdConfirm.setCustomValidity("");
+          this.attrChk[1] = true;
+          this.attrChk[2] = true;
+          this.attrText[2] = `ㅤ`;
+        } else {
+          this.$refs.pwdConfirm.setCustomValidity("비밀번호가 일치하지 않습니다.");
+          this.attrText[2] = `비밀번호가 일치하지 않습니다.`;
+          this.attrChk[2] = false;
+          this.toggleButton();
+        }
+      } else if (index === 3 && this.attrChk[3]) {
+        http.get(`user/check?field=email&val=${this.userData.email}`).then((response) => {
+          if (response.data !== "success") {
+            event.target.setCustomValidity("중복 된 이메일입니다.");
+            this.attrText[3] = `중복 된 이메일입니다.`;
+            this.attrChk[3] = false;
+            this.toggleButton();
+            this.$forceUpdate();
+          } else {
+            event.target.setCustomValidity("");
+          }
+        });
+      } else if (index === 4 && this.attrChk[4]) {
+        http.get(`user/check?field=nickname&val=${this.userData.nickname}`).then((response) => {
+          if (response.data !== "success") {
+            event.target.setCustomValidity("중복 된 닉네임입니다.");
+            this.attrText[4] = `중복 된 닉네임입니다.`;
+            this.attrChk[4] = false;
+            this.toggleButton();
+            this.$forceUpdate();
+          } else {
+            event.target.setCustomValidity("");
+          }
+        });
+      }
+      this.toggleButton();
+    },
+    toggleButton() {
+      console.log("AA");
+      if (
+        this.attrChk[0] &&
+        this.attrChk[1] &&
+        this.attrChk[2] &&
+        this.attrChk[3] &&
+        this.attrChk[4]
+      ) {
         this.activeButton = false;
       } else {
         this.activeButton = true;
       }
     },
-    signupClick: function (event) {
+    signupClick(event) {
       event.preventDefault();
     },
   },
