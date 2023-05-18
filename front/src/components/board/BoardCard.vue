@@ -12,9 +12,9 @@
         <p class="card__footer__writer-nickname">{{ nickname }}</p>
       </div>
       <div class="card__footer__right">
-        <img class="card__footer__icon" src="@/assets/comment.png" />
+        <img class="card__footer__icon card__footer__icon-comment" src="@/assets/comment.png" />
         <p class="card__footer__text">{{ commentCnt }}</p>
-        <img class="card__footer__icon" :src="heart" />
+        <img class="card__footer__icon card__footer__icon-heart" @click="heartClick" :src="heart" />
         <p class="card__footer__text">{{ heartCnt }}</p>
       </div>
     </div>
@@ -36,15 +36,28 @@ export default {
       ],
       nickname: "제티",
       num: Math.ceil(Math.random() * 6 - 1),
-      heart: require("@/assets/heartOff.png"),
       commentCnt: Math.ceil(Math.random() * 20),
+      heart: require("@/assets/heartOff.png"),
       heartCnt: Math.ceil(Math.random() * 40),
+      heartChk: false,
     };
   },
   props: ["itemData"],
   methods: {
-    moveBoardDetail() {
-      this.$router.push({ name: "AppBoardDetail", params: { boardNo: this.itemData.boardNo } });
+    moveBoardDetail(event) {
+      if (!(event.target.classList[1] === "card__footer__icon-heart")) {
+        this.$router.push({ name: "AppBoardDetail", params: { boardNo: this.itemData.boardNo } });
+      }
+    },
+    heartClick() {
+      this.heartChk = !this.heartChk;
+      if (!this.heartChk) {
+        --this.heartCnt;
+        this.heart = require("@/assets/heartOff.png");
+      } else {
+        ++this.heartCnt;
+        this.heart = require("@/assets/heartOn.png");
+      }
     },
   },
 };
@@ -111,6 +124,17 @@ export default {
   margin-left: 5px;
   width: 18px;
   height: 18px;
+}
+.card__footer__icon-heart:hover {
+  animation: scaling 1s ease-in-out infinite;
+}
+@keyframes scaling {
+  from {
+    transform: scale(1.3);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 .card__footer__text {
   margin-left: 10px;

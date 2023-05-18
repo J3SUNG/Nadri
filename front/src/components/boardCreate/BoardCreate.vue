@@ -1,22 +1,22 @@
 <template>
-  <div class="board-create">
-    <h2 class="board-create__title">게시글 작성</h2>
-    <div class="board-create__box">
-      <input class="board-create__subject" placeholder="글 제목" v-model="subject" />
+  <div class="board__create">
+    <!-- <h2 class="board__create__title">게시글 작성</h2> -->
+    <div class="board__create__box">
+      <input class="board__create__subject" placeholder="제목을 입력하세요" v-model="subject" />
+      <hr class="board__create__hr" />
       <textarea
-        class="board-create__content"
-        placeholder="내용을 입력하세요."
+        class="board__create__content"
+        placeholder="내용을 입력하세요"
         v-model="content"
       ></textarea>
-      <div class="board-create__footer">
-        <img class="board-create__button board-create__button-img" src="@/assets/file.png" />
+      <div class="board__create__footer">
+        <img class="board__create__button board__create__button-img" src="@/assets/file.png" />
         <!-- 서버에 요청 보내기 -->
-        <router-link class="board-create__button board-create__button-a" :to="{ name: 'AppBoard' }"
-          >게시하기</router-link
-        >
+        <div class="board__create__button board__create__button-a" @click="createBoard">
+          <router-link :to="{ name: 'AppBoard' }">게시하기</router-link>
+        </div>
       </div>
     </div>
-    <button @click="createBoard"></button>
   </div>
 </template>
 
@@ -51,62 +51,69 @@ export default {
 </script>
 
 <style>
-.board-create {
+.board__create {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
-.board-create input:focus,
+.board__create input:focus,
 textarea:focus {
   outline: none;
 }
-.board-create__title {
+.board__create__title {
   margin-bottom: 20px;
 }
-.board-create__box {
+.board__create__hr {
+  color: lightgray;
+  width: 100%;
+  opacity: 0.4;
+}
+.board__create__box {
   width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 1px solid var(--color-lightgray);
 }
-.board-create__box * {
+.board__create__box * {
   margin: 0px;
 }
-.board-create__box input {
+.board__create__box input {
   width: clac(100% - 60px);
   padding: 12px 30px;
   border-radius: 0px;
-  border: 1px solid var(--color-lightgray);
+  border: 0px solid var(--color-lightgray);
 }
-.board-create__box textarea {
+.board__create__box textarea {
   width: calc(100% - 60px);
   height: 20em;
   padding: 30px;
-  border: 1px solid var(--color-lightgray);
+  border: 0px solid var(--color-lightgray);
 }
-.board-create__content {
+.board__create__subject {
+  font-size: 40px;
+  border: 10px solid black;
+}
+.board__create__content {
+  font-size: 20px;
   height: 50%;
 }
-.board-create__footer {
+.board__create__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 96%;
   padding: 0 2%;
   height: 60px;
-  border: 1px solid var(--color-lightgray);
-  background-color: var(--color-white);
+  border: 0px solid var(--color-lightgray);
+  background__color: var(--color-white);
 }
-.board-create__button {
+.board__create__button {
   width: 40px;
   height: 40px;
   cursor: pointer;
 }
-.board-create__button-img {
-}
-.board-create__button-a {
+.board__create__button-a {
   height: auto;
   width: auto;
 }
