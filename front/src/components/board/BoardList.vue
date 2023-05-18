@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <h1 class="board__title">게시판</h1>
+    <h1 class="board__title">커뮤니티</h1>
     <div class="board__write">
       <button class="board__write-button" @click="moveBoardCreate">게시글 작성</button>
     </div>
@@ -47,9 +47,9 @@ export default {
   text-align: right;
 }
 .board__cards {
+  margin-left: 75px;
+  margin-right: 75px;
   display: flex;
   flex-wrap: wrap;
-  margin-left: 50px;
-  margin-right: 50px;
 }
 </style>

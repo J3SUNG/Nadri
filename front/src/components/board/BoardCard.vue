@@ -1,17 +1,22 @@
 <template>
   <div class="board__card" @click="moveBoardDetail">
-    <div class="board__card__header">
-      <img class="board__writer_img" :src="img" />
-      <div class="board__card__header__text">
-        <h3 class="board__card__title">{{ itemData.subject }}</h3>
-        <p class="board__card__writer">{{ itemData.nickname }}, {{ itemData.createTime }}</p>
+    <img class="card__img" :src="img[num]" />
+    <h3 class="card__subject">{{ itemData.subject }}</h3>
+    <p class="card__content">
+      {{ itemData.content }}
+    </p>
+    <hr class="card__hr" />
+    <div class="card__footer">
+      <div class="card__footer__left">
+        <img class="card__footer__writer-img" src="@/assets/jetty.jpg" />
+        <p class="card__footer__writer-nickname">{{ nickname }}</p>
       </div>
-    </div>
-    <hr class="board__card__hr" />
-    <div class="board__card__body">
-      <p class="board__card__content">
-        {{ itemData.content }}
-      </p>
+      <div class="card__footer__right">
+        <img class="card__footer__icon" src="@/assets/comment.png" />
+        <p class="card__footer__text">{{ commentCnt }}</p>
+        <img class="card__footer__icon" :src="heart" />
+        <p class="card__footer__text">{{ heartCnt }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +26,19 @@ export default {
   name: "BoardCard",
   data() {
     return {
-      img: require("@/assets/jetty.jpg"),
+      img: [
+        require("@/assets/dummy1.jpg"),
+        require("@/assets/dummy2.jpg"),
+        require("@/assets/dummy3.jpg"),
+        require("@/assets/dummy4.jpg"),
+        require("@/assets/dummy5.jpg"),
+        require("@/assets/dummy6.jpg"),
+      ],
+      nickname: "제티",
+      num: Math.ceil(Math.random() * 6 - 1),
+      heart: require("@/assets/heartOff.png"),
+      commentCnt: Math.ceil(Math.random() * 20),
+      heartCnt: Math.ceil(Math.random() * 40),
     };
   },
   props: ["itemData"],
@@ -36,14 +53,13 @@ export default {
 <style>
 .board__card {
   width: 280px;
-  height: 160px;
-  border: 1px solid var(--color-black);
-  box-shadow: 0px 0px 5px var(--color-darkgray);
+  height: 280px;
+  border: 0px solid var(--color-black);
   margin-left: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  border-radius: 20px;
   background-color: var(--color-white);
   transition: all 0.1s linear;
   font-size: 12px;
@@ -52,48 +68,62 @@ export default {
 }
 .board__card:hover {
   transform: scale(1.04);
+  box-shadow: 0px 0px 5px var(--color-darkgray);
 }
-.board__card__header {
-  display: flex;
-  align-items: center;
-  margin: 20px 20px 10px 20px;
+.card__img {
+  width: 260px;
+  height: 170px;
+  margin: 10px;
+  /* overflow: hidden; */
 }
-.board__card__header__text {
-  display: flex;
-  margin-left: 20px;
-  margin-right: 20px;
-  flex-direction: column;
-  text-align: left;
-}
-.board__card__title {
-  width: 160px;
+.card__subject {
+  width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.board__writer_img {
-  width: 50px;
-  height: 50px;
-  border-radius: 70%;
-}
-.board__card__hr {
+.card__content {
   width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-.board__card__body {
-  display: flex;
-  align-items: center;
-  margin: 10px 20px 0 20px;
-}
-.board__card__content {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal;
-  line-height: 1.2;
-  height: 2.4em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+}
+.card__hr {
+  width: 90%;
+  margin: 10px;
+}
+.card__footer {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+.card__footer__left {
+  display: flex;
+  justify-content: start;
+  align-content: center;
+}
+.card__footer__right {
+  display: flex;
+  justify-content: end;
+  align-content: center;
+}
+.card__footer__icon {
+  margin-left: 5px;
+  width: 18px;
+  height: 18px;
+}
+.card__footer__text {
+  margin-left: 10px;
+  width: 18px;
+  height: 18px;
+}
+.card__footer__writer-img {
+  width: 18px;
+  height: 18px;
+  border-radius: 70px;
+}
+.card__footer__writer-nickname {
+  font-weight: bold;
+  margin-left: 5px;
 }
 </style>

@@ -38,7 +38,7 @@ export default {
     clickLogin() {
       let userData = {
         id: this.id,
-        password: this.password,
+        pw: this.password,
       };
       http.post(`login`, JSON.stringify(userData)).then((response) => {
         console.log(response);
