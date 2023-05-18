@@ -34,9 +34,10 @@ public class BoardServiceImpl implements BoardService {
 		param.put("key", key == null ? "" : key);
 		param.put("word", boardParameterDto.getWord() == null ? "" : boardParameterDto.getWord());
 		int pgNo = boardParameterDto.getPg() == 0 ? 1 : boardParameterDto.getPg();
-		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+//		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		int start = pgNo * boardParameterDto.getSpp() - boardParameterDto.getSpp();
 		param.put("start", start);
-		param.put("listsize", SizeConstant.LIST_SIZE);
+		param.put("listsize", boardParameterDto.getSpp());
 		param.put("boardType", boardParameterDto.getType());
 		return boardMapper.listArticle(param);
 	}

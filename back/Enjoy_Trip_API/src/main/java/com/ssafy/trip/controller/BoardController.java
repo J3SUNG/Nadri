@@ -1,11 +1,11 @@
 package com.ssafy.trip.controller;
 
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,7 +24,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
 @RequestMapping("/board")
 @Api("게시판 컨트롤러  API V1")
@@ -41,7 +38,10 @@ public class BoardController {
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("")
 	public String write(@RequestBody BoardDto boardDto,
-			RedirectAttributes redirectAttributes) throws Exception {
+			RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+		session.setAttribute("hello", "hello");
+		System.out.println("save");
+		System.out.println((String) session.getAttribute("hello"));
 //		logger.debug("write boardDto : {}", data);
 		logger.debug("write boardDto : {}", boardDto);
 		boardDto.setUserNo(7);
@@ -64,7 +64,7 @@ public class BoardController {
 		if(boardParameterDto.getType()=="0") {
 			boardParameterDto.setSpp(20);
 		} else {
-			boardParameterDto.setSpp(15);
+			boardParameterDto.setSpp(21);
 		}
 		List<BoardDto> list = boardService.listArticle(boardParameterDto);
 		//		type 0일때 20 1일때 15로 글 개수 고정 ###############
@@ -80,7 +80,7 @@ public class BoardController {
 	}
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	@GetMapping("/{boardNo}")
-	public BoardDto view(@PathVariable("boardNo") int boardNo, @RequestParam Map<String, String> map)
+	public BoardDto view(@PathVariable("boardNo") int boardNo)
 			throws Exception {
 		logger.debug("view boardNo : {}", boardNo);
 		BoardDto boardDto = boardService.getArticle(boardNo);

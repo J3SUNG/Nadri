@@ -3,21 +3,51 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.trip.model.mapper.LoginMapper">
-<resultMap type="UserDto" id="loginMap">
-		<result column="id" property="id"/>
-		<result column="name" property="name"/>
-		<result column="email" property="email"/>
-		<result column="age" property="age"/>
-		<result column="gender" property="gender"/>
-		<result column="grade" property="grade"/>
-		<result column="sido_no" property="sidoNo"/>
-		<result column="gugun_no" property="gugunNo"/>
+<resultMap type="userDto" id="user">
+		<result column="user_no" property="userNo" />
+		<result column="id" property="id" />
+		<result column="nickname" property="nickname" />
+		<result column="email" property="email" />
+		<result column="grade" property="grade" />
 </resultMap>
+	
+<!-- 
+<select id="login" parameterType="LoginParameterDto" resultMap="user">
+		select
+		user_no, id, nickname, email, grade
+		from user
+		where id = #{id} and password = #{pw}
+</select>	 
+-->
 
-<select id="login" parameterType="map" resultMap="loginMap">
-		select id, name, email, age, gender, grade, sido_no, gugun_no
+	<select id="login" parameterType="userDto" resultType="user">
+		select nickname, id, email
 		from user
 		where id = #{id} and password = #{password}
-</select>	
+	</select>
+	
+	<select id="userInfo" parameterType="string" resultMap="user">
+		select nickname, id, email
+		from user
+		where id = #{id}
+	</select>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user
+		where id = #{id}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set token = #{token}
+		where id = #{id}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user
+		set token = #{token, jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
 	
 </mapper>

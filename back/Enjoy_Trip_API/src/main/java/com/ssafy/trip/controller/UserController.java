@@ -33,7 +33,7 @@ public class UserController {
 	}	
 
 	@GetMapping("")
-	public UserDto getUser(HttpSession session) throws Exception {
+	public UserDto getUser() throws Exception {
 	/**
 	 * session에서 로그인 되어있는 userDto를 가져와서 
 	 * 결과로 userDto.id에 해당하는 사용자의 정보를 UserDto 형태로 반환한다.
@@ -46,18 +46,20 @@ public class UserController {
 	}
 	
 	@PostMapping("")
-	public String join(@RequestBody UserDto userDto) {
+	public String join(@RequestBody UserDto userDto, HttpSession session) {
 		/**
 		 * 회원가입 화면에서 회원가입에 필요한 정보를 입력받아 넘기면 해당 정보로 가입을 진행한다.(유효성 검사 완료된 정보가 넘어온다.)
 		 * 결과로 '회원가입 성공', '회원가입 실패'를 반환한다.
 		 */
+		String hello = (String) session.getAttribute("hello");
+		System.out.println("!!!!!!!!!!!!!!"+hello);
 		logger.debug("userDto info : {}", userDto);
 		try {
 			userService.joinUser(userDto);
-			return "회원가입 성공";
+			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "회원가입 실패"; // error 페이지 연결
+			return "fail"; // error 페이지 연결
 		}
 	}
 	
@@ -99,7 +101,7 @@ public class UserController {
 		map.put("field",field);
 		map.put("val",val);
 		int cnt = userService.check(map);
-		return cnt + "";
+		return cnt==0?"success":"fail";
 	}
 	
 	@GetMapping("/authEmail")
