@@ -1,8 +1,11 @@
-package com.ssafy.trip.service;
+package com.ssafy.trip.model.mapper;
 
 import java.util.HashMap;
 
-public interface PlanLikeService {
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface PlanLikeMapper {
 
 	int get(HashMap<String, Integer> map);
 

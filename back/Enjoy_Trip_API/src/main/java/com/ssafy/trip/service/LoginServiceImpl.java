@@ -31,8 +31,9 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public void saveRefreshToken(String userid, String refreshToken) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", userid);
+		map.put("userid", "user1");
 		map.put("token", refreshToken);
+//		System.out.println(userid+" ***** "+map.get("token"));
 		sqlSession.getMapper(LoginMapper.class).saveRefreshToken(map);
 	}
 

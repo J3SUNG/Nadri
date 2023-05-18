@@ -13,7 +13,6 @@ import com.ssafy.trip.controller.BoardController;
 import com.ssafy.trip.model.dto.BoardDto;
 import com.ssafy.trip.model.dto.BoardParameterDto;
 import com.ssafy.trip.model.mapper.BoardMapper;
-import com.ssafy.trip.util.SizeConstant;
 
 @Service
 public class BoardServiceImpl implements BoardService {
