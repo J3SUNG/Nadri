@@ -49,6 +49,7 @@ public class JwtServiceImpl implements JwtService {
 	 */
 	@Override
 	public <T> String create(String key, T data, String subject, long expire) {
+		System.out.println("**********토큰을 만들어보자*********");
 		// Payload 설정 : 생성일 (IssuedAt), 유효기간 (Expiration),
 		// 토큰 제목 (Subject), 데이터 (Claim) 등 정보 세팅.
 		Claims claims = Jwts.claims()

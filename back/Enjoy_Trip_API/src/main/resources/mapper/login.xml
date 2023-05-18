@@ -19,35 +19,33 @@
 		where id = #{id} and password = #{pw}
 </select>	 
 -->
-
-	<select id="login" parameterType="userDto" resultType="user">
+	<select id="login" parameterType="UserDto" resultMap="user">
 		select nickname, id, email
 		from user
-		where id = #{id} and password = #{password}
+		where id = "ssafy" and password = "1234"
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="user">
 		select nickname, id, email
 		from user
-		where id = #{id}
+		where id = #{userid}
 	</select>
 	
 	<select id="getRefreshToken" parameterType="string" resultType="string">
 		select token
 		from user
-		where id = #{id}
+		where id = #{userid}
 	</select>
 	
 	<update id="saveRefreshToken" parameterType="map">
 		update user
 		set token = #{token}
-		where id = #{id}
+		where id = #{userid}
 	</update>
 	
 	<update id="deleteRefreshToken" parameterType="map">
 		update user
 		set token = #{token, jdbcType=VARCHAR}
-		where id = #{id}
+		where id = #{userid}
 	</update>
-	
 </mapper>

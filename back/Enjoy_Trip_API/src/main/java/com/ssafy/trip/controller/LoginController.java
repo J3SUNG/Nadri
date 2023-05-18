@@ -54,12 +54,14 @@ public class LoginController {
 		HttpStatus status = null;
 		try {
 			UserDto loginUser = loginService.login(userDto);
+			logger.debug("***********login user : {}***************",loginUser);
 			if (loginUser != null) {
 				String accessToken = jwtService.createAccessToken("userid", loginUser.getId());// key, data
-				String refreshToken = jwtService.createRefreshToken("userid", loginUser.getId());// key, data
-				loginService.saveRefreshToken(userDto.getId(), refreshToken);
 				logger.debug("로그인 accessToken 정보 : {}", accessToken);
+				String refreshToken = jwtService.createRefreshToken("userid", loginUser.getId());// key, data
 				logger.debug("로그인 refreshToken 정보 : {}", refreshToken);
+
+				loginService.saveRefreshToken(userDto.getId(), refreshToken);
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
 				resultMap.put("message", SUCCESS);
