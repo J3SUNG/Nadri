@@ -16,7 +16,30 @@ import AppMap from "@/views/AppMap.vue";
 import AppSignup from "@/views/AppSignup.vue";
 import AppError from "@/views/AppError.vue";
 
+import store from "@/store";
+
 Vue.use(VueRouter);
+
+// https://v3.router.vuejs.org/kr/guide/advanced/navigation-guards.html
+const onlyAuthUser = async (to, from, next) => {
+  const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+  const checkToken = store.getters["memberStore/checkToken"];
+  let token = sessionStorage.getItem("access-token");
+  console.log("로그인 처리 전", checkUserInfo, token);
+
+  if (checkUserInfo != null && token) {
+    console.log("토큰 유효성 체크하러 가자!!!!");
+    await store.dispatch("memberStore/getUserInfo", token);
+  }
+  if (!checkToken || checkUserInfo === null) {
+    alert("로그인이 필요한 페이지입니다..");
+    // next({ name: "login" });
+    // router.push({ name: "AppLogin" });
+  } else {
+    console.log("로그인 했다!!!!!!!!!!!!!.");
+    next();
+  }
+};
 
 const routes = [
   {
@@ -52,11 +75,13 @@ const routes = [
   {
     path: "/boardUpdate/:boardNo",
     name: "AppBoardUpdate",
+    beforeEnter: onlyAuthUser,
     component: AppBoardUpdate,
   },
   {
     path: "/boardCreate/:boardType",
     name: "AppBoardCreate",
+    beforeEnter: onlyAuthUser,
     component: AppBoardCreate,
   },
   {
@@ -67,11 +92,13 @@ const routes = [
   {
     path: "/notifyUpdate/:boardNo",
     name: "AppNotifyUpdate",
+    beforeEnter: onlyAuthUser,
     component: AppNotifyUpdate,
   },
   {
     path: "/notifyCreate",
     name: "AppNotifyCreate",
+    beforeEnter: onlyAuthUser,
     component: AppNotifyCreate,
   },
   {
