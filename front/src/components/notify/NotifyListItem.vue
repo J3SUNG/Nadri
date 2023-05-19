@@ -2,7 +2,6 @@
   <tr class="notify__item" @click="moveNotifyDetail">
     <td>{{ board.boardNo }}</td>
     <td>{{ board.subject }}</td>
-    <td>{{ board.nickname }}</td>
     <td>{{ board.createTime }}</td>
   </tr>
 </template>
@@ -24,5 +23,9 @@ export default {
 <style>
 .notify__item {
   cursor: pointer;
+  height: 20px;
+}
+.notify__item td {
+  border-bottom: solid 1px var(--color-lightgray);
 }
 </style>

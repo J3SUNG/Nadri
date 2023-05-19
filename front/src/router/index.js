@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AppHome from "@/views/AppHome.vue";
 import AppLogin from "@/views/AppLogin.vue";
+import AppMypage from "@/views/AppMypage.vue";
 import AppFindPwd from "@/views/AppFindPwd.vue";
 import AppBoard from "@/views/AppBoard.vue";
 import AppBoardDetail from "@/views/AppBoardDetail.vue";
@@ -51,6 +52,11 @@ const routes = [
     path: "/login",
     name: "AppLogin",
     component: AppLogin,
+  },
+  {
+    path: "/mypage",
+    name: "AppMypage",
+    component: AppMypage,
   },
   {
     path: "/findPwd",
