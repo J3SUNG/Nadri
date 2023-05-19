@@ -1,50 +1,32 @@
 package com.ssafy.trip.model.dto;
 
+import java.util.Arrays;
+
 public class SearchDto {
 	private String areaCode;
 	private String sigunguCode;
-	private String contentTypeId;
-	public SearchDto(String areaCode, String sigunguCode, String contentTypeId) {
-		super();
-		this.areaCode = areaCode;
-		this.sigunguCode = sigunguCode;
-		this.contentTypeId = contentTypeId;
-	}
-	
-	
+	private int[] types;
 	public String getAreaCode() {
 		return areaCode;
 	}
-
-
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
 	}
-
-
 	public String getSigunguCode() {
 		return sigunguCode;
 	}
-
-
 	public void setSigunguCode(String sigunguCode) {
 		this.sigunguCode = sigunguCode;
 	}
-
-
-	public String getContentTypeId() {
-		return contentTypeId;
+	public int[] getTypes() {
+		return types;
 	}
-
-
-	public void setContentTypeId(String contentTypeId) {
-		this.contentTypeId = contentTypeId;
+	public void setTypes(int[] types) {
+		this.types = types;
 	}
-
-
 	@Override
 	public String toString() {
-		return "SearchDto [areaCode=" + areaCode + ", sigunguCode=" + sigunguCode + ", contentTypeId=" + contentTypeId
+		return "SearchDto [areaCode=" + areaCode + ", sigunguCode=" + sigunguCode + ", types=" + Arrays.toString(types)
 				+ "]";
 	}
 }

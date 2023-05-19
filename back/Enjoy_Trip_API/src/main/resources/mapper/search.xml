@@ -24,20 +24,26 @@
 
 
 <select id="search" parameterType="searchDto" resultMap="attraction">
-select *
+		select *
 		from attraction_info ai
-		where 
+		<where>
 		<if test="areaCode != 0"> <!-- 수정중 !!!!!!!!!!!!!!!!!!!! -->
 			ai.sido_no = #{areaCode}
 			<if test="sigunguCode != 0">
-				and ai.gugun_no = #{sigunguCode} 
+				AND ai.gugun_no = #{sigunguCode} 
 			</if>
 		</if> 
-		<if test="content_type != -1">
-				content_type = #{contentTypeId}
+		<if test="content_type != 0">
+				AND content_type in
+				<foreach item="item" index="index" collection="types"
+				open="(" separator="," close=")">
+					#{item}
+				</foreach>
 		</if>
-		order by b.title desc
+		</where>
+		order by title desc
 		limit 200
+		
 </select>	
 
 <select id="getAttr" parameterType="String" resultMap="attraction">

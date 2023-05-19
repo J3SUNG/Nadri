@@ -3,6 +3,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.trip.model.mapper.BoardLikeMapper">
+	<resultMap type="BoardLikeDto" id="boardlike">
+		<result column="board_no" property="boardNo"/>
+		<result column="user_no" property="userNo"/>
+	</resultMap>
 	<select id="get" parameterType="map" resultType="Integer">
 		select count(*)
 from board_like
@@ -16,4 +20,11 @@ where board_no = #{boardNo} and user_no = #{userNo}
 		delete from board_like
 		where board_no = #{boardNo} and user_no = #{userNo}
 	</delete>
+	<select id="list" parameterType="int" resultMap="boardlike">
+	select b.board_no, u.user_no
+	from user u
+	join board_like b
+	on u.user_no = b.user_no
+	where u.user_no = #{userNo}
+	</select>
 </mapper>
