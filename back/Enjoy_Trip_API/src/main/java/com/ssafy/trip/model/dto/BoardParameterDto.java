@@ -19,6 +19,8 @@ public class BoardParameterDto {
 	@ApiModelProperty(value = "게시판 종류")
 	private String type;
 	
+	private int userNo;
+	
 	public BoardParameterDto() {
 		pg = 1;
 		spp = 20;
@@ -72,11 +74,21 @@ public class BoardParameterDto {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
 
 	@Override
 	public String toString() {
 		return "BoardParameterDto [pg=" + pg + ", spp=" + spp + ", start=" + start + ", key=" + key + ", word=" + word
-				+ ", type=" + type + "]";
+				+ ", type=" + type + ", userNo=" + userNo + "]";
 	}
 
 }

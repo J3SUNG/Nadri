@@ -20,13 +20,13 @@
 </select>	 
 -->
 	<select id="login" parameterType="UserDto" resultMap="user">
-		select nickname, id, email
+		select user_no, nickname, id, email, grade
 		from user
 		where id = "ssafy" and password = "1234"
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="user">
-		select nickname, id, email
+		select user_no, nickname, id, email, grade
 		from user
 		where id = #{userid}
 	</select>

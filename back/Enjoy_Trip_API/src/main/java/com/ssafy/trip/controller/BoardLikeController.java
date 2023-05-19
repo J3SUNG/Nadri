@@ -1,6 +1,7 @@
 package com.ssafy.trip.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.trip.model.dto.BoardLikeDto;
 import com.ssafy.trip.service.BoardLikeService;
 
 @RestController
@@ -38,10 +40,10 @@ public class BoardLikeController {
 		return result;
 	}
 	
-	@PostMapping("/{boardNo}")
-	public String create(@PathVariable("boardNo") int boardNo) throws Exception {
+	@PostMapping("/{boardNo}/{userNo}")
+	public String create(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like board number of : {}", boardNo);
-		int userNo = 1;//test
+//		int userNo = 1;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);
@@ -49,10 +51,10 @@ public class BoardLikeController {
 		return "success";
 	}
 	
-	@DeleteMapping("/{boardNo}")
-	public String delete(@PathVariable("boardNo") int boardNo) throws Exception {
+	@DeleteMapping("/{boardNo}/{userNo}")
+	public String delete(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("unlike board number of : {}", boardNo);
-		int userNo = 1;//test
+//		int userNo = 1;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);

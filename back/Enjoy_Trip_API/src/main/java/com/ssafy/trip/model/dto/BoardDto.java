@@ -9,6 +9,8 @@ public class BoardDto {
 	private int likeCount;
 	private int userNo;
 	private String nickname;
+	private int commentCount;
+	private int isLike;
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -51,18 +53,30 @@ public class BoardDto {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+	public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	public int getIsLike() {
+		return isLike;
+	}
+	public void setIsLike(int isLike) {
+		this.isLike = isLike;
+	}
 	@Override
 	public String toString() {
 		return "BoardDto [boardNo=" + boardNo + ", boardType=" + boardType + ", createTime=" + createTime + ", subject="
-				+ subject + ", content=" + content + ", likeCount=" + likeCount + ", userNo=" + userNo + ", nickName="
-				+ nickname + "]";
+				+ subject + ", content=" + content + ", likeCount=" + likeCount + ", userNo=" + userNo + ", nickname="
+				+ nickname + ", commentCount=" + commentCount + ", isLike=" + isLike + "]";
 	}
+	
 	
 }

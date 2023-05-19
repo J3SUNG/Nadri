@@ -1,9 +1,11 @@
 package com.ssafy.trip.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.trip.model.dto.BoardLikeDto;
 import com.ssafy.trip.model.mapper.BoardLikeMapper;
 
 @Service
@@ -27,6 +29,11 @@ public class BoardLikeServiceImpl implements BoardLikeService {
 	@Override
 	public void delete(HashMap<String, Integer> map) {
 		boardLikeMapper.delete(map);
+	}
+
+	@Override
+	public List<BoardLikeDto> list(int userNo) {
+		return boardLikeMapper.list(userNo);
 	}
 
 }

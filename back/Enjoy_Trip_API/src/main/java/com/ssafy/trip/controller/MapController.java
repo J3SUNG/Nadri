@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.model.dto.AttractionDto;
 import com.ssafy.trip.model.dto.SearchDto;
-import com.ssafy.trip.model.dto.UserDto;
 import com.ssafy.trip.service.MapService;
 
 @RestController

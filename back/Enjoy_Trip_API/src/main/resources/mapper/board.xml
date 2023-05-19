@@ -12,6 +12,7 @@
 		<result column="like_count" property="likeCount" />
 		<result column="user_no" property="userNo" />
 		<result column="nickname" property="nickname" />
+		<result column="comment_cnt" property="commentCount" />
 	</resultMap>
 
 	<sql id="search">
@@ -27,12 +28,16 @@
 
 	<select id="listArticle" parameterType="map" resultMap="board">
 		select b.board_no, b.board_type, b.subject subject, b.content content,
-		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time, count(bl.like_no) like_count, b.user_no, u.nickname
+		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time, count(bl.like_no) like_count, b.user_no, u.nickname, ifnull(c.comment_cnt, 0) comment_cnt, isLike
 		from board b
 		left join board_like bl
 		on b.board_no = bl.board_no
 		join user u
 		on b.user_no = u.user_no
+		left join
+		(select board_no, count(*) comment_cnt from enjoy_trip.board_comment
+		group by board_no) c
+		on b.board_no = c.board_no
 		where b.board_type =
 		#{boardType}
 		<if test="word != null and word != ''">
