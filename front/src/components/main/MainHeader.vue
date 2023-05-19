@@ -19,10 +19,15 @@
         </ul>
       </nav>
       <aside class="header__login">
-        <ul>
-          <li class="header__login__item header__login__item-login">
-            <button @click="logoutClick">로그아웃</button>
+        <ul v-if="userInfo">
+          <li class="header__login__item header__login__item-logout">
+            <div @click="logoutClick">로그아웃</div>
           </li>
+          <li class="header__login__item header__login__item-mypage">
+            <router-link :to="{ name: 'AppMypage' }">마이페이지</router-link>
+          </li>
+        </ul>
+        <ul v-else>
           <li class="header__login__item header__login__item-login">
             <router-link :to="{ name: 'AppLogin' }">로그인</router-link>
           </li>
@@ -118,22 +123,24 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .header__login__item > a {
   position: relative;
-  font-size: px;
   width: 100%;
   padding: 15px 0px;
   opacity: 1;
 }
-.header__login__item-login {
+.header__login__item-login,
+.header__login__item-logout {
   width: 80px;
   height: 40px;
   border-radius: 10px;
   border: 3px solid var(--color-main);
   background-color: var(--color-main);
 }
-.header__login__item-signup {
+.header__login__item-signup,
+.header__login__item-mypage {
   width: 80px;
   height: 40px;
   border: 3px solid var(--color-main);
@@ -141,10 +148,12 @@ export default {
   background-color: var(--color-white);
   margin-left: 10px;
 }
-.header__login__item-login > a {
+.header__login__item-login > a,
+.header__login__item-logout > div {
   color: var(--color-white);
 }
-.header__login__item-signup > a {
+.header__login__item-signup > a,
+.header__login__item-mypage > a {
   color: var(--color-main);
 }
 </style>

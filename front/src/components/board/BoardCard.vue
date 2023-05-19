@@ -9,11 +9,11 @@
     <div class="card__footer">
       <div class="card__footer__left">
         <img class="card__footer__writer-img" src="@/assets/jetty.jpg" />
-        <p class="card__footer__writer-nickname">{{ nickname }}</p>
+        <p class="card__footer__writer-nickname">{{ itemData.nickname }}</p>
       </div>
       <div class="card__footer__right">
         <img class="card__footer__icon card__footer__icon-comment" src="@/assets/comment.png" />
-        <p class="card__footer__text">{{ commentCnt }}</p>
+        <p class="card__footer__text">{{ itemData.commentCount }}</p>
         <img class="card__footer__icon card__footer__icon-heart" @click="heartClick" :src="heart" />
         <p class="card__footer__text">{{ heartCnt }}</p>
       </div>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
+
 export default {
   name: "BoardCard",
   data() {
@@ -34,15 +36,18 @@ export default {
         require("@/assets/dummy5.jpg"),
         require("@/assets/dummy6.jpg"),
       ],
-      nickname: "제티",
       num: Math.ceil(Math.random() * 6 - 1),
       commentCnt: Math.ceil(Math.random() * 20),
-      heart: require("@/assets/heartOff.png"),
-      heartCnt: Math.ceil(Math.random() * 40),
-      heartChk: false,
+      heartChk: this.itemData.isLike,
+      heartCnt: this.itemData.likeCount,
+      heart: "",
     };
   },
   props: ["itemData"],
+  mounted() {
+    this.heart =
+      this.heartChk === 0 ? require("@/assets/heartOff.png") : require("@/assets/heartOn.png");
+  },
   methods: {
     moveBoardDetail(event) {
       if (!(event.target.classList[1] === "card__footer__icon-heart")) {
@@ -50,14 +55,23 @@ export default {
       }
     },
     heartClick() {
-      this.heartChk = !this.heartChk;
-      if (!this.heartChk) {
-        --this.heartCnt;
-        this.heart = require("@/assets/heartOff.png");
-      } else {
-        ++this.heartCnt;
+      if (this.heartChk === 0) {
+        http.post(`boardlike/${this.itemData.boardNo}/${this.itemData.userNo}`).then((response) => {
+          ++this.heartCnt;
+          console.log(response);
+        });
         this.heart = require("@/assets/heartOn.png");
+      } else {
+        http
+          .delete(`boardlike/${this.itemData.boardNo}/${this.itemData.userNo}`)
+          .then((response) => {
+            --this.heartCnt;
+            console.log(response);
+          });
+        this.heart = require("@/assets/heartOff.png");
       }
+      this.heartChk = this.heartChk === 0 ? 1 : 0;
+      this.$forceUpdate();
     },
   },
 };
@@ -68,7 +82,7 @@ export default {
   width: 280px;
   height: 280px;
   border: 0px solid var(--color-black);
-  margin-left: 50px;
+  margin-left: 37.5px;
   margin-bottom: 40px;
   display: flex;
   align-items: center;

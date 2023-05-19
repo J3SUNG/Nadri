@@ -81,13 +81,15 @@ export default {
     },
     deleteBoard() {
       console.log(this.board.boardNo);
-      http.delete(`board/${this.board.boardNo}`).then(() => {
-        if (this.board.boardType === 1) {
-          this.$router.push({ name: "AppBoard" });
-        } else {
-          this.$router.push({ name: "AppNotify" });
-        }
-      });
+      if (confirm("정말 삭제하시겠습니까?")) {
+        http.delete(`board/${this.board.boardNo}`).then(() => {
+          if (this.board.boardType === 1) {
+            this.$router.push({ name: "AppBoard" });
+          } else {
+            this.$router.push({ name: "AppNotify" });
+          }
+        });
+      }
     },
     heartClick() {
       this.heartChk = !this.heartChk;
