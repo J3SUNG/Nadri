@@ -22,7 +22,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import http from "@/util/http-common";
+
+const memberStore = "memberStore";
 
 export default {
   name: "BoardCard",
@@ -43,10 +46,15 @@ export default {
       heart: "",
     };
   },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   props: ["itemData"],
   mounted() {
     this.heart =
-      this.heartChk === 0 ? require("@/assets/heartOff.png") : require("@/assets/heartOn.png");
+      this.itemData.isLike === 0
+        ? require("@/assets/heartOff.png")
+        : require("@/assets/heartOn.png");
   },
   methods: {
     moveBoardDetail(event) {
@@ -56,14 +64,14 @@ export default {
     },
     heartClick() {
       if (this.heartChk === 0) {
-        http.post(`boardlike/${this.itemData.boardNo}/${this.itemData.userNo}`).then((response) => {
+        http.post(`boardlike/${this.itemData.boardNo}/${this.userInfo.userNo}`).then((response) => {
           ++this.heartCnt;
           console.log(response);
         });
         this.heart = require("@/assets/heartOn.png");
       } else {
         http
-          .delete(`boardlike/${this.itemData.boardNo}/${this.itemData.userNo}`)
+          .delete(`boardlike/${this.itemData.boardNo}/${this.userInfo.userNo}`)
           .then((response) => {
             --this.heartCnt;
             console.log(response);

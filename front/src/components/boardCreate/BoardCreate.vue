@@ -17,6 +17,7 @@
         </div>
       </div>
     </div>
+    <input @change="upload" multiple accept="image/*" type="file" id="file" class="inputfile" />
   </div>
 </template>
 
