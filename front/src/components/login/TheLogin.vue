@@ -102,6 +102,9 @@ export default {
   border-radius: 8px;
   padding: 15px;
 }
+.login__find-pw {
+  color: var(--color-main);
+}
 .login__btn {
   font-weight: bold;
   border: 0px;

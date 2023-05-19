@@ -1,13 +1,9 @@
 <template>
   <tr class="notify__item" @click="moveNotifyDetail">
-    <!-- <td>{{ board.boardNo }}</td> -->
-    <!-- <td>{{ board.boardType }}</td> -->
+    <td>{{ board.boardNo }}</td>
     <td>{{ board.subject }}</td>
     <td>{{ board.nickname }}</td>
     <td>{{ board.createTime }}</td>
-    <td>{{ board.likeCount }}</td>
-    <!-- <td>{{ board.content }}</td> -->
-    <!-- <td>{{ board.userNo }}</td> -->
   </tr>
 </template>
 
