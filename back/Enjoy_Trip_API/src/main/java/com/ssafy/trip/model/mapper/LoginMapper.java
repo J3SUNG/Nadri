@@ -12,7 +12,8 @@ import com.ssafy.trip.model.dto.UserDto;
 public interface LoginMapper {
 //	UserDto login(LoginParameterDto loginDto) throws SQLException;
 
-	public UserDto login(UserDto userDto) throws SQLException;
+//	public UserDto login(String id, String password) throws SQLException;
+	public UserDto login(Map<String, String> map) throws SQLException;
 	public UserDto userInfo(String userid) throws SQLException;
 	public void saveRefreshToken(Map<String, String> map) throws SQLException;
 	public Object getRefreshToken(String userid) throws SQLException;

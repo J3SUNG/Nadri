@@ -38,6 +38,7 @@ public class BoardServiceImpl implements BoardService {
 		param.put("start", start);
 		param.put("listsize", boardParameterDto.getSpp());
 		param.put("boardType", boardParameterDto.getType());
+		param.put("userNo", boardParameterDto.getUserNo());
 		return boardMapper.listArticle(param);
 	}
 	

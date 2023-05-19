@@ -77,22 +77,22 @@ public class BoardController {
 		}
 
 		List<BoardDto> list = boardService.listArticle(boardParameterDto);
-
-		int userNo = boardParameterDto.getUserNo();
-		if (userNo != 0) { // 로그인한 사용자입니다!
-			// isLike 리스트를 가져와서 list각각에 매칭해주기
-			List<BoardLikeDto> likelist = boardLikeService.list(userNo);
-//			logger.debug(likelist.toString() + " 관광지 몇개? : " + list.size());
-			for (int i = 0; i < list.size(); i++) {
-				for (int j = 0; j < likelist.size(); j++) {
-					//logger.debug("boarddto : " + list.get(i).getBoardNo() + "  likedto :" + likelist.get(j).getBoardNo());
-					if (list.get(i).getBoardNo() == likelist.get(j).getBoardNo()
-							&& userNo == likelist.get(j).getUserNo()) {
-						list.get(i).setIsLike(1);
-					}
-				}
-			}
-		}
+//		logger.debug(list.toString());
+//		int userNo = boardParameterDto.getUserNo();
+//		if (userNo != 0) { // 로그인한 사용자입니다!
+//			// isLike 리스트를 가져와서 list각각에 매칭해주기
+//			List<BoardLikeDto> likelist = boardLikeService.list(userNo);
+////			logger.debug(likelist.toString() + " 관광지 몇개? : " + list.size());
+//			for (int i = 0; i < list.size(); i++) {
+//				for (int j = 0; j < likelist.size(); j++) {
+//					//logger.debug("boarddto : " + list.get(i).getBoardNo() + "  likedto :" + likelist.get(j).getBoardNo());
+//					if (list.get(i).getBoardNo() == likelist.get(j).getBoardNo()
+//							&& userNo == likelist.get(j).getUserNo()) {
+//						list.get(i).setIsLike(1);
+//					}
+//				}
+//			}
+//		}
 		// type 0일때 20 1일때 15로 글 개수 고정 ###############
 
 //		페이지네이션 처리 보류, 이전에는 model&view를 사용하요 pageNavigation 전달

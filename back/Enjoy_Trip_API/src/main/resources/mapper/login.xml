@@ -19,10 +19,10 @@
 		where id = #{id} and password = #{pw}
 </select>	 
 -->
-	<select id="login" parameterType="UserDto" resultMap="user">
+	<select id="login" parameterType="map" resultMap="user">
 		select user_no, nickname, id, email, grade
 		from user
-		where id = "ssafy" and password = "1234"
+		where id = #{id} and password = #{password}
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="user">

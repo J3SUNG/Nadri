@@ -13,19 +13,28 @@ import com.ssafy.trip.model.mapper.LoginMapper;
 @Service
 public class LoginServiceImpl implements LoginService {
 	
+//	@Autowired
+//	private SqlSession sqlSession;
 	@Autowired
-	private SqlSession sqlSession;
+	LoginMapper loginMapper;
 
 	@Override
 	public UserDto login(UserDto userDto) throws Exception {
 		if (userDto.getId() == null || userDto.getPassword() == null)
 			return null;
-		return sqlSession.getMapper(LoginMapper.class).login(userDto);
+//		System.out.println(userDto.toString());
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", userDto.getId());
+		map.put("password", userDto.getPassword());
+		System.out.println(map.get("id"));
+//		System.out.println(userDto.getId());
+//		return loginMapper.login(userDto.getId(), userDto.getPassword());
+		return loginMapper.login(map);
 	}
 
 	@Override
 	public UserDto userInfo(String userid) throws Exception {
-		return sqlSession.getMapper(LoginMapper.class).userInfo(userid);
+		return loginMapper.userInfo(userid);
 	}
 	
 	@Override
@@ -34,12 +43,12 @@ public class LoginServiceImpl implements LoginService {
 		map.put("userid", "user1");
 		map.put("token", refreshToken);
 //		System.out.println(userid+" ***** "+map.get("token"));
-		sqlSession.getMapper(LoginMapper.class).saveRefreshToken(map);
+		loginMapper.saveRefreshToken(map);
 	}
 
 	@Override
 	public Object getRefreshToken(String userid) throws Exception {
-		return sqlSession.getMapper(LoginMapper.class).getRefreshToken(userid);
+		return loginMapper.getRefreshToken(userid);
 	}
 
 	@Override
@@ -47,6 +56,6 @@ public class LoginServiceImpl implements LoginService {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", userid);
 		map.put("token", null);
-		sqlSession.getMapper(LoginMapper.class).deleteRefreshToken(map);
+		loginMapper.deleteRefreshToken(map);
 	}
 }

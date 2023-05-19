@@ -13,6 +13,7 @@
 		<result column="user_no" property="userNo" />
 		<result column="nickname" property="nickname" />
 		<result column="comment_cnt" property="commentCount" />
+		<result column="isLike" property="isLike" />
 	</resultMap>
 
 	<sql id="search">
@@ -26,10 +27,14 @@
 		</if>
 	</sql>
 
-	<!-- <select id="listArticle" parameterType="map" resultMap="board">
+	<select id="listArticle" parameterType="map" resultMap="board">
 		select b.board_no, b.board_type, b.subject subject, b.content content,
-		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time, count(bl.like_no) like_count, b.user_no, u.nickname, ifnull(c.comment_cnt, 0) comment_cnt, isLike
+		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time, count(bl.like_no) like_count, 
+		b.user_no, u.nickname, ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0) isLike
 		from board b
+		left join 
+		(select  board_no, count(*) isLike from board_like where user_no = #{userNo} group by board_no) bll
+		on b.board_no = bll.board_no
 		left join board_like bl
 		on b.board_no = bl.board_no
 		join user u
@@ -52,7 +57,6 @@
 		order by b.board_no desc
 		limit #{start}, #{listsize}
 	</select>
- -->
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board
 		(board_no, board_type, create_time, subject, content, user_no)
