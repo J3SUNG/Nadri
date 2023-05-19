@@ -26,7 +26,7 @@
 		</if>
 	</sql>
 
-	<select id="listArticle" parameterType="map" resultMap="board">
+	<!-- <select id="listArticle" parameterType="map" resultMap="board">
 		select b.board_no, b.board_type, b.subject subject, b.content content,
 		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time, count(bl.like_no) like_count, b.user_no, u.nickname, ifnull(c.comment_cnt, 0) comment_cnt, isLike
 		from board b
@@ -52,7 +52,7 @@
 		order by b.board_no desc
 		limit #{start}, #{listsize}
 	</select>
-
+ -->
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board
 		(board_no, board_type, create_time, subject, content, user_no)
