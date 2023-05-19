@@ -51,6 +51,7 @@ export default {
       let token = sessionStorage.getItem("access-token");
       if (this.isLogin) {
         await this.getUserInfo(token);
+        console.log("4. confirm() userInfo :: ", this.userInfo);
       }
       this.$router.push({ name: "AppHome" });
     },

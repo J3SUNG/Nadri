@@ -41,7 +41,7 @@ const memberStore = {
           if (data.message === "success") {
             let accessToken = data["access-token"];
             let refreshToken = data["refresh-token"];
-            // console.log("login success token created!!!! >> ", accessToken, refreshToken);
+            console.log("login success token created!!!! >> ", accessToken, refreshToken);
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -60,13 +60,13 @@ const memberStore = {
     },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
-      // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+      console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
         decodeToken.userid,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_USER_INFO", data.userInfo);
-            // console.log("3. getUserInfo data >> ", data);
+            console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
           }
@@ -99,7 +99,7 @@ const memberStore = {
             console.log("갱신 실패");
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
-              state.userInfo.userid,
+              state.userInfo.id,
               ({ data }) => {
                 if (data.message === "success") {
                   console.log("리프레시 토큰 제거 성공");
@@ -122,13 +122,13 @@ const memberStore = {
         }
       );
     },
-    async userLogout({ commit }, userid) {
+    async userLogout({ commit }, id) {
       await logout(
-        userid,
+        id,
         ({ data }) => {
           if (data.message === "success") {
-            commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
+            commit("SET_IS_LOGIN", false);
             commit("SET_IS_VALID_TOKEN", false);
           } else {
             console.log("유저 정보 없음!!!!");
