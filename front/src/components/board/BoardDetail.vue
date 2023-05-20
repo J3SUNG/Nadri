@@ -64,13 +64,17 @@ export default {
       commentCnt: 0,
       comments: [],
       isNotify: 1,
+      userNo: 0,
     };
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
   async created() {
-    const response = await http.get(`board/${this.$route.params.boardNo}/${this.userInfo.userNo}`);
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+    const response = await http.get(`board/${this.$route.params.boardNo}/${this.userNo}`);
     this.board = response.data;
     this.heart =
       this.board.isLike == 1 ? require("@/assets/heartOn.png") : require("@/assets/heartOff.png");
@@ -207,6 +211,7 @@ export default {
   margin-left: 40px;
   width: 36px;
   height: 36px;
+  cursor: pointer;
 }
 .board-deatil__function-heart-text {
   margin-left: 16px;

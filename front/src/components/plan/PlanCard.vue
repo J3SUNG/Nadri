@@ -63,21 +63,25 @@ export default {
       }
     },
     heartClick() {
-      if (this.heartChk === 0) {
-        http.post(`planlike/${this.itemData.planNo}/${this.userInfo.userNo}`).then((response) => {
-          ++this.heartCnt;
-          console.log(response);
-        });
-        this.heart = require("@/assets/heartOn.png");
-      } else {
-        http.delete(`planlike/${this.itemData.planNo}/${this.userInfo.userNo}`).then((response) => {
-          --this.heartCnt;
-          console.log(response);
-        });
-        this.heart = require("@/assets/heartOff.png");
+      if (this.userInfo !== null) {
+        if (this.heartChk === 0) {
+          http.post(`planlike/${this.itemData.planNo}/${this.userInfo.userNo}`).then((response) => {
+            ++this.heartCnt;
+            console.log(response);
+          });
+          this.heart = require("@/assets/heartOn.png");
+        } else {
+          http
+            .delete(`planlike/${this.itemData.planNo}/${this.userInfo.userNo}`)
+            .then((response) => {
+              --this.heartCnt;
+              console.log(response);
+            });
+          this.heart = require("@/assets/heartOff.png");
+        }
+        this.heartChk = this.heartChk === 0 ? 1 : 0;
+        this.$forceUpdate();
       }
-      this.heartChk = this.heartChk === 0 ? 1 : 0;
-      this.$forceUpdate();
     },
   },
 };

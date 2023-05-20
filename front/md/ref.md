@@ -22,4 +22,5 @@ https://www.flaticon.com/free-icon/airplane_10307950?term=travel&related_id=1030
 정규표현식 - https://regexr.com/
 색조합 - https://mycolor.space/?hex=%23587FFF&sub=1
 아이콘 - https://www.flaticon.com/
-언스플래시 - https://unsplash.com/ko
+저작권 없는 이미지 - https://unsplash.com/ko
+gif 이미지 - https://pixabay.com/videos/

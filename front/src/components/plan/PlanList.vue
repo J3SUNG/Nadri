@@ -29,10 +29,14 @@ export default {
     return {
       plans: [],
       type: "1",
+      userNo: 0,
     };
   },
   created() {
-    http.get(`plan/list/${this.userInfo.userNo}`).then((response) => {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+    http.get(`plan/list/${this.userNo}`).then((response) => {
       this.plans = response.data;
       console.log(this.plans);
     });
