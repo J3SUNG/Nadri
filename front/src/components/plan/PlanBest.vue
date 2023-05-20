@@ -1,11 +1,16 @@
 <template>
   <div class="best-plan">
     <h2 class="best-plan__title">BEST 여행노트</h2>
-    <div class="best-plan__img">
-      <div class="best-plan__img-right">
+    <div class="best-plan__box">
+      <img class="best-plan__img" :src="this.plan[this.index].img" />
+      <div class="best-plan__box-right">
         <h3>여행코스소개</h3>
         <ul class="best-plan__course-box">
-          <li class="best-plan__course" v-for="(item, index) in plan[0].course" :key="item.attr_no">
+          <li
+            class="best-plan__course"
+            v-for="(item, index) in plan[this.index].course"
+            :key="item.attr_no"
+          >
             <p class="best-plan__course-no">{{ index }}</p>
             <p class="best-plan__course-loc">{{ item.loc }}</p>
           </li>
@@ -14,8 +19,8 @@
         <div class="best-plan__footer">
           <img class="best-plan__footer-img" src="@/assets/jetty.jpg" />
           <div class="best-plan__footer-right">
-            <p class="best-plan__footer-nickname">{{ this.plan[0].nickname }}</p>
-            <p class="best-plan__footer-createtime">{{ this.plan[0].createtime }}</p>
+            <p class="best-plan__footer-nickname">{{ this.plan[this.index].nickname }}</p>
+            <p class="best-plan__footer-createtime">{{ this.plan[this.index].createtime }}</p>
           </div>
         </div>
       </div>
@@ -28,6 +33,7 @@ export default {
   name: "BestPlan",
   data() {
     return {
+      index: 0,
       plan: {
         0: {
           course: {
@@ -54,6 +60,7 @@ export default {
           },
           createtime: "2023-05-20 21:20",
           nickname: "jetty",
+          img: require("@/assets/dummy1.jpg"),
         },
         1: {
           course: {
@@ -80,9 +87,15 @@ export default {
           },
           createtime: "2023-05-20 21:20",
           nickname: "cola",
+          img: require("@/assets/dummy2.jpg"),
         },
       },
     };
+  },
+  created() {
+    setInterval(() => {
+      this.index = this.index === 0 ? 1 : 0;
+    }, 3000);
   },
 };
 </script>
@@ -96,29 +109,38 @@ export default {
   width: 100%;
   height: 10%;
   text-align: left;
+  margin-left: 10px;
 }
-.best-plan__img {
+.best-plan__box {
   width: 100%;
   height: 90%;
-  background-image: url("@/assets/dummy1.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: flex;
+  position: relative;
   justify-content: right;
+  /*  */
+  -webkit-transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
+  -o-transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
+  transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
 }
-.best-plan__img-right {
+.best-plan__box {
+  width: 100%;
+}
+.best-plan__box-right {
+  position: absolute;
   padding: 18px;
   width: 40%;
   height: 90%;
   text-align: left;
   backdrop-filter: brightness(30%);
 }
-.best-plan__img-right h3,
-.best-plan__img-right p {
+.best-plan__box-right h3,
+.best-plan__box-right p {
   color: var(--color-white);
 }
 .best-plan__course-box {
-  min-height: 65%;
+  height: 65%;
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -141,13 +163,18 @@ export default {
   display: flex;
 }
 .best-plan__footer-right {
-  margin-left: 10px;
+  margin-left: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
 }
 .best-plan__footer-img {
   width: 40px;
   height: 40px;
   border-radius: 70px;
+}
+.best-plan__footer-createtime {
+  font-size: 12px;
 }
 </style>
