@@ -41,9 +41,9 @@ export default {
       ],
       num: Math.ceil(Math.random() * 6 - 1),
       commentCnt: Math.ceil(Math.random() * 20),
-      heartChk: this.itemData.isLike,
-      heartCnt: this.itemData.likeCount,
       heart: "",
+      heartCnt: this.itemData.likeCount,
+      heartChk: this.itemData.isLike,
     };
   },
   computed: {
@@ -59,7 +59,10 @@ export default {
   methods: {
     moveBoardDetail(event) {
       if (!(event.target.classList[1] === "card__footer__icon-heart")) {
-        this.$router.push({ name: "AppBoardDetail", params: { boardNo: this.itemData.boardNo } });
+        this.$router.push({
+          name: "AppBoardDetail",
+          params: { boardNo: this.itemData.boardNo },
+        });
       }
     },
     heartClick() {
@@ -79,7 +82,6 @@ export default {
         this.heart = require("@/assets/heartOff.png");
       }
       this.heartChk = this.heartChk === 0 ? 1 : 0;
-      this.$forceUpdate();
     },
   },
 };

@@ -68,6 +68,7 @@ textarea {
   display: flex;
   justify-content: center;
   width: 100%;
+  min-width: 1140px;
 }
 #main__box {
   width: 1140px;
@@ -75,9 +76,11 @@ textarea {
 }
 #header {
   z-index: 10;
+  min-width: 1140px;
 }
 #footer {
   z-index: 10;
+  min-width: 1140px;
 }
 ul {
   display: flex;

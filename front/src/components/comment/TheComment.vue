@@ -3,11 +3,11 @@
     <img class="comment__writer-img" :src="comment.img" />
     <div class="comment__main">
       <div class="comment__up">
-        <p class="comment__writer-nickname">{{ comment.nickname }}</p>
-        <p class="comment__createtime">{{ comment.createtime }}</p>
+        <p class="comment__writer-nickname">{{ itemData.nickname }}</p>
+        <p class="comment__createtime">{{ itemData.createTime }}</p>
       </div>
       <div class="comment__down"></div>
-      <p class="comment__content">{{ comment.content }}</p>
+      <p class="comment__content">{{ itemData.content }}</p>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ export default {
       },
     };
   },
+  props: ["itemData"],
 };
 </script>
 

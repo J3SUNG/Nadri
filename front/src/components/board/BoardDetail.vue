@@ -37,9 +37,7 @@
           등록
         </button>
       </div>
-      <the-comment />
-      <the-comment />
-      <the-comment />
+      <the-comment v-for="item in comments" :itemData="item" :key="item.commentNo" />
     </div>
   </div>
 </template>
@@ -47,6 +45,10 @@
 <script>
 import http from "@/util/http-common";
 import TheComment from "../comment/TheComment.vue";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
+
 export default {
   components: { TheComment },
   name: "BoardDetail",
@@ -58,19 +60,28 @@ export default {
       heartChk: false,
       title: "",
       board: "",
-      commentCnt: 3,
+      commentCnt: 0,
+      comments: [],
     };
   },
-  created() {
-    http.get(`board/${this.$route.params.boardNo}`).then((response) => {
-      this.board = response.data;
-      console.log(this.board);
-      if (this.board.boardType === 1) {
-        this.title = "커뮤니티";
-      } else {
-        this.title = "공지사항";
-      }
-    });
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  async created() {
+    const response = await http.get(`board/${this.$route.params.boardNo}`);
+    this.heartChk = this.$route.params.isLike;
+    this.board = response.data;
+    console.log(this.board);
+    if (this.board.boardType === 1) {
+      this.title = "커뮤니티";
+    } else {
+      this.title = "공지사항";
+    }
+
+    const response2 = await http.get(`comment/${this.board.boardNo}`);
+    this.comments = response2.data;
+    console.log(this.comments);
+    this.commentCnt = this.comments.length;
   },
   methods: {
     moveBoardUpdate() {
@@ -92,14 +103,21 @@ export default {
       }
     },
     heartClick() {
-      this.heartChk = !this.heartChk;
-      if (!this.heartChk) {
-        --this.heartCnt;
-        this.heart = require("@/assets/heartOff.png");
-      } else {
-        ++this.heartCnt;
+      if (this.heartChk === 0) {
+        http.post(`boardlike/${this.board.boardNo}/${this.userInfo.userNo}`).then((response) => {
+          ++this.heartCnt;
+          console.log(response);
+        });
         this.heart = require("@/assets/heartOn.png");
+      } else {
+        http.delete(`boardlike/${this.board.boardNo}/${this.userInfo.userNo}`).then((response) => {
+          --this.heartCnt;
+          console.log(response);
+        });
+        this.heart = require("@/assets/heartOff.png");
       }
+      this.heartChk = this.heartChk === 0 ? 1 : 0;
+      this.$forceUpdate();
     },
   },
 };

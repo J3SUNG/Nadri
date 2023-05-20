@@ -59,6 +59,7 @@ export default {
   margin-right: 110px;
 }
 .board__cards {
+  width: 100%;
   margin-left: 75px;
   margin-right: 75px;
   display: flex;
