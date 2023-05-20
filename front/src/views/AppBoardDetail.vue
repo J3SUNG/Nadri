@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import BoardDetail from "@/components/boardDetail/BoardDetail.vue";
+import BoardDetail from "@/components/board/BoardDetail.vue";
 
 export default {
   name: "AppBoardDetail",

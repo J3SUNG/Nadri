@@ -4,7 +4,7 @@
 
 <script>
 // @ is an alias to /src
-import TheMypage from "@/components/mypage/TheMypage.vue";
+import TheMypage from "@/components/user/TheMypage.vue";
 
 export default {
   name: "AppMypage",

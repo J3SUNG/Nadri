@@ -1,54 +1,98 @@
 <template>
-  <div class="plan__card">
-    <div class="plan__card__header">
-      <img class="plan__img" :src="planImg" />
-    </div>
-    <hr class="plan__card__hr" />
-    <div class="plan__card__body">
-      <img class="plan__writer_img" :src="img" />
-      <div class="plan__card__header__text">
-        <h3 class="plan__card__title">{{ itemData.subject }}</h3>
-        <p class="plan__card__writer">{{ itemData.nickname }}, {{ itemData.createTime }}</p>
+  <div class="plan__card" @click="movePlanDetail">
+    <img class="card__img" :src="img[num]" />
+    <h3 class="card__subject">{{ itemData.subject }}</h3>
+    <p class="card__content">
+      {{ itemData.content }}
+    </p>
+    <hr class="card__hr" />
+    <div class="card__footer">
+      <div class="card__footer__left">
+        <img class="card__footer__writer-img" src="@/assets/jetty.jpg" />
+        <p class="card__footer__writer-nickname">{{ itemData.nickname }}</p>
+      </div>
+      <div class="card__footer__right">
+        <img class="card__footer__icon card__footer__icon-comment" src="@/assets/comment.png" />
+        <p class="card__footer__text">{{ itemData.commentCount }}</p>
+        <img class="card__footer__icon card__footer__icon-heart" @click="heartClick" :src="heart" />
+        <p class="card__footer__text">{{ heartCnt }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import http from "@/util/http-common";
+
+const memberStore = "memberStore";
+
 export default {
-  name: "BoardCard",
+  name: "PlanCard",
   data() {
     return {
-      planImg:
-        "https://www.kagoshima-kankou.com/storage/tourism_themes/12/responsive_images/ElwnvZ2u5uZda7Pjcwlk4mMtr08kLNydT8zXA6Ie__1673_1115.jpeg",
-      img: require("@/assets/jetty.jpg"),
-      itemData: {
-        subject: "제티와 함께하는 산책산책산책산책산책",
-        nickname: "jetty",
-        createTime: "2023-05-16 15:17",
-      },
+      img: [
+        require("@/assets/dummy1.jpg"),
+        require("@/assets/dummy2.jpg"),
+        require("@/assets/dummy3.jpg"),
+        require("@/assets/dummy4.jpg"),
+        require("@/assets/dummy5.jpg"),
+        require("@/assets/dummy6.jpg"),
+      ],
+      num: Math.ceil(Math.random() * 6 - 1),
+      commentCnt: Math.ceil(Math.random() * 20),
+      heartChk: this.itemData.isLike,
+      heartCnt: this.itemData.likeCount,
+      heart: "",
     };
   },
-  // data() {
-  //   return {
-  //     img: require("@/assets/jetty.jpg"),
-  //   };
-  // },
-  // props: ["itemData"],
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  props: ["itemData"],
+  mounted() {
+    this.heart =
+      this.itemData.isLike === 0
+        ? require("@/assets/heartOff.png")
+        : require("@/assets/heartOn.png");
+  },
+  methods: {
+    movePlanDetail(event) {
+      if (!(event.target.classList[1] === "card__footer__icon-heart")) {
+        this.$router.push({ name: "AppPlanDetail", params: { planNo: this.itemData.planNo } });
+      }
+    },
+    heartClick() {
+      if (this.heartChk === 0) {
+        http.post(`planlike/${this.itemData.planNo}/${this.userInfo.userNo}`).then((response) => {
+          ++this.heartCnt;
+          console.log(response);
+        });
+        this.heart = require("@/assets/heartOn.png");
+      } else {
+        http.delete(`planlike/${this.itemData.planNo}/${this.userInfo.userNo}`).then((response) => {
+          --this.heartCnt;
+          console.log(response);
+        });
+        this.heart = require("@/assets/heartOff.png");
+      }
+      this.heartChk = this.heartChk === 0 ? 1 : 0;
+      this.$forceUpdate();
+    },
+  },
 };
 </script>
 
 <style>
 .plan__card {
-  width: 240px;
-  height: 300px;
-  border: 1px solid var(--color-black);
-  box-shadow: 0px 0px 5px var(--color-darkgray);
-  margin-left: 50px;
+  width: 280px;
+  height: 280px;
+  border: 0px solid var(--color-black);
+  margin-left: 37.5px;
   margin-bottom: 40px;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  border-radius: 20px;
   background-color: var(--color-white);
   transition: all 0.1s linear;
   font-size: 12px;
@@ -57,41 +101,73 @@ export default {
 }
 .plan__card:hover {
   transform: scale(1.04);
+  box-shadow: 0px 0px 5px var(--color-darkgray);
 }
-.plan__card__header {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 20px 10px 20px;
+.card__img {
+  width: 260px;
+  height: 170px;
+  margin: 10px;
+  /* overflow: hidden; */
 }
-.plan__card__hr {
-  width: 80%;
-  margin: 0px 10%;
-}
-.plan__card__header__text {
-  display: flex;
-  margin-left: 20px;
-  margin-right: 20px;
-  flex-direction: column;
-  text-align: left;
-}
-.plan__img {
-  width: 200px;
-  height: 200px;
-}
-.plan__card__title {
-  width: 140px;
+.card__subject {
+  width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.plan__writer_img {
-  width: 40px;
-  height: 40px;
-  border-radius: 70%;
+.card__content {
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.plan__card__body {
+.card__hr {
+  width: 90%;
+  margin: 10px;
+}
+.card__footer {
+  width: 90%;
   display: flex;
-  align-items: center;
-  margin: 10px 20px 0 20px;
+  justify-content: space-between;
+}
+.card__footer__left {
+  display: flex;
+  justify-content: start;
+  align-content: center;
+}
+.card__footer__right {
+  display: flex;
+  justify-content: end;
+  align-content: center;
+}
+.card__footer__icon {
+  margin-left: 5px;
+  width: 18px;
+  height: 18px;
+}
+.card__footer__icon-heart:hover {
+  animation: scaling 1s ease-in-out infinite;
+}
+@keyframes scaling {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.3);
+  }
+}
+.card__footer__text {
+  margin-left: 10px;
+  width: 18px;
+  height: 18px;
+}
+.card__footer__writer-img {
+  width: 18px;
+  height: 18px;
+  border-radius: 70px;
+}
+.card__footer__writer-nickname {
+  font-weight: bold;
+  margin-left: 5px;
 }
 </style>

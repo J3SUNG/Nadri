@@ -4,7 +4,7 @@
 
 <script>
 // @ is an alias to /src
-import NotifyDetail from "@/components/boardDetail/BoardDetail.vue";
+import NotifyDetail from "@/components/board/BoardDetail.vue";
 
 export default {
   name: "AppNotifyDetail",

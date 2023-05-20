@@ -52,8 +52,10 @@ export default {
       if (this.isLogin) {
         await this.getUserInfo(token);
         console.log("4. confirm() userInfo :: ", this.userInfo);
+        this.$router.push({ name: "AppHome" });
+      } else {
+        alert("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
-      this.$router.push({ name: "AppHome" });
     },
     // clickLogin() {
     //   let userData = {

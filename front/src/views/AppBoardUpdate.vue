@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import BoardUpdate from "@/components/boardUpdate/BoardUpdate.vue";
+import BoardUpdate from "@/components/board/BoardUpdate.vue";
 
 export default {
   name: "AppBoardUpdate",

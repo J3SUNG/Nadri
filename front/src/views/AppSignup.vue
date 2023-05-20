@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TheSignup from "@/components/signup/TheSignup.vue";
+import TheSignup from "@/components/user/TheSignup.vue";
 
 export default {
   name: "AppSignup",

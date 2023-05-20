@@ -54,6 +54,9 @@ export default {
 .board__write {
   text-align: right;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: end;
+  margin-right: 110px;
 }
 .board__cards {
   margin-left: 75px;
@@ -61,11 +64,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
-}
-.board__write {
-  display: flex;
-  justify-content: end;
-  margin-right: 110px;
 }
 .board__write-button {
   display: flex;

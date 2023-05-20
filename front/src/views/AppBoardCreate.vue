@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import BoardCreate from "@/components/boardCreate/BoardCreate.vue";
+import BoardCreate from "@/components/board/BoardCreate.vue";
 
 export default {
   name: "AppBoardCreate",
