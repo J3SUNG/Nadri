@@ -1,10 +1,10 @@
 <template>
-  <div class="plan">
-    <h1 class="plan__title">여행노트</h1>
-    <div class="plan__write">
-      <button class="plan__write-button" @click="movePlanCreate">글쓰기</button>
+  <div class="plan-note">
+    <div class="plan-note__header">
+      <h2 class="plan-note__title">여행노트</h2>
+      <button class="plan-note__write-button" @click="movePlanCreate">글쓰기</button>
     </div>
-    <div class="plan__cards">
+    <div class="plan-note__cards">
       <plan-card v-for="item in plans" :itemData="item" :key="item.planNo" />
     </div>
   </div>
@@ -46,18 +46,18 @@ export default {
 </script>
 
 <style>
-.plan {
+.plan-note {
   width: 100%;
   height: 100%;
+  padding: 50px 0px;
 }
-.plan__write {
-  text-align: right;
-  margin-bottom: 20px;
+.plan-note__header {
   display: flex;
-  justify-content: end;
-  margin-right: 110px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 120px;
 }
-.plan__cards {
+.plan-note__cards {
   width: 100%;
   margin-left: 75px;
   margin-right: 75px;
@@ -65,7 +65,7 @@ export default {
   flex-wrap: wrap;
   justify-content: start;
 }
-.plan__write-button {
+.plan-note__write-button {
   display: flex;
   width: 90px;
   height: 40px;
