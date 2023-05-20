@@ -28,6 +28,9 @@ export default {
   flex-direction: column;
 }
 .plan__header {
+  width: 80%;
+  height: auto;
+  margin-left: 10%;
   margin-top: 40px;
   display: flex;
 }

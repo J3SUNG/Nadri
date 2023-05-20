@@ -1,6 +1,6 @@
 <template>
   <div class="like-plan">
-    <p>찜한 게시글</p>
+    <p>LIKE 게시글</p>
   </div>
 </template>
 
@@ -12,8 +12,7 @@ export default {
 
 <style>
 .like-plan {
-  width: 30%;
-  height: 30%;
+  width: 40%;
   background-color: skyblue;
 }
 </style>

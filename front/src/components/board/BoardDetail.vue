@@ -19,17 +19,17 @@
     <hr class="board-detail__hr" />
     <div class="board-deatil__function">
       <button @click="moveBoardList">목록</button>
-      <div class="board-deatil__function-heart">
+      <div class="board-deatil__function-heart" v-if="isNotify">
         <img class="board-deatil__function-heart-img" @click="heartClick" :src="heart" />
-        <p class="board-deatil__function-heart-text">{{ this.board.likeCount }}</p>
+        <p class="board-deatil__function-heart-text">{{ this.heartCnt }}</p>
       </div>
       <div class="board-detail__function-admin">
         <button @click="moveBoardUpdate">수정</button>
         <button @click="deleteBoard">삭제</button>
       </div>
     </div>
-    <hr class="board-detail__hr" />
-    <div class="board-deatil__comment">
+    <hr class="board-detail__hr" v-if="isNotify" />
+    <div class="board-deatil__comment" v-if="isNotify">
       <p class="board-deatil__comment-text">댓글</p>
       <p class="board-deatil__comment-cnt">{{ commentCnt }}</p>
       <div class="board-deatil__comment-box">
@@ -58,20 +58,25 @@ export default {
       imgArr: [require("@/assets/dummy1.jpg"), require("@/assets/dummy2.jpg")],
       heart: require("@/assets/heartOff.png"),
       heartChk: false,
+      heartCnt: 0,
       title: "",
       board: "",
       commentCnt: 0,
       comments: [],
+      isNotify: 1,
     };
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
   async created() {
-    const response = await http.get(`board/${this.$route.params.boardNo}`);
-    this.heartChk = this.$route.params.isLike;
+    const response = await http.get(`board/${this.$route.params.boardNo}/${this.userInfo.userNo}`);
     this.board = response.data;
-    console.log(this.board);
+    this.heart =
+      this.board.isLike == 1 ? require("@/assets/heartOn.png") : require("@/assets/heartOff.png");
+    this.heartChk = this.board.isLike;
+    this.heartCnt = this.board.likeCount;
+    this.isNotify = this.board.boardType;
     if (this.board.boardType === 1) {
       this.title = "커뮤니티";
     } else {
