@@ -22,16 +22,29 @@
       </div>
     </div>
     <div class="mypage__main">
-      <div id="slideShow">
-        <ul class="slides" :style="`left:${this.left}`">
-          <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
-        </ul>
-        <p class="controller">
-          <!-- &lang: 왼쪽 방향 화살표
-      &rang: 오른쪽 방향 화살표 -->
-          <span class="prev" @click="moveLeft">&lang;</span>
-          <span class="next" @click="moveRight">&rang;</span>
-        </p>
+      <div class="mypage__main__visited-attr">
+        <h2 class="mypage__main__visited__title">최근 본 관광지</h2>
+        <div class="mypage__visited__slideShow">
+          <ul class="mypage__visited__slides" :style="`left:${this.attrLeft}`">
+            <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
+          </ul>
+          <p class="mypage__visited__controller">
+            <img src="@/assets/next.png" class="mypage__visited__prev" @click="moveAttrLeft" />
+            <img src="@/assets/next.png" class="mypage__visited__next" @click="moveAttrRight" />
+          </p>
+        </div>
+      </div>
+      <div class="mypage__main__visited-plan">
+        <h2 class="mypage__main__visited__title">최근 본 여행노트</h2>
+        <div class="mypage__visited__slideShow">
+          <ul class="mypage__visited__slides" :style="`left:${this.planLeft}`">
+            <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
+          </ul>
+          <p class="mypage__visited__controller">
+            <img src="@/assets/next.png" class="mypage__visited__prev" @click="movePlanLeft" />
+            <img src="@/assets/next.png" class="mypage__visited__next" @click="movePlanRight" />
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -43,9 +56,12 @@ export default {
   name: "TheMypage",
   data() {
     return {
-      left: 0,
-      currentIdx: 0, //현재 슬라이드 index
-      slideCount: 3, // 슬라이드 개수
+      attrLeft: 0,
+      attrCurrentIdx: 0, //현재 슬라이드 index
+      attrSlideCount: 3, // 슬라이드 개수
+      planLeft: 0,
+      planCurrentIdx: 0, //현재 슬라이드 index
+      planSlideCount: 3, // 슬라이드 개수
 
       userImg: require("@/assets/jetty.jpg"),
       id: "jetty1234",
@@ -136,16 +152,28 @@ export default {
       this.$router.push({ name: "AppUserUpdate" });
     },
     //
-    moveSlide(num) {
-      this.left = -num * 280 + "px";
-      this.currentIdx = num;
+    movePlanSlide(num) {
+      this.planLeft = -num * 300 + "px";
+      this.planCurrentIdx = num;
     },
-    moveLeft() {
-      if (this.currentIdx !== 0) this.moveSlide(this.currentIdx - 1);
+    movePlanLeft() {
+      if (this.planCurrentIdx !== 0) this.movePlanSlide(this.planCurrentIdx - 1);
     },
-    moveRight() {
-      if (this.currentIdx !== this.slideCount - 1) {
-        this.moveSlide(this.currentIdx + 1);
+    movePlanRight() {
+      if (this.planCurrentIdx !== this.planSlideCount - 1) {
+        this.movePlanSlide(this.planCurrentIdx + 1);
+      }
+    },
+    moveAttrSlide(num) {
+      this.attrLeft = -num * 300 + "px";
+      this.attrCurrentIdx = num;
+    },
+    moveAttrLeft() {
+      if (this.attrCurrentIdx !== 0) this.moveAttrSlide(this.attrCurrentIdx - 1);
+    },
+    moveAttrRight() {
+      if (this.attrCurrentIdx !== this.attrSlideCount - 1) {
+        this.moveAttrSlide(this.attrCurrentIdx + 1);
       }
     },
   },
@@ -213,77 +241,91 @@ export default {
 .mypage__header-button__delete {
   background-color: var(--color-tomato);
 }
-
-.mypage__main .plan__card {
-  margin: 0px;
+.mypage__main__visited-attr {
+  margin-top: 20px;
+  animation: fadeInDown 1s;
+}
+.mypage__main__visited-plan {
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeInDown 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+.mypage__main__visited__title {
+  text-align: left;
+  margin-left: 20px;
+}
+.mypage__main__visited-attr .plan__card,
+.mypage__main__visited-plan .plan__card {
+  margin: 10px 0 0 0;
   padding: 0px;
 }
-/*  */
-#slideShow {
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+/* slide */
+.mypage__visited__slideShow {
   width: 930px;
   height: 300px;
   position: relative;
   overflow: hidden;
-  margin-top: 20px;
-  /*리스트 형식으로 이미지를 일렬로 
-  정렬할 것이기 때문에, 500px 밖으로 튀어 나간 이미지들은
-  hidden으로 숨겨줘야됨*/
 }
-.slides {
+.mypage__visited__slides {
   position: absolute;
   left: 0;
   top: 0;
-  width: 2000px; /* 슬라이드할 사진과 마진 총 넓이 */
-  transition: left 0.5s ease-out;
-  /*ease-out: 처음에는 느렸다가 점점 빨라짐*/
+  width: 2000px;
+  transition: left 0.3s ease-out;
 }
-/* 첫 번째 슬라이드 가운데에 정렬하기위해
-첫번째 슬라이드만 margin-left조정 */
-.slides li:first-child {
-  margin-left: 30px;
+.mypage__visited__slides li:first-child {
+  margin-left: 25px;
 }
-.slides li:last-child {
-  margin-right: 30px;
+.mypage__visited__slides li:last-child {
+  margin-right: 25px;
 }
-/* 슬라이드들 옆으로 정렬 */
-.slides li:not(:last-child) {
+.mypage__visited__slides li:not(:last-child) {
   float: left;
   margin-right: 20px;
 }
-.slides li {
+.mypage__visited__slides li {
   float: left;
 }
-.controller span {
+.mypage__visited__controller img {
   position: absolute;
   background-color: transparent;
   color: black;
   text-align: center;
-  border-radius: 50%;
-  padding: 10px 20px;
   top: 50%;
-  font-size: 1.3em;
   cursor: pointer;
 }
-/* 이전, 다음 화살표에 마우스 커서가 올라가 있을때 */
-.controller span:hover {
-  background-color: rgba(128, 128, 128, 0.11);
+.mypage__visited__prev {
+  width: 40px;
+  height: 40px;
+  left: 0px;
+  backdrop-filter: brightness(90%);
+  border-radius: 70px;
 }
-.prev {
-  left: 10px;
-  backdrop-filter: brightness(80%);
+.mypage__visited__prev:hover {
+  backdrop-filter: brightness(70%);
 }
-/* 이전 화살표에 마우스 커서가 올라가 있을때 
-이전 화살표가 살짝 왼쪽으로 이동하는 효과*/
-.prev:hover {
-  transform: translateX(-10px);
+.mypage__visited__next {
+  width: 40px;
+  height: 40px;
+  right: 0px;
+  backdrop-filter: brightness(90%);
+  border-radius: 70px;
+  transform: rotate(180deg);
 }
-.next {
-  right: 10px;
-  backdrop-filter: brightness(80%);
-}
-/* 다음 화살표에 마우스 커서가 올라가 있을때 
-이전 화살표가 살짝 오른쪽으로 이동하는 효과*/
-.next:hover {
-  transform: translateX(10px);
+.mypage__visited__next:hover {
+  backdrop-filter: brightness(70%);
+  transform: rotate(180deg);
 }
 </style>
