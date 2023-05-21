@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.trip.model.mapper.SidoGugunMapper">
+	<resultMap type="SidoDto" id="sido">
+		<result column="sido_no" property="sidoNo"/>
+		<result column="sido_name" property="sidoName"/>
+	</resultMap>
+	<resultMap type="GugunDto" id="gugun">
+		<result column="gugun_no" property="gugunNo"/>
+		<result column="gugun_name" property="gugunName"/>
+		<result column="sido_no" property="sidoNo"/>
+	</resultMap>
+	
+	<select id="getSido" resultMap="sido">
+		select * 
+		from sido
+	</select>
+	<select id="getGugun" parameterType="int" resultMap="gugun">
+		select * 
+		from gugun
+		where sido_no = #{sido}
+	</select>
+</mapper>

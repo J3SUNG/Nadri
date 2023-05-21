@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.trip.model.mapper.AttractionReviewMapper">
+	<resultMap type="ReviewDto" id="review">
+		<result column="review_no" property="reviewNo"/>
+		<result column="content" property="content"/>
+		<result column="create_time" property="createTime"/>
+		<result column="attraction_no" property="attractionNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="nickname" property="nickname"/>
+	</resultMap>
+	
+	<select id="list" parameterType="int" resultMap="review">
+		select *
+		from attraction_review ar join user u
+		on ar.user_no = u.user_no 
+		where attraction_no = #{attractionNo}
+	</select>
+
+	<insert id="write" parameterType="ReviewDto">
+		insert into attraction_review
+		values(null,#{content},now(),#{attractionNo},#{userNo});
+	</insert>
+	
+	<update id="modify" parameterType="ReviewDto">
+		update attraction_review
+		set content = #{content}
+		where review_no = #{reviewNo}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from attraction_review
+		where review_no = #{reviewNo}
+	</delete>
+</mapper>

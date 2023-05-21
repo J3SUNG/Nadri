@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trip.controller.BoardController;
 import com.ssafy.trip.model.dto.BoardDto;
+import com.ssafy.trip.model.dto.BoardListDto;
 import com.ssafy.trip.model.dto.BoardParameterDto;
 import com.ssafy.trip.model.mapper.BoardMapper;
 
@@ -24,7 +25,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws Exception {
+	public List<BoardListDto> listArticle(BoardParameterDto boardParameterDto) throws Exception {
 		logger.debug("list parameter boardType : {}", boardParameterDto.getType());
 		Map<String, Object> param = new HashMap<String, Object>();
 		String key = boardParameterDto.getKey();
@@ -46,6 +47,8 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public void writeArticle(BoardDto boardDto) throws Exception {
 		boardMapper.writeArticle(boardDto);
+		System.out.println(boardDto.getBoardNo());
+		boardMapper.fileRegister(boardDto);
 	}
 
 	//	
@@ -79,8 +82,11 @@ public class BoardServiceImpl implements BoardService {
 //	}
 
 	@Override
-	public BoardDto getArticle(int articleNo) throws Exception {
-		return boardMapper.getArticle(articleNo);
+	public BoardDto getArticle(int boardNo, int userNo) throws Exception {
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		map.put("boardNo", boardNo);
+		map.put("userNo", userNo);
+		return boardMapper.getArticle(map);
 	}
 
 	@Override

@@ -33,7 +33,7 @@
 				AND ai.gugun_no = #{sigunguCode} 
 			</if>
 		</if> 
-		<if test="content_type != 0">
+		<if test="types[0] != 0">
 				AND content_type in
 				<foreach item="item" index="index" collection="types"
 				open="(" separator="," close=")">
@@ -42,7 +42,7 @@
 		</if>
 		</where>
 		order by title desc
-		limit 200
+		limit 20
 		
 </select>	
 

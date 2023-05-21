@@ -1,6 +1,8 @@
 package com.ssafy.trip.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -16,13 +18,18 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public PlanDto get(int planNo) {
-		return planMapper.get(planNo);
+	public PlanDto get(int planNo,int userNo) {
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		map.put("planNo", planNo);
+		map.put("userNo", userNo);
+		return planMapper.get(map);
 	}
 
 	@Override
 	public void write(PlanDto planDto) {
 		planMapper.write(planDto);
+		System.out.println(planDto.getPlanNo());
+		planMapper.fileRegister(planDto);
 	}
 
 	@Override
@@ -36,8 +43,18 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public List<PlanDto> list() {
-		return planMapper.list();
+	public List<PlanDto> list(int userNo) {
+		return planMapper.list(userNo);
+	}
+
+	@Override
+	public void updateHit(int planNo) {
+		planMapper.updateHit(planNo);
+	}
+
+	@Override
+	public List<PlanDto> likelist(int userNo) {
+		return planMapper.likelist(userNo);
 	}
 
 }
