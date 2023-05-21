@@ -66,40 +66,50 @@ public class PlanController {
 		return list;
 	}
 	
+	@GetMapping("/writelist/{userNo}")
+	public List<PlanDto> writelist(@PathVariable("userNo") int userNo) throws Exception {
+		logger.debug("get most liked list of plan");
+		List<PlanDto> list = planService.writelist(userNo);
+		return list;
+	}
+	
 	@PostMapping
-	public String write(@RequestParam(required = false) MultipartFile[] files,
+	public String write(//@RequestParam(required = false) MultipartFile[] files,
 			PlanDto planDto) throws Exception {
 		logger.debug("**********write plan : {}",planDto);
 //		planDto.setContent("plan test");planDto.setEndDate("2022-02-02");planDto.setStartDate("2022-02-02");
 //		planDto.setSubject("plan subject");planDto.setUserNo(1); //test
 		
 		
-		if (!files[0].isEmpty()) {
-			String realPath = new File("").getAbsolutePath()+"/resources/img";
-			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-			String saveFolder = realPath + File.separator + today;
-			logger.debug("저장 폴더 : {}", saveFolder);
-			File folder = new File(saveFolder);
-			if (!folder.exists())
-				folder.mkdirs();
-			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-			for (MultipartFile mfile : files) {
-				FileInfoDto fileInfoDto = new FileInfoDto();
-				String originalFileName = mfile.getOriginalFilename();
-				if (!originalFileName.isEmpty()) {
-					String saveFileName = UUID.randomUUID().toString()
-							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-					fileInfoDto.setSaveFolder(today);
-					fileInfoDto.setOriginalFile(originalFileName);
-					fileInfoDto.setSaveFile(saveFileName);
-					logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
-					mfile.transferTo(new File(folder, saveFileName));
-				}
-				fileInfos.add(fileInfoDto);
-			}
-			planDto.setFileInfos(fileInfos);
-		}
+//		if (!files[0].isEmpty()) {
+//			String realPath = new File("").getAbsolutePath()+"/resources/img";
+//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+//			String saveFolder = realPath + File.separator + today;
+//			logger.debug("저장 폴더 : {}", saveFolder);
+//			File folder = new File(saveFolder);
+//			if (!folder.exists())
+//				folder.mkdirs();
+//			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
+//			for (MultipartFile mfile : files) {
+//				FileInfoDto fileInfoDto = new FileInfoDto();
+//				String originalFileName = mfile.getOriginalFilename();
+//				if (!originalFileName.isEmpty()) {
+//					String saveFileName = UUID.randomUUID().toString()
+//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+//					fileInfoDto.setSaveFolder(today);
+//					fileInfoDto.setOriginalFile(originalFileName);
+//					fileInfoDto.setSaveFile(saveFileName);
+//					logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+//					mfile.transferTo(new File(folder, saveFileName));
+//				}
+//				fileInfos.add(fileInfoDto);
+//			}
+//			planDto.setFileInfos(fileInfos);
+//		}
 		planService.write(planDto);
+		for(TripDto trip : planDto.getTrips()) {
+			//tripService.write();			
+		}
 		return "success";
 	}
 

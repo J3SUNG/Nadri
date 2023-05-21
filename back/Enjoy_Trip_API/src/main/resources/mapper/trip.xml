@@ -13,13 +13,17 @@
 	
 	<select id="get" parameterType="int" resultMap="trip">
 		select * 
-		from trip
-		where trip_no = #{tripNo}
+		from trip t
+		join attraction_info a
+        using (attraction_no)
+		where trip_no = #{tripNo};
 	</select>
 	
 	<select id="list" parameterType="int" resultMap="trip">
 		select * 
-		from trip
+		from trip t
+		join attraction_info a
+        using (attraction_no)
 		where plan_no = #{planNo}
 	</select>
 

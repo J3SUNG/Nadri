@@ -26,4 +26,6 @@ public interface PlanMapper {
 
 	List<PlanDto> likelist(int userNo);
 
+	List<PlanDto> writelist(int userNo);
+
 }

@@ -42,7 +42,7 @@
 		</if>
 		</where>
 		order by title desc
-		limit 20
+		limit 10
 		
 </select>	
 

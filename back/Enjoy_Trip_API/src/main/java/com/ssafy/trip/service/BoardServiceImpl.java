@@ -13,7 +13,9 @@ import com.ssafy.trip.controller.BoardController;
 import com.ssafy.trip.model.dto.BoardDto;
 import com.ssafy.trip.model.dto.BoardListDto;
 import com.ssafy.trip.model.dto.BoardParameterDto;
+import com.ssafy.trip.model.dto.FileInfoDto;
 import com.ssafy.trip.model.mapper.BoardMapper;
+import com.ssafy.trip.util.PageNavigation;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -29,8 +31,8 @@ public class BoardServiceImpl implements BoardService {
 		logger.debug("list parameter boardType : {}", boardParameterDto.getType());
 		Map<String, Object> param = new HashMap<String, Object>();
 		String key = boardParameterDto.getKey();
-		if ("userid".equals(key))
-			key = "b.user_id";
+		if ("user_no".equals(key))
+			key = "b.user_no";
 		param.put("key", key == null ? "" : key);
 		param.put("word", boardParameterDto.getWord() == null ? "" : boardParameterDto.getWord());
 		int pgNo = boardParameterDto.getPg() == 0 ? 1 : boardParameterDto.getPg();
@@ -51,42 +53,46 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.fileRegister(boardDto);
 	}
 
-	//	
-//	@Override
-//	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
-//		PageNavigation pageNavigation = new PageNavigation();
-//
-//		int naviSize = SizeConstant.NAVIGATION_SIZE;
-//		int sizePerPage = SizeConstant.LIST_SIZE;
-//		int currentPage = Integer.parseInt(map.get("pgno"));
-//
-//		pageNavigation.setCurrentPage(currentPage);
-//		pageNavigation.setNaviSize(naviSize);
-//		Map<String, Object> param = new HashMap<String, Object>();
-//		String key = map.get("key");
-//		if ("userid".equals(key))
-//			key = "user_id";
-//		param.put("key", key == null ? "" : key);
-//		param.put("word", map.get("word") == null ? "" : map.get("word"));
-//		int totalCount = boardMapper.getTotalArticleCount(param);
-//		pageNavigation.setTotalCount(totalCount);
-//		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
-//		pageNavigation.setTotalPageCount(totalPageCount);
-//		boolean startRange = currentPage <= naviSize;
-//		pageNavigation.setStartRange(startRange);
-//		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < currentPage;
-//		pageNavigation.setEndRange(endRange);
+		
+	@Override
+	public PageNavigation makePageNavigation(BoardParameterDto bParamDto) throws Exception {
+		PageNavigation pageNavigation = new PageNavigation();
+
+		int naviSize = 5;
+		int sizePerPage = bParamDto.getSpp();
+		int currentPage = bParamDto.getPg();
+
+		pageNavigation.setCurrentPage(currentPage);
+		pageNavigation.setNaviSize(naviSize);
+		Map<String, Object> param = new HashMap<String, Object>();
+		String key = bParamDto.getKey();
+		if ("id".equals(key)) key = "id";
+		param.put("key", key == null ? "" : key);
+		param.put("word", bParamDto.getWord() == null ? "" : bParamDto.getWord());
+		param.put("type",bParamDto.getType());
+		int totalCount = boardMapper.getTotalArticleCount(param);
+		logger.debug("total count : {}",totalCount);
+		pageNavigation.setTotalCount(totalCount);
+		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
+		pageNavigation.setTotalPageCount(totalPageCount);
+		boolean startRange = currentPage <= naviSize;
+		pageNavigation.setStartRange(startRange);
+		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < currentPage;
+		pageNavigation.setEndRange(endRange);
 //		pageNavigation.makeNavigator();
-//
-//		return pageNavigation;
-//	}
+
+		return pageNavigation;
+	}
 
 	@Override
 	public BoardDto getArticle(int boardNo, int userNo) throws Exception {
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);
-		return boardMapper.getArticle(map);
+		BoardDto boardDto = boardMapper.getArticle(map);
+		List<FileInfoDto> files = boardMapper.fileInfoList(boardDto.getBoardNo());
+		boardDto.setFileInfos(files);
+		return boardDto;
 	}
 
 	@Override
@@ -99,5 +105,7 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteArticle(int articleNo) throws Exception {
 		boardMapper.deleteArticle(articleNo);
 	}
+
+
 
 }
