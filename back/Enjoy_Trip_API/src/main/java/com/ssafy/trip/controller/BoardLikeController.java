@@ -26,11 +26,11 @@ public class BoardLikeController {
 	}
 	
 	@GetMapping("/{boardNo}")
-	public int get(@PathVariable("boardNo") int boardNo) throws Exception {
+	public int get(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		/**
 		 * 세션??에서 사용자 번호를 가져와서 사용자가 boardNo에 해당하는 게시글에 좋아요를 눌렀다면 1 아니면 0 반환
 		 */
-		int userNo = 1;//test
+//		int userNo = 1;//test
 		logger.debug("like board {} user {}", boardNo,userNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);

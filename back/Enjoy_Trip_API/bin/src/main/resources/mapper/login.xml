@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.LoginMapper">
+<resultMap type="userDto" id="user">
+		<result column="user_no" property="userNo" />
+		<result column="id" property="id" />
+		<result column="nickname" property="nickname" />
+		<result column="email" property="email" />
+		<result column="grade" property="grade" />
+</resultMap>
+	
+<!-- 
+<select id="login" parameterType="LoginParameterDto" resultMap="user">
+		select
+		user_no, id, nickname, email, grade
+		from user
+		where id = #{id} and password = #{pw}
+</select>	 
+-->
+	<select id="login" parameterType="map" resultMap="user">
+		select user_no, nickname, id, email, grade
+		from user
+		where id = #{id} and password = #{password}
+	</select>
+	
+	<select id="userInfo" parameterType="string" resultMap="user">
+		select user_no, nickname, id, email, grade
+		from user
+		where id = #{userid}
+	</select>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user
+		where id = #{userid}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set token = #{token}
+		where id = #{userid}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user
+		set token = #{token, jdbcType=VARCHAR}
+		where id = #{userid}
+	</update>
+</mapper>

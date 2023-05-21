@@ -31,14 +31,12 @@ public class JwtServiceImpl implements JwtService {
 	@Override
 	public <T> String createAccessToken(String key, T data) {
 		return create(key, data, "access-token", 1000 * 60 * 60 * ACCESS_TOKEN_EXPIRE_HOURS);
-//		return create(key, data, "access-token", 1000 * 10 * ACCESS_TOKEN_EXPIRE_MINUTES);
 	}
 
 //	AccessToken에 비해 유효기간을 길게...
 	@Override
 	public <T> String createRefreshToken(String key, T data) {
 		return create(key, data, "refresh-token", 1000 * 60 * 60 * REFRESH_TOKEN_EXPIRE_HOURS);
-//		return create(key, data, "refresh-token", 1000 * 30 * ACCESS_TOKEN_EXPIRE_MINUTES);
 	}
 
 	// Token 발급
@@ -49,7 +47,6 @@ public class JwtServiceImpl implements JwtService {
 	 */
 	@Override
 	public <T> String create(String key, T data, String subject, long expire) {
-		System.out.println("**********토큰을 만들어보자*********");
 		// Payload 설정 : 생성일 (IssuedAt), 유효기간 (Expiration),
 		// 토큰 제목 (Subject), 데이터 (Claim) 등 정보 세팅.
 		Claims claims = Jwts.claims()

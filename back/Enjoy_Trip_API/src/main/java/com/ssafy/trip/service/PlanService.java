@@ -6,7 +6,7 @@ import com.ssafy.trip.model.dto.PlanDto;
 
 public interface PlanService {
 
-	PlanDto get(int planNo);
+	PlanDto get(int planNo, int userNo);
 
 	void write(PlanDto planDto);
 
@@ -14,6 +14,10 @@ public interface PlanService {
 
 	void delete(int planNo);
 
-	List<PlanDto> list();
+	List<PlanDto> list(int userNo);
+
+	void updateHit(int planNo);
+
+	List<PlanDto> likelist(int userNo);
 
 }

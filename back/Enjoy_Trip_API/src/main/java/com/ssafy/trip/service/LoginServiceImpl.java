@@ -13,8 +13,6 @@ import com.ssafy.trip.model.mapper.LoginMapper;
 @Service
 public class LoginServiceImpl implements LoginService {
 	
-//	@Autowired
-//	private SqlSession sqlSession;
 	@Autowired
 	LoginMapper loginMapper;
 
@@ -22,13 +20,10 @@ public class LoginServiceImpl implements LoginService {
 	public UserDto login(UserDto userDto) throws Exception {
 		if (userDto.getId() == null || userDto.getPassword() == null)
 			return null;
-//		System.out.println(userDto.toString());
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id", userDto.getId());
 		map.put("password", userDto.getPassword());
 		System.out.println(map.get("id"));
-//		System.out.println(userDto.getId());
-//		return loginMapper.login(userDto.getId(), userDto.getPassword());
 		return loginMapper.login(map);
 	}
 
@@ -42,7 +37,6 @@ public class LoginServiceImpl implements LoginService {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", "user1");
 		map.put("token", refreshToken);
-//		System.out.println(userid+" ***** "+map.get("token"));
 		loginMapper.saveRefreshToken(map);
 	}
 
