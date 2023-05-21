@@ -282,13 +282,13 @@ export default {
   align-items: center;
 }
 .signup__form {
-  border-radius: 20px;
   padding: 30px;
   width: 500px;
   background-color: var(--color-white);
   box-shadow: 0px 0px 5px var(--color-darkgray);
 }
 .signup__logo {
+  width: 160px;
   margin-bottom: 20px;
 }
 .signup__label {
@@ -310,7 +310,7 @@ export default {
 .signup__btn {
   font-weight: bold;
   border: 0px;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 .signup__signup-btn {
   width: 120px;

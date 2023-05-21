@@ -87,7 +87,6 @@ export default {
 }
 .login__form {
   display: flex;
-  border-radius: 20px;
   padding: 30px;
   width: 500px;
   background-color: var(--color-white);
