@@ -217,11 +217,8 @@ export default {
   margin-bottom: 20px;
 }
 .map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 500px;
 }
 .map__select__box {
   width: 310px;

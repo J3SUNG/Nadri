@@ -140,9 +140,9 @@ export default {
   justify-content: right;
   cursor: pointer;
   /*  */
-  -webkit-transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
+  /* -webkit-transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
   -o-transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
-  transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1);
+  transition: all 0.25s cubic-bezier(1, 0.01, 0.32, 1); */
 }
 .best-plan__box {
   width: 100%;
