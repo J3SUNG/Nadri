@@ -1,5 +1,9 @@
 package com.ssafy.trip.model.dto;
 
+import java.util.List;
+
+import com.ssafy.trip.util.PageNavigation;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TripDto {
-	private int tripNo;
-	private int order;
-	private String memo;
-	private int planNo;
-	private int attractionNo;
-	private String image1;
+public class BoardPageDto {
+	private PageNavigation pageNavigation;
+	List<BoardListDto> list;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ssafy.trip.model.dto.BoardDto;
 import com.ssafy.trip.model.dto.BoardListDto;
 import com.ssafy.trip.model.dto.BoardParameterDto;
+import com.ssafy.trip.util.PageNavigation;
 
 public interface BoardService {
 	
@@ -13,5 +14,6 @@ public interface BoardService {
 	BoardDto getArticle(int boardNo, int userNo) throws Exception;
 	void modifyArticle(BoardDto boardDto) throws Exception;
 	void deleteArticle(int articleNo) throws Exception;
+	PageNavigation makePageNavigation(BoardParameterDto boardParameterDto) throws Exception;
 	
 }

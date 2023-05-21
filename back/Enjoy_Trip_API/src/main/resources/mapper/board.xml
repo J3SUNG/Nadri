@@ -81,20 +81,55 @@ right outer join
 		enjoy_trip.board_comment
 		group by board_no) c
 		on b.board_no = c.board_no
-		where b.board_type = 1
-        <if test="word != null and word != ''">
-			<if test="key == 'subject'">
-				and subject like concat('%', #{word}, '%')
-			</if>
-			<if test="key != 'subject'">
-				and ${key} = #{word}
-			</if>
-		</if>
+		where b.board_type = #{boardType}
+        <include refid="search"></include>
 		group by b.board_no
 		order by b.board_no desc
 		limit #{start}, #{listsize}
         ) mi using(idx)
 	</select>
+	
+	<select id="writelist" parameterType="int" resultMap="boardlist">
+	    select *
+		from file_info f
+		right outer join
+		(select b.board_no, b.board_type, b.subject subject, b.content content,
+		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
+		count(bl.like_no) like_count, b.user_no, u.nickname,
+		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0) isLike
+        ,min(idx) idx
+		from
+		board b
+        left outer join file_info f
+        on b.board_no = f.board_no
+		left join
+		(select board_no, count(*) isLike from board_like
+		where user_no = 1
+		group by board_no) bll
+		on b.board_no = bll.board_no
+		left join board_like bl
+		on b.board_no = bl.board_no
+		join user u
+		on b.user_no = u.user_no
+		left join
+		(select board_no, count(*)
+		comment_cnt from
+		enjoy_trip.board_comment
+		group by board_no) c
+		on b.board_no = c.board_no
+		group by b.board_no
+		order by b.board_no desc
+        ) mi using(idx)
+        where user_no = #{userNo};
+	</select>
+	
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(board_no)
+		from board
+		where board_type = #{type}
+		<include refid="search"></include>
+	</select> <!--  ***************수정필요 -->
+	
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board
 		(board_no, board_type, create_time, subject, content,
@@ -121,7 +156,7 @@ right outer join
 	<select id="fileInfoList" resultMap="file">
 		select save_folder, original_file, save_file
 		from file_info
-		where article_no = #{articleNo}
+		where board_no = #{boardNo}
 	</select>
 
 	<select id="getArticle" parameterType="map" resultMap="board">

@@ -22,5 +22,6 @@ public class PlanDto {
 	private int isLike;
 	private int likeCount;
 	private List<TripDto> trips;
-	private List<FileInfoDto> fileInfos;
+	private String image1;
+//	private List<FileInfoDto> fileInfos;
 }
