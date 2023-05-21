@@ -56,7 +56,7 @@ export default {
   margin-bottom: 20px;
   display: flex;
   justify-content: end;
-  margin-right: 110px;
+  margin-right: 120px;
 }
 .board__cards {
   width: 100%;

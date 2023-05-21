@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import AppHome from "@/views/AppHome.vue";
 import AppLogin from "@/views/AppLogin.vue";
 import AppMypage from "@/views/AppMypage.vue";
+import AppUserUpdate from "@/views/AppUserUpdate.vue";
 import AppFindPwd from "@/views/AppFindPwd.vue";
 import AppBoard from "@/views/AppBoard.vue";
 import AppBoardDetail from "@/views/AppBoardDetail.vue";
@@ -58,6 +59,11 @@ const routes = [
     path: "/mypage",
     name: "AppMypage",
     component: AppMypage,
+  },
+  {
+    path: "/userUpdate",
+    name: "AppUserUpdate",
+    component: AppUserUpdate,
   },
   {
     path: "/findPwd",

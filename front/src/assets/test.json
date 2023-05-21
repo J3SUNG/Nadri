@@ -1,26 +1,11 @@
 [
   {
-    "board_no": 1,
-    "board_type": 0,
-    "create_time": "2023-05-03",
-    "subject": "Hi",
-    "content": "hahaha",
-    "user_no": 12
+    "0": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1bb..png" },
+    "1": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1xx..png" }
   },
   {
-    "board_no": 2,
-    "board_type": 0,
-    "create_time": "2023-05-03",
-    "subject": "Hey",
-    "content": "Yeah",
-    "user_no": 12
-  },
-  {
-    "board_no": 3,
-    "board_type": 0,
-    "create_time": "2023-05-03",
-    "subject": "Oh",
-    "content": "NMY",
-    "user_no": 12
+    "0": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1bb..png" },
+    "1": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1xx..png" },
+    "2": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1xx..png" }
   }
 ]
