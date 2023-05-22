@@ -68,20 +68,15 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/modify")
-	public String ModifyUser(@RequestParam(required = false) MultipartFile[] files, UserDto userDto) throws Exception {
+	@PostMapping(value = "/modify", consumes = {org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE})
+	public String ModifyUser(@RequestParam("img") MultipartFile img, UserDto userDto) throws Exception {
 		/**
 		 * 회원 정보 수정을 위한 userDto를 받아서 받은 내용 그대로 회원 정보를 수정한다. 수정된 내용으로
 		 * 정보를 재등록한다. 이메일, 닉네임만 변경 결과로 '회원 수정' 반환
 		 */
 		logger.debug("modify userDto info : {}", userDto);
-//		// test
-//		userDto.setUserNo(1);
-//		userDto.setId("ssafy");
-//		userDto.setEmail("test@gmail.com");
-//		userDto.setNickname("예삐");
-//
-		if (!files[0].isEmpty()) {
+
+		if (!img.isEmpty()) {
 			String realPath = new File("").getAbsolutePath() + "/resources/img";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
@@ -89,7 +84,7 @@ public class UserController {
 			File folder = new File(saveFolder);
 			if (!folder.exists())
 				folder.mkdirs();
-			MultipartFile mfile = files[0];
+			MultipartFile mfile = img;
 			FileInfoDto fileInfoDto = new FileInfoDto();
 			String originalFileName = mfile.getOriginalFilename();
 			if (!originalFileName.isEmpty()) {

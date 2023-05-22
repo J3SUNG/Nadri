@@ -28,7 +28,6 @@ import com.ssafy.trip.model.dto.BoardListDto;
 import com.ssafy.trip.model.dto.BoardPageDto;
 import com.ssafy.trip.model.dto.BoardParameterDto;
 import com.ssafy.trip.model.dto.FileInfoDto;
-import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.service.BoardLikeService;
 import com.ssafy.trip.service.BoardService;
 import com.ssafy.trip.util.PageNavigation;
@@ -54,11 +53,15 @@ public class BoardController {
 	BoardLikeService boardLikeService;
 
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("")
-	public String write(@RequestParam(required = false) MultipartFile[] files, BoardDto boardDto) throws Exception {
+	@PostMapping(consumes = {org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE})
+	public String write(@RequestParam("imgs") List<MultipartFile> imgs, BoardDto boardDto) throws Exception { //, BoardDto boardDto
+		
+		logger.debug(imgs.get(0).getOriginalFilename());
+		logger.debug(imgs.get(1).getOriginalFilename());
+		
 		logger.debug("게시판 글 작성 boardDto : {}", boardDto);
 
-		if (!files[0].isEmpty()) {
+		if (!imgs.get(0).isEmpty()) {
 			String realPath = new File("").getAbsolutePath() + "/resources/img";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
@@ -67,7 +70,7 @@ public class BoardController {
 			if (!folder.exists())
 				folder.mkdirs();
 			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-			for (MultipartFile mfile : files) {
+			for (MultipartFile mfile : imgs) {
 				FileInfoDto fileInfoDto = new FileInfoDto();
 				String originalFileName = mfile.getOriginalFilename();
 				if (!originalFileName.isEmpty()) {

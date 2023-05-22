@@ -40,6 +40,9 @@
 					#{item}
 				</foreach>
 		</if>
+		<if test="search != null">
+				and title like concat('%', #{search}, '%')
+			</if>
 		</where>
 		order by title desc
 		limit 10
