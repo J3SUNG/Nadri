@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="map__hide-footer"></div>
     <div class="map__box">
       <div class="map__select__box">
         <select class="map__select map__select-sido" v-model="sidoCode" @change="changeSido">
@@ -16,7 +17,6 @@
         </select>
       </div>
 
-      <!-- check box start  **************************-->
       <div class="map__checkbox__box">
         <label class="map__checkbox-label">관광지</label>
         <input
@@ -93,28 +93,38 @@
       </div>
       <!-- 12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점-->
       <!-- check box        ***************************-->
-      <input class="map__search" v-model="search" />
+      <input
+        class="map__search"
+        v-model="search"
+        placeholder="주소 검색"
+        @change="changeContentType"
+      />
     </div>
     <div id="map" class="map">
-      <map-left />
-    </div>
-    <div>
-      <div v-for="(item, index) in positions" :key="index">
-        <img :src="item.image1" />
-        <!-- <img :src="item.image2" /> -->
-        <!-- 아마 image2가 썸네일 용이라 저화질, image가 없을때 no image 처리 필요-->
-        <div>{{ item.title }} {{ item.addr1 }} {{ item.addr2 }} {{ item.tel }}</div>
-        <div>{{ item.overview }}</div>
+      <div class="map__left">
+        <div class="map__left__box" v-for="(item, index) in positions" :key="index">
+          <img class="map__left__box__img" :src="item.image1" />
+          <!-- <img :src="item.image2" /> -->
+          <!-- 아마 image2가 썸네일 용이라 저화질, image가 없을때 no image 처리 필요-->
+          <div class="map__left__box__main">
+            <div class="map__left__box__main__up">
+              <h2 class="map__left__box__main__up__title">{{ item.title }}</h2>
+              <p class="map__left__box__main__up__type">{{ type[item.contentType] }}</p>
+            </div>
+            <p class="map__left__box__main__addr">{{ item.addr1 }}</p>
+            <p class="map__left__box__main__tel">{{ item.tel }}</p>
+          </div>
+          <!-- <div>{{ item.overview }}</div> -->
+        </div>
       </div>
     </div>
+    <div></div>
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
-import MapLeft from "./MapLeft.vue";
 export default {
-  components: { MapLeft },
   name: "TheMap",
   data() {
     return {
@@ -131,6 +141,16 @@ export default {
       message: "Hello, world",
       file: "",
       img_src: "",
+      type: {
+        12: "관광지",
+        14: "문화시설",
+        15: "축제공연행사",
+        25: "여행코스",
+        28: "레포츠",
+        32: "숙박",
+        38: "쇼핑",
+        39: "음식점",
+      },
     };
   },
   created() {},
@@ -268,19 +288,29 @@ export default {
       }
     },
     displayMarker() {
-      let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; // 마커 이미지
-      let imageSize = new window.kakao.maps.Size(24, 35); //마커 이미지 크기
-      let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-      //console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
+      let imageSrc = {
+        12: require("@/assets/type_white/type_white_trip.png"),
+        14: require("@/assets/type_white/type_white_cultural.png"),
+        15: require("@/assets/type_white/type_white_event.png"),
+        25: require("@/assets/type_white/type_white_course.png"),
+        28: require("@/assets/type_white/type_white_leport.png"),
+        32: require("@/assets/type_white/type_white_home.png"),
+        38: require("@/assets/type_white/type_white_shopping.png"),
+        39: require("@/assets/type_white/type_white_food.png"),
+      }; // 마커 이미지
+      let imageSize = new window.kakao.maps.Size(30, 30); //마커 이미지 크기
+      console.log(window.kakao.maps);
+      let markerImage = new window.kakao.maps.MarkerImage(imageSrc[12], imageSize);
+      console.log(this.positions);
+      // console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
       // let bounds = new window.kakao.maps.LatLngBounds(); // 지도 범위 재설정
 
       this.positions.forEach((position) => {
         const infowindow = new window.kakao.maps.InfoWindow({
           content: `<img src="${position.image1}" width="100px" height="100px"/><p>
-          ${position.title}<br>
-          주소 : ${position.addr1} ${position.addr2}<br>
-          </p>`,
-          removable: false,
+            ${position.title}<br>
+            주소 : ${position.addr1} ${position.addr2}<br>
+            </p>`,
         });
 
         const marker = new window.kakao.maps.Marker({
@@ -313,25 +343,80 @@ export default {
 
 <style>
 .map__left {
-  width: 400px;
-  height: 100vh;
-  background-color: tomato;
+  margin-top: 100px;
+  width: 360px;
+  height: 80vh;
+  left: 0;
   position: absolute;
   z-index: 10;
+  overflow: scroll;
+  backdrop-filter: brightness(20%);
+  border-radius: 5px;
+  cursor: pointer;
 }
+.map__left p,
+h2 {
+  color: white;
+}
+.map__left__box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid;
+}
+.map__left__box:hover {
+  /* animation: scaling 1s ease-in-out infinite; */
+}
+.map__left__box__img {
+  margin-left: 10px;
+  min-width: 80px;
+  min-height: 80px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+.map__left__box__main {
+  margin-left: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.map__left__box__main__up {
+  display: flex;
+  align-items: center;
+}
+.map__left__box__main__up__title {
+  width: 180px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .map__box {
   display: flex;
-  justify-content: space-between;
-  align-content: center;
-  margin-bottom: 20px;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  position: absolute;
+  top: 80px;
+  width: 1140px;
+  height: 60px;
+  backdrop-filter: brightness(40%);
+  border-radius: 10px;
 }
 .map {
   position: absolute;
+  display: flex;
+  justify-content: center;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
 }
 .map__select__box {
   width: 310px;
@@ -344,6 +429,7 @@ export default {
   width: 200px;
 }
 .map__search {
+  text-align: center;
   width: 200px;
 }
 .map__box input,
@@ -356,6 +442,9 @@ export default {
 .map__checkbox__box {
   display: flex;
   align-content: center;
+}
+.map__checkbox__box label {
+  color: white;
 }
 .map__checkbox-label {
   position: relative;

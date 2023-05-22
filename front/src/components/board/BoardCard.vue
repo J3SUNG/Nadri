@@ -159,14 +159,6 @@ export default {
 .board__card__footer__icon-heart:hover {
   animation: scaling 1s ease-in-out infinite;
 }
-@keyframes scaling {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.3);
-  }
-}
 .board__card__footer__text {
   margin-left: 10px;
   width: 28px;
