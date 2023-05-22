@@ -7,6 +7,53 @@
     <div class="board__cards">
       <board-card v-for="item in boards" :itemData="item" :key="item.boardNo" />
     </div>
+    <div class="board__pagenation__box">
+      <button
+        :class="{
+          board__pagenation: true,
+          board__pagenation__hidden: !this.pageNav.startRange,
+        }"
+        @click="movePage(startPage - 1)"
+      >
+        &lt;
+      </button>
+      <button
+        :class="{ board__pagenation: true, board__pagenation__selected: this.selected[0] }"
+        @click="movePage(startPage)"
+      >
+        {{ this.startPage }}
+      </button>
+      <button
+        :class="{ board__pagenation: true, board__pagenation__selected: this.selected[1] }"
+        @click="movePage(startPage + 1)"
+      >
+        {{ this.startPage + 1 }}
+      </button>
+      <button
+        :class="{ board__pagenation: true, board__pagenation__selected: this.selected[2] }"
+        @click="movePage(startPage + 2)"
+      >
+        {{ this.startPage + 2 }}
+      </button>
+      <button
+        :class="{ board__pagenation: true, board__pagenation__selected: this.selected[3] }"
+        @click="movePage(startPage + 3)"
+      >
+        {{ this.startPage + 3 }}
+      </button>
+      <button
+        :class="{ board__pagenation: true, board__pagenation__selected: this.selected[4] }"
+        @click="movePage(startPage + 4)"
+      >
+        {{ this.startPage + 4 }}
+      </button>
+      <button
+        :class="{ board__pagenation: true, board__pagenation__hidden: !this.pageNav.endRange }"
+        @click="movePage(startPage + 5)"
+      >
+        &gt;
+      </button>
+    </div>
   </div>
 </template>
 
@@ -28,19 +75,53 @@ export default {
   data() {
     return {
       boards: [],
+      pageNav: {},
       type: "1",
+      nextPage: 1,
+      startPage: 1,
+      selected: [true, false, false, false, false],
     };
   },
   created() {
     let userNo = this.userInfo === null ? 0 : this.userInfo.userNo;
     http.get(`board?type=${this.type}&userNo=${userNo}`).then((response) => {
-      this.boards = response.data;
-      console.log(this.boards);
+      this.boards = response.data.list;
+      this.pageNav = response.data.pageNavigation;
+      console.log(this.pageNav);
     });
   },
   methods: {
     moveBoardCreate() {
       this.$router.push({ name: "AppBoardCreate", params: { boardType: this.type } });
+    },
+    movePage(page) {
+      this.nextPage = page;
+      if (this.nextPage <= 0) {
+        this.nextPage = 1;
+      } else if (this.nextPage >= this.pageNav.totalPageCount) {
+        this.nextPage = this.pageNav.totalPageCount;
+      }
+      http.get(`board?pg=${this.nextPage}&type=${this.type}`).then((response) => {
+        this.boards = response.data.list;
+        this.pageNav = response.data.pageNavigation;
+        console.log(this.pageNav);
+        if (!this.pageNav.startRange) {
+          this.startPage = 1;
+          this.selected = [true, false, false, false, false];
+        } else if (!this.pageNav.endRange) {
+          this.startPage = this.pageNav.totalPageCount - 4;
+          this.selected = [false, false, false, false, true];
+        } else if (!this.pageNav.startRange2) {
+          this.startPage = 1;
+          this.selected = [false, true, false, false, false];
+        } else if (!this.pageNav.endRange2) {
+          this.startPage = this.pageNav.totalPageCount - 4;
+          this.selected = [false, false, false, true, false];
+        } else {
+          this.startPage = this.pageNav.currentPage - 2;
+          this.selected = [false, false, true, false, false];
+        }
+      });
     },
   },
 };
@@ -74,5 +155,15 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 16px;
+}
+.board__pagenation {
+  color: black;
+  background-color: white;
+}
+.board__pagenation__selected {
+  color: var(--color-main);
+}
+.board__pagenation__hidden {
+  visibility: hidden;
 }
 </style>

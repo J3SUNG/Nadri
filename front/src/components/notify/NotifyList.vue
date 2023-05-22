@@ -5,31 +5,77 @@
       <div class="notify__write">
         <button class="notify__write-button" @click="moveNotifyCreate">글쓰기</button>
       </div>
-      <!-- <div v-if="boards.length"> -->
-      <table class="notify__table">
-        <colgroup class="notify__colgroup">
-          <col width="200px" />
-          <col width="512px" />
-          <col width="200px" />
-        </colgroup>
-        <thead>
-          <tr class="notify__table__tr">
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <notify-list-item></notify-list-item> -->
-          <notify-list-item
-            v-for="board in boards"
-            :key="board.boardNo"
-            :board="board"
-            class="notify__table__data"
-          ></notify-list-item>
-        </tbody>
-      </table>
-      <!-- <div v-else>게시글이 없습니다.</div> -->
+      <div class="notify__table__box">
+        <table class="notify__table">
+          <colgroup class="notify__colgroup">
+            <col width="200px" />
+            <col width="512px" />
+            <col width="200px" />
+          </colgroup>
+          <thead>
+            <tr class="notify__table__tr">
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <notify-list-item
+              v-for="board in boards"
+              :key="board.boardNo"
+              :board="board"
+              class="notify__table__data"
+            ></notify-list-item>
+          </tbody>
+        </table>
+      </div>
+      <div class="notify__pagenation__box">
+        <button
+          :class="{
+            notify__pagenation: true,
+            notify__pagenation__hidden: !this.pageNav.startRange,
+          }"
+          @click="movePage(startPage - 1)"
+        >
+          &lt;
+        </button>
+        <button
+          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[0] }"
+          @click="movePage(startPage)"
+        >
+          {{ this.startPage }}
+        </button>
+        <button
+          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[1] }"
+          @click="movePage(startPage + 1)"
+        >
+          {{ this.startPage + 1 }}
+        </button>
+        <button
+          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[2] }"
+          @click="movePage(startPage + 2)"
+        >
+          {{ this.startPage + 2 }}
+        </button>
+        <button
+          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[3] }"
+          @click="movePage(startPage + 3)"
+        >
+          {{ this.startPage + 3 }}
+        </button>
+        <button
+          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[4] }"
+          @click="movePage(startPage + 4)"
+        >
+          {{ this.startPage + 4 }}
+        </button>
+        <button
+          :class="{ notify__pagenation: true, notify__pagenation__hidden: !this.pageNav.endRange }"
+          @click="movePage(startPage + 5)"
+        >
+          &gt;
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,17 +92,52 @@ export default {
   data() {
     return {
       boards: [],
+      pageNav: {},
       type: "0",
+      nextPage: 1,
+      startPage: 1,
+      selected: [true, false, false, false, false],
     };
   },
   created() {
-    http.get(`board?type=${this.type}`).then((response) => {
-      this.boards = response.data;
+    http.get(`board?pg=${this.nextPage}&type=${this.type}`).then((response) => {
+      this.boards = response.data.list;
+      this.pageNav = response.data.pageNavigation;
+      console.log(this.pageNav);
     });
   },
   methods: {
     moveNotifyCreate() {
       this.$router.push({ name: "AppNotifyCreate", params: { boardType: this.type } });
+    },
+    movePage(page) {
+      this.nextPage = page;
+      if (this.nextPage <= 0) {
+        this.nextPage = 1;
+      } else if (this.nextPage >= this.pageNav.totalPageCount) {
+        this.nextPage = this.pageNav.totalPageCount;
+      }
+      http.get(`board?pg=${this.nextPage}&type=${this.type}`).then((response) => {
+        this.boards = response.data.list;
+        this.pageNav = response.data.pageNavigation;
+        console.log(this.pageNav);
+        if (!this.pageNav.startRange) {
+          this.startPage = 1;
+          this.selected = [true, false, false, false, false];
+        } else if (!this.pageNav.endRange) {
+          this.startPage = this.pageNav.totalPageCount - 4;
+          this.selected = [false, false, false, false, true];
+        } else if (!this.pageNav.startRange2) {
+          this.startPage = 1;
+          this.selected = [false, true, false, false, false];
+        } else if (!this.pageNav.endRange2) {
+          this.startPage = this.pageNav.totalPageCount - 4;
+          this.selected = [false, false, false, true, false];
+        } else {
+          this.startPage = this.pageNav.currentPage - 2;
+          this.selected = [false, false, true, false, false];
+        }
+      });
     },
   },
 };
@@ -71,6 +152,10 @@ export default {
 .notify__box {
   width: 80%;
   height: 100%;
+}
+.notify__table__box {
+  width: 100%;
+  height: 550px;
 }
 .notify__table {
   width: 100%;
@@ -103,5 +188,15 @@ export default {
 .notify__table__tr th {
   border-bottom: 1px solid var(--color-lightgray);
   border-top: 1px solid var(--color-lightgray);
+}
+.notify__pagenation {
+  color: black;
+  background-color: white;
+}
+.notify__pagenation__selected {
+  color: var(--color-main);
+}
+.notify__pagenation__hidden {
+  visibility: hidden;
 }
 </style>
