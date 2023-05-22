@@ -141,10 +141,12 @@ export default {
   display:flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
+  margin-left: 121px;
 }
 .board__write {
   text-align: right;
-height: 100%;
+  height: 100%;
   display: flex;
   justify-content: end;
   align-items: center;

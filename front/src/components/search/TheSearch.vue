@@ -5,19 +5,23 @@
             <option value="nickname">닉네임</option>
         </select>
         <input class="search-input"/>
-        <button class="search-button" @click="moveBoardCreate">검색</button>
+        <button class="search-button" @click="clickSearch">검색</button>
     </div>
 </template>
   
 <script>
   export default {
     name: "TheSearch",
+    methods: {
+        clickSearch() {
+            //검색
+        }
+    }
   };
 </script>
   
 <style>
 .search__box {
-  margin-left: 123px;
   width: 360px;
   display:flex;
   justify-content: space-around;

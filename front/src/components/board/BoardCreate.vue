@@ -1,14 +1,14 @@
 <template>
   <div class="board__create">
-    <!-- <h2 class="board__create__title">게시글 작성</h2> -->
     <div class="board__create__box">
       <input class="board__create__subject" placeholder="제목을 입력하세요" v-model="subject" />
       <hr class="board__create__hr" />
       <textarea
-        class="board__create__content"
-        placeholder="내용을 입력하세요"
-        v-model="content"
+      class="board__create__content"
+      placeholder="내용을 입력하세요"
+      v-model="content"
       ></textarea>
+      <hr class="board__create__hr" />
       <div class="board__create__footer">
         <img class="board__create__button board__create__button-img" src="@/assets/file.png" />
         <!-- 서버에 요청 보내기 -->
@@ -56,20 +56,25 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  
 }
 .board__create input:focus,
 textarea:focus {
   outline: none;
 }
-.board__create__title {
+/* .board__create__title {
+  text-align: left;
+  width:100%;
   margin-bottom: 20px;
-}
+  margin-left: 40%;
+} */
 .board__create__hr {
   color: lightgray;
   width: 100%;
   opacity: 0.4;
 }
 .board__create__box {
+  margin-top: 40px;
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -92,11 +97,11 @@ textarea:focus {
   border: 0px solid var(--color-lightgray);
 }
 .board__create__subject {
-  font-size: 40px;
+  font-size: 32px;
   border: 10px solid black;
 }
 .board__create__content {
-  font-size: 20px;
+  font-size: 18px;
   height: 50%;
 }
 .board__create__footer {
@@ -115,6 +120,7 @@ textarea:focus {
   cursor: pointer;
 }
 .board__create__button-a {
+  font-size: 20px;
   height: auto;
   width: auto;
 }

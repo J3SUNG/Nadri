@@ -2,7 +2,8 @@
   <div class="notify">
     <div class="notify__box">
       <h1>공지사항</h1>
-      <div class="notify__write">
+      <div class="notify__header__box">
+        <the-search/>
         <button class="notify__write-button" @click="moveNotifyCreate">글쓰기</button>
       </div>
       <div class="notify__table__box">
@@ -83,11 +84,13 @@
 <script>
 import http from "@/util/http-common";
 import NotifyListItem from "@/components/notify/NotifyListItem.vue";
+import TheSearch from "@/components/search/TheSearch.vue";
 
 export default {
   name: "NotifyList",
   components: {
     NotifyListItem,
+    TheSearch,
   },
   data() {
     return {
@@ -166,9 +169,11 @@ export default {
 .notify__colgroup {
   width: 100%;
 }
-.notify__write {
-  display: flex;
-  justify-content: end;
+.notify__header__box {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
 .notify__write-button {
   display: flex;
