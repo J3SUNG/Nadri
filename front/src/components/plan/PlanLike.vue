@@ -68,8 +68,8 @@ export default {
 
 <style>
 .like-plan {
-  width: 35%;
-  height: 400px;
+  width: 440px;
+  height: 440px;
 }
 .like-plan__title {
   width: 100%;
@@ -97,7 +97,7 @@ export default {
 }
 .like-plan__img {
   height: 100%;
-  width: 100px;
+  width: 140px;
 }
 .like-plan__main {
   display: flex;

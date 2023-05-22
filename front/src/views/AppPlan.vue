@@ -28,9 +28,8 @@ export default {
   flex-direction: column;
 }
 .plan__header {
-  width: 80%;
+  width: 100%;
   height: auto;
-  margin-left: 10%;
   display: flex;
   justify-content: space-between;
 }

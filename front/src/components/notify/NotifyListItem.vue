@@ -1,8 +1,8 @@
 <template>
   <tr class="notify__item" @click="moveNotifyDetail">
-    <td>{{ board.boardNo }}</td>
-    <td>{{ board.subject }}</td>
-    <td>{{ board.createTime }}</td>
+    <td class="notify__item__boardNo">{{ board.boardNo }}</td>
+    <td class="notify__item__subject">{{ board.subject }}</td>
+    <td class="notify__item__createTime">{{ board.createTime }}</td>
   </tr>
 </template>
 

@@ -3,7 +3,7 @@
     <div class="notify__box">
       <h1>공지사항</h1>
       <div class="notify__header__box">
-        <the-search/>
+        <the-search />
         <button class="notify__write-button" @click="moveNotifyCreate">글쓰기</button>
       </div>
       <div class="notify__table__box">
@@ -148,12 +148,12 @@ export default {
 
 <style>
 .notify {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: 80%;
+  margin-left: 10%;
+  height: 100%;
 }
 .notify__box {
-  width: 80%;
+  width: 100%;
   height: 100%;
 }
 .notify__table__box {
@@ -170,7 +170,7 @@ export default {
   width: 100%;
 }
 .notify__header__box {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;

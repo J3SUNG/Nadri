@@ -4,9 +4,9 @@
       <input class="board__create__subject" placeholder="제목을 입력하세요" v-model="subject" />
       <hr class="board__create__hr" />
       <textarea
-      class="board__create__content"
-      placeholder="내용을 입력하세요"
-      v-model="content"
+        class="board__create__content"
+        placeholder="내용을 입력하세요"
+        v-model="content"
       ></textarea>
       <hr class="board__create__hr" />
       <div class="board__create__footer">
@@ -56,7 +56,6 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  
 }
 .board__create input:focus,
 textarea:focus {

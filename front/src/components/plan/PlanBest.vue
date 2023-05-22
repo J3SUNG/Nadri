@@ -10,14 +10,14 @@
               <h3 class="best-plan__box-title">여행코스소개</h3>
               <hr class="best-plan__box-hr" />
               <ul class="best-plan__course-box">
-                 <li
+                <li
                   class="best-plan__course"
                   v-for="(courseItem, index) in item.course"
                   :key="courseItem.attr_no"
                 >
                   <p class="best-plan__course-no">{{ index }}</p>
                   <p class="best-plan__course-loc">{{ courseItem.loc }}</p>
-                </li> 
+                </li>
               </ul>
               <hr class="best-plan__footer-hr" />
               <div class="best-plan__footer">
@@ -35,7 +35,7 @@
         <img src="@/assets/next.png" class="best-plan__prev" @click="moveLeft" />
         <img src="@/assets/next.png" class="best-plan__next" @click="moveRight" />
       </p>
-    </div>    
+    </div>
   </div>
 </template>
 
@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     moveSlide(num) {
-      this.left = -num * 540 + "px";
+      this.left = -num * 640 + "px";
       this.currentIdx = num;
     },
     moveLeft() {
@@ -159,14 +159,14 @@ export default {
   },
   mounted() {
     this.timerStart();
-  }
+  },
 };
 </script>
 
 <style>
 .best-plan {
-  width: 540px;
-  height: 400px;
+  width: 640px;
+  height: 440px;
 }
 .best-plan__title {
   width: 100%;
@@ -175,7 +175,7 @@ export default {
   margin-left: 10px;
 }
 .best-plan__img__box {
-  width: 540px;
+  width: 640px;
   height: 100%;
   display: flex;
   position: relative;
@@ -261,7 +261,7 @@ export default {
   left: 0;
   top: 0;
   width: 200%;
-  height:100%;
+  height: 100%;
   transition: left 0.3s ease-out;
 }
 .best-plan__slides li:first-child {

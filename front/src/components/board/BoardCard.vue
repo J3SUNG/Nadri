@@ -1,21 +1,28 @@
 <template>
   <div class="board__card" @click="moveBoardDetail">
-    <img class="card__img" :src="img[num]" />
-    <h3 class="card__subject">{{ itemData.subject }}</h3>
-    <p class="card__content">
+    <img class="board__card__img" :src="img[num]" />
+    <h3 class="board__card__subject">{{ itemData.subject }}</h3>
+    <p class="board__card__content">
       {{ itemData.content }}
     </p>
-    <hr class="card__hr" />
-    <div class="card__footer">
-      <div class="card__footer__left">
-        <img class="card__footer__writer-img" src="@/assets/jetty.jpg" />
-        <p class="card__footer__writer-nickname">{{ itemData.nickname }}</p>
+    <hr class="board__card__hr" />
+    <div class="board__card__footer">
+      <div class="board__card__footer__left">
+        <img class="board__card__footer__writer-img" src="@/assets/jetty.jpg" />
+        <p class="board__card__footer__writer-nickname">{{ itemData.nickname }}</p>
       </div>
-      <div class="card__footer__right">
-        <img class="card__footer__icon card__footer__icon-comment" src="@/assets/comment.png" />
-        <p class="card__footer__text">{{ itemData.commentCount }}</p>
-        <img class="card__footer__icon card__footer__icon-heart" @click="heartClick" :src="heart" />
-        <p class="card__footer__text">{{ heartCnt }}</p>
+      <div class="board__card__footer__right">
+        <img
+          class="board__card__footer__icon card__footer__icon-comment"
+          src="@/assets/comment.png"
+        />
+        <p class="board__card__footer__text">{{ itemData.commentCount }}</p>
+        <img
+          class="board__card__footer__icon card__footer__icon-heart"
+          @click="heartClick"
+          :src="heart"
+        />
+        <p class="board__card__footer__text">{{ heartCnt }}</p>
       </div>
     </div>
   </div>
@@ -58,7 +65,7 @@ export default {
   },
   methods: {
     moveBoardDetail(event) {
-      if (!(event.target.classList[1] === "card__footer__icon-heart")) {
+      if (!(event.target.classList[1] === "board__card__footer__icon-heart")) {
         this.$router.push({
           name: "AppBoardDetail",
           params: { boardNo: this.itemData.boardNo },
@@ -89,17 +96,16 @@ export default {
 
 <style>
 .board__card {
-  width: 280px;
-  height: 280px;
+  width: 340px;
+  height: 340px;
   border: 0px solid var(--color-black);
-  margin-left: 37.5px;
   margin-bottom: 40px;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: var(--color-white);
   transition: all 0.1s linear;
-  font-size: 12px;
+  font-size: 16px;
   text-align: left;
   cursor: pointer;
 }
@@ -107,49 +113,50 @@ export default {
   transform: scale(1.04);
   box-shadow: 0px 0px 5px var(--color-darkgray);
 }
-.card__img {
-  width: 260px;
-  height: 170px;
+.board__card__img {
+  width: 320px;
+  height: 200px;
   margin: 10px;
   /* overflow: hidden; */
 }
-.card__subject {
+.board__card__subject {
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.card__content {
+.board__card__content {
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.card__hr {
+.board__card__hr {
   width: 90%;
   margin: 10px;
 }
-.card__footer {
+.board__card__footer {
   width: 90%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.card__footer__left {
+.board__card__footer__left {
   display: flex;
   justify-content: start;
-  align-content: center;
+  align-items: center;
 }
-.card__footer__right {
+.board__card__footer__right {
   display: flex;
   justify-content: end;
-  align-content: center;
+  align-items: center;
 }
-.card__footer__icon {
+.board__card__footer__icon {
   margin-left: 5px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
-.card__footer__icon-heart:hover {
+.board__card__footer__icon-heart:hover {
   animation: scaling 1s ease-in-out infinite;
 }
 @keyframes scaling {
@@ -160,17 +167,17 @@ export default {
     transform: scale(1.3);
   }
 }
-.card__footer__text {
+.board__card__footer__text {
   margin-left: 10px;
-  width: 18px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
 }
-.card__footer__writer-img {
-  width: 18px;
-  height: 18px;
+.board__card__footer__writer-img {
+  width: 28px;
+  height: 28px;
   border-radius: 70px;
 }
-.card__footer__writer-nickname {
+.board__card__footer__writer-nickname {
   font-weight: bold;
   margin-left: 5px;
 }

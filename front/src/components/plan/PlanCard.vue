@@ -99,7 +99,6 @@ export default {
   width: 340px;
   height: 340px;
   border: 0px solid var(--color-black);
-  margin-left: 37.5px;
   margin-bottom: 40px;
   display: flex;
   align-items: center;

@@ -135,8 +135,7 @@ export default {
 <style>
 .board-detail {
   margin-top: 50px;
-  margin-left: 10%;
-  width: 80%;
+  width: 100%;
 }
 .board-detail__header {
   display: flex;

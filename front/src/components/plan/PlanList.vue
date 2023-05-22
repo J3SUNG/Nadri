@@ -59,15 +59,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 120px;
+  margin: 0px 0px 0 10px;
 }
 .plan-note__cards {
   width: 100%;
-  margin-left: 75px;
-  margin-right: 75px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: space-around;
 }
 .plan-note__write-button {
   display: flex;

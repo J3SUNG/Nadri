@@ -2,7 +2,7 @@
   <div class="board">
     <h1 class="board__title">커뮤니티</h1>
     <div class="board__header__box">
-      <the-search/>
+      <the-search />
       <div class="board__write">
         <button class="board__write-button" @click="moveBoardCreate">글쓰기</button>
       </div>
@@ -138,11 +138,10 @@ export default {
   height: 100%;
 }
 .board__header__box {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  margin-left: 121px;
+  margin: 20px 0px 0 10px;
 }
 .board__write {
   text-align: right;
@@ -150,15 +149,12 @@ export default {
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-right: 120px;
 }
 .board__cards {
   width: 100%;
-  margin-left: 75px;
-  margin-right: 75px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: space-around;
 }
 .board__write-button {
   display: flex;
