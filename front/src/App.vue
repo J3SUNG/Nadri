@@ -32,6 +32,7 @@ export default {
   --color-week: #ffa921;
   --color-week2: #fff3af;
   --color-tomato: tomato;
+  --color-yellow: #d88500;
   --color-white: #ffffff;
   --color-darkgray: #444;
   --color-lightgray: lightgray;

@@ -4,7 +4,7 @@
       <popular-place-loc />
       <popular-place-rank />
     </div>
-    <div class="thema"></div>
+    <the-thema/>
     <div class="popular-board"></div>
   </div>
 </template>
@@ -12,8 +12,9 @@
 <script>
 import PopularPlaceLoc from "./PopularPlaceLoc.vue";
 import PopularPlaceRank from "./PopularPlaceRank.vue";
+import TheThema from "./TheThema.vue";
 export default {
-  components: { PopularPlaceLoc, PopularPlaceRank },
+  components: { PopularPlaceLoc, PopularPlaceRank, TheThema},
   name: "TheHome",
 };
 </script>

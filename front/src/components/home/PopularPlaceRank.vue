@@ -83,8 +83,8 @@ export default {
   width: 27%;
   margin-left: 3%;
   height: calc(400px-40px);
-  border: 3px solid var(--color-main);
-  border-radius: 20px;
+  border: 3px solid var(--color-week);
+  border-radius: 10px;
   padding: 20px;
 }
 .popular-place-rank {
@@ -100,11 +100,44 @@ export default {
 .popular-place-rank__loc__box {
   width: 100%;
 }
+.popular-place-rank__loc:nth-child(1) {
+  background-color: #FF6701;
+}
+.popular-place-rank__loc:nth-child(1) p {
+  color: var(--color-white);
+}
+.popular-place-rank__loc:nth-child(2) {
+  background-color: #FEA82F;
+}
+.popular-place-rank__loc:nth-child(2) p {
+  color: var(--color-white);
+}
+.popular-place-rank__loc:nth-child(3) {
+  background-color: #ffad5f;
+}
+.popular-place-rank__loc:nth-child(3) p {
+  color: var(--color-white);
+}
 .popular-place-rank__loc {
+  background-color: #ffbc82;
   width: 100%;
   height: 30px;
+  transition: all ease 0.3s 0s;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1px;
+  
+}
+.popular-place-rank__loc p{
+  color: var(--color-white);
+}
+.popular-place-rank__loc:hover {
+  width: 100%;
+  height: 30px;
+  opacity: 0.8;
   border-bottom: 1px dotted var(--color-lightgray);
 }
+
 .popular-place-rank__loc-rank {
   display: inline-block;
   margin-left: 20px;
