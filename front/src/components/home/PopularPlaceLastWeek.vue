@@ -139,7 +139,7 @@
 .popular-place-last-week__main__visited__title {
   text-align: left;
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: 20px;
 }
 .popular-place-last-week__main__visited .popular-place-last-week__card {
@@ -171,7 +171,7 @@
     transition: left 0.3s ease-out;
 }
 .popular-place-last-week__visited__slides .plan__card{
-    margin: 0px 30px;
+    margin: 10px 30px 0 30px;
 }
 .popular-place-last-week__visited__slides li:first-child {
   margin-left: 40px;

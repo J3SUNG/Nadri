@@ -22,6 +22,7 @@ export default {
 
 <style>
 .popular-place__box {
+  margin-top: 40px;
   display: flex;
 }
 </style>

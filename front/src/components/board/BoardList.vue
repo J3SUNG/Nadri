@@ -1,8 +1,11 @@
 <template>
   <div class="board">
     <h1 class="board__title">커뮤니티</h1>
-    <div class="board__write">
-      <button class="board__write-button" @click="moveBoardCreate">글쓰기</button>
+    <div class="board__header__box">
+      <the-search/>
+      <div class="board__write">
+        <button class="board__write-button" @click="moveBoardCreate">글쓰기</button>
+      </div>
     </div>
     <div class="board__cards">
       <board-card v-for="item in boards" :itemData="item" :key="item.boardNo" />
@@ -61,6 +64,7 @@
 import http from "@/util/http-common";
 import BoardCard from "./BoardCard.vue";
 import { mapState } from "vuex";
+import TheSearch from "../search/TheSearch.vue";
 
 const memberStore = "memberStore";
 
@@ -68,6 +72,7 @@ export default {
   name: "BoardList",
   components: {
     BoardCard,
+    TheSearch,
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
@@ -132,11 +137,17 @@ export default {
   width: 100%;
   height: 100%;
 }
+.board__header__box {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .board__write {
   text-align: right;
-  margin-bottom: 20px;
+height: 100%;
   display: flex;
   justify-content: end;
+  align-items: center;
   margin-right: 120px;
 }
 .board__cards {
