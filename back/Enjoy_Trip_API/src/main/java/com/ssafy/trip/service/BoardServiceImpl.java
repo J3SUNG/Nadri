@@ -57,11 +57,10 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public PageNavigation makePageNavigation(BoardParameterDto bParamDto) throws Exception {
 		PageNavigation pageNavigation = new PageNavigation();
-
 		int naviSize = 5;
 		int sizePerPage = bParamDto.getSpp();
 		int currentPage = bParamDto.getPg();
-
+		
 		pageNavigation.setCurrentPage(currentPage);
 		pageNavigation.setNaviSize(naviSize);
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -75,12 +74,15 @@ public class BoardServiceImpl implements BoardService {
 		pageNavigation.setTotalCount(totalCount);
 		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
 		pageNavigation.setTotalPageCount(totalPageCount);
-		boolean startRange = currentPage <= naviSize;
+		boolean startRange = currentPage==1?false:true;
+		boolean startRange2 = currentPage==2?false:true;
 		pageNavigation.setStartRange(startRange);
-		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < currentPage;
+		pageNavigation.setStartRange2(startRange2);
+		boolean endRange = totalPageCount==currentPage?false:true;
+		boolean endRange2 = totalPageCount-1==currentPage?false:true;
 		pageNavigation.setEndRange(endRange);
-//		pageNavigation.makeNavigator();
-
+		pageNavigation.setEndRange2(endRange2);
+		pageNavigation.makeNavigator();
 		return pageNavigation;
 	}
 

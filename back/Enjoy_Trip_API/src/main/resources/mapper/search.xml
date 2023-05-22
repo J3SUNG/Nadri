@@ -6,19 +6,19 @@
 	
 <resultMap type="AttractionDto" id="attraction">
 		<result column="attraction_no" property="attractionNo"/>
-		<result column="content_type" property="contentType"/>
 		<result column="title" property="title"/>
 		<result column="addr1" property="addr1"/>
 		<result column="addr2" property="addr2"/>
 		<result column="zipcode" property="zipcode"/>
 		<result column="tel" property="tel"/>
+		<result column="content_type" property="contentType"/>
 		<result column="image1" property="image1"/>
 		<result column="image2" property="image2"/>
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
 		<result column="overview" property="overview"/>
-		<result column="sido_no" property="sidoCode"/>
 		<result column="gugun_no" property="gugunCode"/>
+		<result column="sido_no" property="sidoCode"/>
 </resultMap>
 
 
@@ -33,9 +33,9 @@
 				AND ai.gugun_no = #{sigunguCode} 
 			</if>
 		</if> 
-		<if test="types[0] != 0">
+		<if test="contentType[0] != 0">
 				AND content_type in
-				<foreach item="item" index="index" collection="types"
+				<foreach item="item" index="index" collection="contentType"
 				open="(" separator="," close=")">
 					#{item}
 				</foreach>

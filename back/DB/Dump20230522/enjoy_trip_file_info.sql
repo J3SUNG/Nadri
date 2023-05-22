@@ -29,8 +29,7 @@ CREATE TABLE `file_info` (
   `original_file` varchar(50) DEFAULT NULL,
   `save_file` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idx`),
-  KEY `board_no_idx` (`board_no`),
-  CONSTRAINT `board_no` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE SET NULL
+  KEY `board_no_idx` (`board_no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +39,6 @@ CREATE TABLE `file_info` (
 
 LOCK TABLES `file_info` WRITE;
 /*!40000 ALTER TABLE `file_info` DISABLE KEYS */;
-INSERT INTO `file_info` VALUES (6,1,'230521','test2.png','1bb5309a-dc77-43e9-bc4e-8cd065722549.png'),(7,20,'230521','test2.png','e1ee1712-b450-4118-9c12-f710fc038c74.png'),(8,20,'230521','test2.png','a7c6f2d8-6f24-4ded-88d6-f5868251c865.png'),(9,20,'230521','test2.png','aed10f1a-adc7-4a4b-95f2-a335a5b5d6f9.png'),(10,21,'230521','test2.png','f7546a53-fe0f-4de6-905f-57bf680deb69.png'),(11,21,'230521','test-image.png','e45ac2d7-675d-4b3d-8e9b-b9d9fa87a379.png'),(12,21,'230521','test2.png','1cd6e4bf-ca80-4f20-8111-13b7c71765aa.png');
 /*!40000 ALTER TABLE `file_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

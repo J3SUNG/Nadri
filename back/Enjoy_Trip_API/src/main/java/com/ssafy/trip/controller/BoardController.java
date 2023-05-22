@@ -85,20 +85,21 @@ public class BoardController {
 		}
 
 		boardService.writeArticle(boardDto);
-		//paging
+		// paging
 		return "success";
 	}
 
 	@ApiOperation(value = "게시판 글목록", notes = "필수 : type / 모든 게시글의 정보를 반환한다. ", response = List.class)
 	@GetMapping
-	public BoardPageDto list(
-			@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) BoardParameterDto boardParameterDto)
+	public BoardPageDto list(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) BoardParameterDto boardParameterDto)
 			throws Exception {
 		logger.debug("list parameter boardType : {}", boardParameterDto);
-		if (boardParameterDto.getType() == "0") {
-			boardParameterDto.setSpp(20);
+		if ("0".equals(boardParameterDto.getType())) {
+			boardParameterDto.setSpp(10);
+			logger.debug("공지사항");
 		} else {
 			boardParameterDto.setSpp(21);
+			logger.debug("게시판");
 		}
 		List<BoardListDto> list = boardService.listArticle(boardParameterDto);
 		PageNavigation pageNavigation = boardService.makePageNavigation(boardParameterDto);
@@ -111,7 +112,7 @@ public class BoardController {
 	public BoardDto view(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("view boardNo : {}", boardNo);
 		BoardDto boardDto = boardService.getArticle(boardNo, userNo);
-		//paging 처리
+		// paging 처리
 		return boardDto;
 	}
 
@@ -129,7 +130,7 @@ public class BoardController {
 	public String delete(@PathVariable("boardNo") int boardNo) throws Exception {
 		logger.debug("delete articleNo : {}", boardNo);
 		boardService.deleteArticle(boardNo);
-		//paging 처리
+		// paging 처리
 		return "success";
 	}
 }
