@@ -38,7 +38,7 @@ export default {
     }
     http.get(`plan/list/${this.userNo}`).then((response) => {
       this.plans = response.data;
-      console.log(this.plans);
+      console.log(response.data);
     });
   },
   methods: {

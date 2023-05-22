@@ -59,9 +59,9 @@
   
   <style>
   .thema{
-    margin-top: 40px;
+    margin-top: 50px;
     width: 100%;
-    height:200px;
+    height:160px;
     background-color: var(--color-week2);
     border-radius: 10px;
   }

@@ -5,16 +5,17 @@
       <popular-place-rank />
     </div>
     <the-thema/>
-    <div class="popular-board"></div>
+    <popular-place-last-week/>
   </div>
 </template>
 
 <script>
+import PopularPlaceLastWeek from "./PopularPlaceLastWeek.vue";
 import PopularPlaceLoc from "./PopularPlaceLoc.vue";
 import PopularPlaceRank from "./PopularPlaceRank.vue";
 import TheThema from "./TheThema.vue";
 export default {
-  components: { PopularPlaceLoc, PopularPlaceRank, TheThema},
+  components: { PopularPlaceLoc, PopularPlaceRank, TheThema, PopularPlaceLastWeek},
   name: "TheHome",
 };
 </script>
