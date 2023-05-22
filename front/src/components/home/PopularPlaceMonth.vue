@@ -1,20 +1,20 @@
 <template>
-  <div class="popular-place-last-week">
-    <div class="popular-place-last-week__main__visited">
-      <h2 class="popular-place-last-week__main__visited__title">지난 주 인기 관광지</h2>
-      <div class="popular-place-last-week__visited__slideShow">
-        <ul class="popular-place-last-week__visited__slides" :style="`left:${this.left}`">
+  <div class="popular-place-month">
+    <div class="popular-place-month__main__visited">
+      <h2 class="popular-place-month__main__visited__title">월간 인기 관광지</h2>
+      <div class="popular-place-month__visited__slideShow">
+        <ul class="popular-place-month__visited__slides" :style="`left:${this.left}`">
           <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
         </ul>
-        <p class="popular-place-last-week__visited__controller">
+        <p class="popular-place-month__visited__controller">
           <img
             src="@/assets/next.png"
-            class="popular-place-last-week__visited__prev"
+            class="popular-place-month__visited__prev"
             @click="moveLeft"
           />
           <img
             src="@/assets/next.png"
-            class="popular-place-last-week__visited__next"
+            class="popular-place-month__visited__next"
             @click="moveRight"
           />
         </p>
@@ -26,7 +26,7 @@
 <script>
 import PlanCard from "@/components/plan/PlanCard.vue";
 export default {
-  name: "PopularPlaceLastWeek",
+  name: "PopularPlaceMonth",
   data() {
     return {
       left: 0,
@@ -137,20 +137,18 @@ export default {
 </script>
 
 <style>
-.popular-place-last-week__main__visited {
-  margin-top: 20px;
+.popular-place-month__main__visited {
   /* opacity: 0;
   animation: fadeInUp 0.5s;
   animation-delay: 0.5s;
   animation-fill-mode: forwards; */
 }
-.popular-place-last-week__main__visited__title {
+.popular-place-month__main__visited__title {
   text-align: left;
-  margin-top: 40px;
   margin-bottom: 10px;
   margin-left: 20px;
 }
-.popular-place-last-week__main__visited .popular-place-last-week__card {
+.popular-place-month__main__visited .popular-place-month__card {
   margin: 10px 0 0 0;
   padding: 0px;
 }
@@ -165,36 +163,36 @@ export default {
   }
 }
 /* slide */
-.popular-place-last-week__visited__slideShow {
+.popular-place-month__visited__slideShow {
   width: 100%;
-  height: 300px;
+  height: 400px;
   position: relative;
   overflow: hidden;
 }
-.popular-place-last-week__visited__slides {
+.popular-place-month__visited__slides {
   position: absolute;
   left: 0;
   top: 0;
   width: 2000px;
   transition: left 0.3s ease-out;
 }
-.popular-place-last-week__visited__slides .plan__card {
-  margin: 10px 10px 0 0px;
+.popular-place-month__visited__slides .plan__card {
+  margin: 10px 30px 0 0px;
 }
-.popular-place-last-week__visited__slides li:first-child {
+.popular-place-month__visited__slides li:first-child {
   margin-left: 30px;
 }
-.popular-place-last-week__visited__slides li:last-child {
+.popular-place-month__visited__slides li:child {
   margin-right: 25px;
 }
-.popular-place-last-week__visited__slides li:not(:last-child) {
+.popular-place-month__visited__slides li:not(:child) {
   float: left;
   margin-right: 20px;
 }
-.popular-place-last-week__visited__slides li {
+.popular-place-month__visited__slides li {
   float: left;
 }
-.popular-place-last-week__visited__controller img {
+.popular-place-month__visited__controller img {
   position: absolute;
   background-color: transparent;
   color: black;
@@ -202,17 +200,17 @@ export default {
   top: 50%;
   cursor: pointer;
 }
-.popular-place-last-week__visited__prev {
+.popular-place-month__visited__prev {
   width: 40px;
   height: 40px;
   left: 0px;
   backdrop-filter: brightness(90%);
   border-radius: 70px;
 }
-.popular-place-last-week__visited__prev:hover {
+.popular-place-month__visited__prev:hover {
   backdrop-filter: brightness(70%);
 }
-.popular-place-last-week__visited__next {
+.popular-place-month__visited__next {
   width: 40px;
   height: 40px;
   right: 0px;
@@ -220,7 +218,7 @@ export default {
   border-radius: 70px;
   transform: rotate(180deg);
 }
-.popular-place-last-week__visited__next:hover {
+.popular-place-month__visited__next:hover {
   backdrop-filter: brightness(70%);
   transform: rotate(180deg);
 }

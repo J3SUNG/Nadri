@@ -4,7 +4,7 @@
     <hr class="popular-place-rank__hr" />
     <ol ckass="popular-place-rank__loc__box" @mouseover="rankOver">
       <li class="popular-place-rank__loc" v-for="(item, index) in popularPlace" :key="item.attrNo">
-        <p class="popular-place-rank__loc-rank">{{ index }}위</p>
+        <p class="popular-place-rank__loc-rank">{{ index * 1 + 1 }}위</p>
         <p class="popular-place-rank__loc-rank">{{ item.name }}</p>
       </li>
     </ol>
@@ -95,7 +95,8 @@ export default {
 }
 .popular-place-rank__title {
   text-align: center;
-  color: var(--color-main);
+  color: var(--color-tomato);
+  font-size: 24px;
 }
 .popular-place-rank__loc__box {
   width: 100%;
@@ -126,6 +127,8 @@ export default {
   cursor: pointer;
   border-radius: 5px;
   margin: 1px;
+  display: flex;
+  align-items: center;
 }
 .popular-place-rank__loc p {
   color: var(--color-white);
@@ -137,6 +140,8 @@ export default {
 .popular-place-rank__loc-rank {
   display: inline-block;
   margin-left: 20px;
+  min-width: 30px;
+  text-align: center;
 }
 .popular-place-rank__loc-text {
   display: inline-block;

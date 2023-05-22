@@ -47,7 +47,7 @@ export default {
       section: 800,
       left: 0,
       currentIdx: 0, //현재 슬라이드 index
-      slideCount: 4, // 슬라이드 개수
+      slideCount: 8, // 슬라이드 개수
       items: {
         0: {
           img: require("@/assets/dummy1.jpg"),
@@ -83,11 +83,51 @@ export default {
           img: require("@/assets/dummy2.jpg"),
           sido: "대구",
           loc: "달서구",
-          type: "39", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          type: "25", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
           name: "대구 막창",
           content:
             "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
           attrNo: 4,
+        },
+        4: {
+          img: require("@/assets/dummy1.jpg"),
+          sido: "서울",
+          loc: "강남",
+          type: "28", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          name: "강남 스시",
+          content:
+            "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
+          attrNo: 5,
+        },
+        5: {
+          img: require("@/assets/dummy2.jpg"),
+          sido: "대구",
+          loc: "달서구",
+          type: "32", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          name: "대구 막창",
+          content:
+            "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
+          attrNo: 6,
+        },
+        6: {
+          img: require("@/assets/dummy1.jpg"),
+          sido: "서울",
+          loc: "강남",
+          type: "38", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          name: "강남 스시",
+          content:
+            "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
+          attrNo: 7,
+        },
+        7: {
+          img: require("@/assets/dummy2.jpg"),
+          sido: "대구",
+          loc: "달서구",
+          type: "39", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          name: "대구 막창",
+          content:
+            "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
+          attrNo: 8,
         },
       },
       icons: {
@@ -173,7 +213,7 @@ export default {
 }
 .popular-place-loc__text__box__sido {
   display: inline-block;
-  color: var(--color-main);
+  color: var(--color-week);
   font-size: 24px;
 }
 .popular-place-loc__icon__box {
@@ -193,7 +233,7 @@ export default {
   margin-top: 10px;
   margin-left: 48.5%;
   width: 3%;
-  border: 2px solid var(--color-main);
+  border: 2px solid var(--color-week);
 }
 .popular-place-loc__content__box {
   margin-top: 20px;

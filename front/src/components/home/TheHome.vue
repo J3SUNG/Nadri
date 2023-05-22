@@ -4,18 +4,20 @@
       <popular-place-loc />
       <popular-place-rank />
     </div>
-    <the-thema/>
-    <popular-place-last-week/>
+    <the-thema />
+    <popular-place-week />
+    <popular-place-month />
   </div>
 </template>
 
 <script>
-import PopularPlaceLastWeek from "./PopularPlaceLastWeek.vue";
+import PopularPlaceWeek from "./PopularPlaceWeek.vue";
 import PopularPlaceLoc from "./PopularPlaceLoc.vue";
 import PopularPlaceRank from "./PopularPlaceRank.vue";
 import TheThema from "./TheThema.vue";
+import PopularPlaceMonth from "./PopularPlaceMonth.vue";
 export default {
-  components: { PopularPlaceLoc, PopularPlaceRank, TheThema, PopularPlaceLastWeek},
+  components: { PopularPlaceLoc, PopularPlaceRank, TheThema, PopularPlaceWeek, PopularPlaceMonth },
   name: "TheHome",
 };
 </script>
