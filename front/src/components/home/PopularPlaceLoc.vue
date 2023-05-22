@@ -53,7 +53,7 @@ export default {
           img: require("@/assets/dummy1.jpg"),
           sido: "서울",
           loc: "강남",
-          type: "1", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          type: "12", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
           name: "강남 스시",
           content:
             "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
@@ -63,7 +63,7 @@ export default {
           img: require("@/assets/dummy2.jpg"),
           sido: "대구",
           loc: "달서구",
-          type: "0", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          type: "14", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
           name: "대구 막창",
           content:
             "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
@@ -73,7 +73,7 @@ export default {
           img: require("@/assets/dummy1.jpg"),
           sido: "서울",
           loc: "강남",
-          type: "1", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          type: "15", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
           name: "강남 스시",
           content:
             "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
@@ -83,7 +83,7 @@ export default {
           img: require("@/assets/dummy2.jpg"),
           sido: "대구",
           loc: "달서구",
-          type: "0", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
+          type: "39", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
           name: "대구 막창",
           content:
             "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
@@ -91,8 +91,14 @@ export default {
         },
       },
       icons: {
-        0: require("@/assets/bibimbap.png"),
-        1: require("@/assets/birthday.png"),
+        12: require("@/assets/type_trip.png"),
+        14: require("@/assets/type_cultural.png"),
+        15: require("@/assets/type_event.png"),
+        25: require("@/assets/type_course.png"),
+        28: require("@/assets/type_leport.png"),
+        32: require("@/assets/type_home.png"),
+        38: require("@/assets/type_shopping.png"),
+        39: require("@/assets/type_food.png"),
       },
     };
   },
