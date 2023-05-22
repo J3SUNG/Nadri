@@ -185,15 +185,15 @@ export default {
 
 <style>
 .mypage {
-  width: 80%;
-  margin-left: 10%;
+  width: 100%;
 }
 .mypage__header {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
+  margin-top: 10px;
+  padding-bottom: 30px;
   border-bottom: 1px solid var(--color-lightgray);
 }
 .mypage__header-img {
@@ -273,10 +273,11 @@ export default {
 }
 /* slide */
 .mypage__visited__slideShow {
-  width: 930px;
-  height: 300px;
+  width: 1100px;
+  height: 360px;
   position: relative;
   overflow: hidden;
+  padding: 0px 20px;
 }
 .mypage__visited__slides {
   position: absolute;
@@ -286,14 +287,14 @@ export default {
   transition: left 0.3s ease-out;
 }
 .mypage__visited__slides li:first-child {
-  margin-left: 25px;
+  margin-left: 30px;
 }
 .mypage__visited__slides li:last-child {
-  margin-right: 25px;
+  margin-right: 30px;
 }
 .mypage__visited__slides li:not(:last-child) {
   float: left;
-  margin-right: 20px;
+  margin-right: 30px;
 }
 .mypage__visited__slides li {
   float: left;

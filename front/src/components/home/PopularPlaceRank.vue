@@ -101,13 +101,13 @@ export default {
   width: 100%;
 }
 .popular-place-rank__loc:nth-child(1) {
-  background-color: #FF6701;
+  background-color: #ff6701;
 }
 .popular-place-rank__loc:nth-child(1) p {
   color: var(--color-white);
 }
 .popular-place-rank__loc:nth-child(2) {
-  background-color: #FEA82F;
+  background-color: #fea82f;
 }
 .popular-place-rank__loc:nth-child(2) p {
   color: var(--color-white);
@@ -126,16 +126,12 @@ export default {
   cursor: pointer;
   border-radius: 5px;
   margin: 1px;
-  
 }
-.popular-place-rank__loc p{
+.popular-place-rank__loc p {
   color: var(--color-white);
 }
 .popular-place-rank__loc:hover {
-  width: 100%;
-  height: 30px;
   opacity: 0.8;
-  border-bottom: 1px dotted var(--color-lightgray);
 }
 
 .popular-place-rank__loc-rank {
