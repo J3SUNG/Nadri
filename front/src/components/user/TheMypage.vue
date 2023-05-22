@@ -261,16 +261,6 @@ export default {
   margin: 10px 0 0 0;
   padding: 0px;
 }
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -10%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
-}
 /* slide */
 .mypage__visited__slideShow {
   width: 1100px;

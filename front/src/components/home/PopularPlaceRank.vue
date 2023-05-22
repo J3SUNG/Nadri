@@ -98,21 +98,65 @@ export default {
 }
 .popular-place-rank__loc:nth-child(1) {
   background-color: #ff6701;
+  animation: fadeInUpUp 1s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
 }
 .popular-place-rank__loc:nth-child(1) p {
   color: var(--color-white);
 }
 .popular-place-rank__loc:nth-child(2) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.1s;
+  animation-fill-mode: forwards;
   background-color: #fea82f;
 }
 .popular-place-rank__loc:nth-child(2) p {
   color: var(--color-white);
 }
 .popular-place-rank__loc:nth-child(3) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.2s;
+  animation-fill-mode: forwards;
   background-color: #ffad5f;
 }
 .popular-place-rank__loc:nth-child(3) p {
   color: var(--color-white);
+}
+.popular-place-rank__loc:nth-child(4) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.3s;
+  animation-fill-mode: forwards;
+}
+.popular-place-rank__loc:nth-child(5) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.4s;
+  animation-fill-mode: forwards;
+}
+.popular-place-rank__loc:nth-child(6) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+.popular-place-rank__loc:nth-child(7) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.6s;
+  animation-fill-mode: forwards;
+}
+.popular-place-rank__loc:nth-child(8) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.7s;
+  animation-fill-mode: forwards;
+}
+.popular-place-rank__loc:nth-child(9) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.8s;
+  animation-fill-mode: forwards;
+}
+.popular-place-rank__loc:nth-child(10) {
+  animation: fadeInUpUp 1s;
+  animation-delay: 0.9s;
+  animation-fill-mode: forwards;
 }
 .popular-place-rank__loc {
   background-color: #ffbc82;
@@ -124,6 +168,7 @@ export default {
   margin: 1px;
   display: flex;
   align-items: center;
+  opacity: 0;
 }
 .popular-place-rank__loc p {
   color: var(--color-white);

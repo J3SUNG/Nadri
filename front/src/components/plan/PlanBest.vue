@@ -15,7 +15,7 @@
                   v-for="(courseItem, index) in item.course"
                   :key="courseItem.attr_no"
                 >
-                  <p class="best-plan__course-no">{{ index }}</p>
+                  <p class="best-plan__course-no">{{ index * 1 + 1 }}</p>
                   <p class="best-plan__course-loc">{{ courseItem.loc }}</p>
                 </li>
               </ul>
@@ -200,7 +200,7 @@ export default {
   color: var(--color-white);
 }
 .best-plan__course-box {
-  height: 65%;
+  height: 60%;
   margin-top: 10px;
   display: flex;
   flex-direction: column;

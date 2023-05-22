@@ -25,7 +25,7 @@
           name="attr"
           v-model="contentType"
           value="12"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">문화시설</label>
         <input
@@ -34,7 +34,7 @@
           name="attr"
           v-model="contentType"
           value="14"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">행사</label>
         <input
@@ -43,7 +43,7 @@
           name="attr"
           v-model="contentType"
           value="15"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">여행코스</label>
         <input
@@ -52,7 +52,7 @@
           name="attr"
           v-model="contentType"
           value="25"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">레포츠</label>
         <input
@@ -61,7 +61,7 @@
           name="attr"
           v-model="contentType"
           value="28"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">숙박</label>
         <input
@@ -70,7 +70,7 @@
           name="attr"
           v-model="contentType"
           value="32"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">쇼핑</label>
         <input
@@ -79,7 +79,7 @@
           name="attr"
           v-model="contentType"
           value="38"
-          @click="changeContentType"
+          @change="changeContentType"
         />
         <label class="map__checkbox-label">음식점</label>
         <input
@@ -88,7 +88,7 @@
           name="attr"
           v-model="contentType"
           value="39"
-          @click="changeContentType"
+          @change="changeContentType"
         />
       </div>
       <!-- 12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점-->
@@ -96,7 +96,7 @@
       <input class="map__search" v-model="search" />
     </div>
     <div id="map" class="map">
-      <div class="map__test">hello</div>
+      <map-left />
     </div>
     <div>
       <div v-for="(item, index) in positions" :key="index">
@@ -112,7 +112,9 @@
 
 <script>
 import http from "@/util/http-common";
+import MapLeft from "./MapLeft.vue";
 export default {
+  components: { MapLeft },
   name: "TheMap",
   data() {
     return {
@@ -132,7 +134,7 @@ export default {
     };
   },
   created() {},
-  mounted() {
+  async mounted() {
     if (window.kakao && window.kakao.maps) {
       // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
       // console.log("loadmap");
@@ -143,7 +145,7 @@ export default {
       this.loadScript();
     }
 
-    http.get(`sidogugun`).then(({ data }) => {
+    await http.get(`sidogugun`).then(({ data }) => {
       this.sidos = data;
     });
     let item = {
@@ -201,14 +203,14 @@ export default {
       };
       this.getAttrs(item);
     },
-    changeContentType(e) {
-      let value = e.target.value;
+    changeContentType() {
+      // let value = e.target.value;
       let item = {
         areaCode: this.sidoCode,
         sigunguCode: this.gugunCode,
-        contentType: this.contentType, // 체크박스 값 받아오도록!!!!!!!!!!!!!!!!
+        contentType: this.contentType,
       };
-      this.contentType.push(value);
+      // item.contentType.push(value);
       console.log("change content type ");
       console.log(item);
       this.getAttrs(item);
@@ -269,7 +271,7 @@ export default {
       let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; // 마커 이미지
       let imageSize = new window.kakao.maps.Size(24, 35); //마커 이미지 크기
       let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-      console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
+      //console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
       // let bounds = new window.kakao.maps.LatLngBounds(); // 지도 범위 재설정
 
       this.positions.forEach((position) => {
@@ -310,13 +312,13 @@ export default {
 </script>
 
 <style>
-/* .map__test {
+.map__left {
   width: 400px;
   height: 100vh;
-  background-color: red;
-  z-index: 1000;
+  background-color: tomato;
   position: absolute;
-} */
+  z-index: 10;
+}
 .map__box {
   display: flex;
   justify-content: space-between;
@@ -324,8 +326,12 @@ export default {
   margin-bottom: 20px;
 }
 .map {
-  width: 100%;
-  height: 500px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }
 .map__select__box {
   width: 310px;
