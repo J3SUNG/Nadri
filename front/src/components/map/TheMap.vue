@@ -15,28 +15,97 @@
           </option>
         </select>
       </div>
+
+      <!-- check box start  **************************-->
       <div class="map__checkbox__box">
         <label class="map__checkbox-label">관광지</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="12"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">문화시설</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="14"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">행사</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="15"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">여행코스</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="25"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">레포츠</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="28"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">숙박</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="32"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">쇼핑</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="38"
+          @click="changeContentType"
+        />
         <label class="map__checkbox-label">음식점</label>
-        <input class="map__checkbox-chkbox" type="checkbox" name="attr" />
+        <input
+          class="map__checkbox-chkbox"
+          type="checkbox"
+          name="attr"
+          v-model="contentType"
+          value="39"
+          @click="changeContentType"
+        />
       </div>
-      <input class="map__search" />
+      <!-- 12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점-->
+      <!-- check box        ***************************-->
+      <input class="map__search" v-model="search" />
     </div>
     <div id="map" class="map">
       <div class="map__test">hello</div>
+    </div>
+    <div>
+      <div v-for="(item, index) in positions" :key="index">
+        <img :src="item.image1" />
+        <!-- <img :src="item.image2" /> -->
+        <!-- 아마 image2가 썸네일 용이라 저화질, image가 없을때 no image 처리 필요-->
+        <div>{{ item.title }} {{ item.addr1 }} {{ item.addr2 }} {{ item.tel }}</div>
+        <div>{{ item.overview }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -48,38 +117,44 @@ export default {
   data() {
     return {
       map: null,
+      search: "",
       sidos: [{ sidoNo: 0, sidoName: null }],
       guguns: [{ gugunNo: 0, sidoNo: 0, gugunName: null }],
       sidoCode: 0,
       gugunCode: 0,
-      contentType: 0,
+      contentType: [],
       markers: [],
       positions: [],
-      input: {
-        image: "",
-      },
+      file_name: "파일을 선택하세요.",
+      message: "Hello, world",
+      file: "",
+      img_src: "",
     };
   },
-  created() {
+  created() {},
+  mounted() {
+    if (window.kakao && window.kakao.maps) {
+      // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
+      // console.log("loadmap");
+      this.loadMap();
+    } else {
+      // 없다면 카카오 스크립트 추가 후 맵 실행
+      // console.log("loadscript");
+      this.loadScript();
+    }
+
     http.get(`sidogugun`).then(({ data }) => {
       this.sidos = data;
     });
     let item = {
-      //전국 좋아요 상위 200개? //현재는 테스트로 그냥 20개 가져옴
+      //전국 좋아요 상위 200개? //현재는 테스트로 그냥 10개 가져옴
       areaCode: 0,
       sigunguCode: 0,
-      types: [0],
+      contentType: ["0"],
+      search: "",
     };
+    // console.log("search : " + this.search);
     this.getAttrs(item);
-  },
-  mounted() {
-    if (window.kakao && window.kakao.maps) {
-      // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
-      this.loadMap();
-    } else {
-      // 없다면 카카오 스크립트 추가 후 맵 실행
-      this.loadScript();
-    }
   },
   methods: {
     loadScript() {
@@ -96,107 +171,139 @@ export default {
         center: new window.kakao.maps.LatLng(35.87222, 127.6025), // 지도의 중심좌표
         level: 13, // 지도의 레벨(확대, 축소 정도)
       };
-
       this.map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
     },
 
     changeSido() {
       console.log("시도 선택 ::: " + this.sidoCode);
-      this.gugunCode = 0;
+      this.gugunCode = "0";
 
       //해당 시도 코드로 sidos 서버에서 가져오기
       http.get(`sidogugun/${this.sidoCode}`).then(({ data }) => {
         this.guguns = data;
       });
-      //getAttrs();
+
+      let item = {
+        //전국 좋아요 상위 200개? //현재는 테스트로 그냥 20개 가져옴
+        areaCode: this.sidoCode,
+        sigunguCode: this.gugunCode,
+        contentType: this.contentType,
+      };
+      this.getAttrs(item);
     },
     changeGugun() {
+      // this.levelSet(9);
       console.log("구군 선택 ::: " + this.gugunCode);
-      //getAttrs();
+      let item = {
+        areaCode: this.sidoCode,
+        sigunguCode: this.gugunCode,
+        contentType: this.contentType,
+      };
+      this.getAttrs(item);
+    },
+    changeContentType(e) {
+      let value = e.target.value;
+      let item = {
+        areaCode: this.sidoCode,
+        sigunguCode: this.gugunCode,
+        contentType: this.contentType, // 체크박스 값 받아오도록!!!!!!!!!!!!!!!!
+      };
+      this.contentType.push(value);
+      console.log("change content type ");
+      console.log(item);
+      this.getAttrs(item);
     },
     getAttrs(item) {
+      if (item.contentType.length == 0) {
+        console.log("item cont-type null");
+        item.contentType = ["0"];
+      }
+      item.search = this.search;
+      console.log(item);
       http.post(`/map`, JSON.stringify(item)).then(({ data }) => {
-        // console.log(data);
-        this.setMarkers(data);
-        //가져왔다 이제 맵에 찍어주심 됌!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // console.log("관광지 데이터 갱신");
+        this.attractions = data;
+        // console.log(this.attractions);
+        if (!this.attractions.length == 0) this.setMarkers(data);
+        else alert("검색 결과가 없습니다.");
       });
     },
     setMarkers(data) {
       this.positions = [];
-      //removeMarkers(); //기존에 있던 마커들을 지운다.
+      this.removeMarkers(); //기존에 있던 마커들을 지운다.
       // console.log(data);
       data.forEach((area) => {
-        // console.log(area.latitude, area.longitude);
         let markerInfo = {
           title: area.title, // 관광지 이름
+          contentType: area.contentType,
           latlng: new window.kakao.maps.LatLng(area.latitude, area.longitude), // 위도 경도 정보 가지고 좌표값 가진 객체 생성
+          addr1: area.addr1,
+          addr2: area.addr2,
+          attractionNo: area.attractionNo,
+          gugunCode: area.gugunCode,
+          image1: area.image1,
+          image2: area.image2,
+          overview: area.overview,
+          sidoCode: area.sidoCode,
+          tel: area.tel,
+          zipcode: area.zipcode,
         };
+        if (markerInfo.image1 == "") {
+          markerInfo.image1 =
+            "https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=";
+          // console.log("no-image");
+        }
         this.positions.push(markerInfo);
         // console.log(markerInfo);
       });
       this.displayMarker();
     },
-    removeMarker() {
-      // for (var i = 0; i < markers.length; i++) {
-      //   // 좌표 넣어둔 배열만큼
-      //   markers[i].setMap(null);
-      // }
+    removeMarkers() {
+      if (this.markers.length > 0) {
+        this.markers.forEach((item) => {
+          item.setMap(null);
+        });
+      }
     },
     displayMarker() {
-      // 마커 이미지의 이미지 주소입니다
+      let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; // 마커 이미지
+      let imageSize = new window.kakao.maps.Size(24, 35); //마커 이미지 크기
+      let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+      console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
+      // let bounds = new window.kakao.maps.LatLngBounds(); // 지도 범위 재설정
 
-      var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; // 마커 이미지
+      this.positions.forEach((position) => {
+        const infowindow = new window.kakao.maps.InfoWindow({
+          content: `<img src="${position.image1}" width="100px" height="100px"/><p>
+          ${position.title}<br>
+          주소 : ${position.addr1} ${position.addr2}<br>
+          </p>`,
+          removable: false,
+        });
 
-      for (var i = 0; i < this.positions.length; i++) {
-        // 좌표 넣어둔 배열만큼
-        // 마커 이미지의 이미지 크기 입니다
-        let imageSize = new window.kakao.maps.Size(24, 35);
-        // console.log(imageSrc);
-        // console.log(imageSize);
-        // 마커 이미지를 생성합니다
-        let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-        // console.log(markerImage);
-        // 마커를 생성합니다
-        var marker = new window.kakao.maps.Marker({
-          // map: this.map, // 마커를 표시할 지도
-          position: this.positions[i].latlng, // 마커를 표시할 위치
-          title: this.positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        const marker = new window.kakao.maps.Marker({
+          map: this.map, // 마커를 표시할 지도
+          position: position.latlng, // 마커를 표시할 위치
+          title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
           image: markerImage, // 마커 이미지
         });
-        // let marker = new window.kakao.maps.Marker({
-        //   position: this.positions,
-        // });
-        // console.log(marker);
 
-        console.log("마커를 보여주자");
-        marker.setMap(this.map);
-
-        // 생성된 마커를 배열에 추가합니다
+        // 마커에 클릭이벤트를 등록
+        window.kakao.maps.event.addListener(marker, "mouseover", () => {
+          infowindow.open(this.map, marker);
+        });
+        window.kakao.maps.event.addListener(marker, "mouseout", () => {
+          infowindow.close(this.map, marker);
+        });
         this.markers.push(marker);
+      }); //positions foreach end ****************
 
-        // infowindow
-        // var infowindow = window.kakao.maps.InfoWindow({
-        //   content: this.positions[i].title,
-        //   position: this.positions[i].latLng,
-        // });
-
-        // 마커 이벤트 추가 (누르면 정보 오버레이 표시)
-        // window.kakao.maps.event.addListener(marker, "click", makeClickListener(marker, infowindow));
-
-        // function makeClickListener(marker, infowindow) {
-        //   return function () {
-        //     !!selectedInfoWindow && selectedInfoWindow.close();
-        //     infowindow.open(this.map, marker);
-        //     // selectedMarker = selected;
-        //     selectedInfoWindow = infowindow;
-        //   };
-        // }
-      }
-
-      // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
-      this.map.setCenter(this.positions[0].latlng);
-      // markers가 다 보이게 레벨 자동으로 지정
-      console.log(this.positions);
+      // bounds에 추가된 마커들에 대해 지도 범위 재설정 ******************
+      const bounds = this.positions.reduce(
+        (bounds, position) => bounds.extend(position.latlng),
+        new window.kakao.maps.LatLngBounds()
+      );
+      this.map.setBounds(bounds);
     },
   },
 };

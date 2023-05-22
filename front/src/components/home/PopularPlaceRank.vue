@@ -2,7 +2,7 @@
   <div class="popular-place-rank">
     <h3 class="popular-place-rank__title">오늘의 인기 장소</h3>
     <hr class="popular-place-rank__hr" />
-    <ol ckass="popular-place-rank__loc__box" @mouseover="rankOver">
+    <ol ckass="popular-place-rank__loc__box">
       <li class="popular-place-rank__loc" v-for="(item, index) in popularPlace" :key="item.attrNo">
         <p class="popular-place-rank__loc-rank">{{ index * 1 + 1 }}위</p>
         <p class="popular-place-rank__loc-rank">{{ item.name }}</p>
@@ -69,11 +69,6 @@ export default {
         },
       },
     };
-  },
-  methods: {
-    rankOver(event) {
-      console.log(event);
-    },
   },
 };
 </script>

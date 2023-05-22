@@ -12,30 +12,12 @@
 export default {
   name: "TheLogo",
   data() {
-    return {
-      img: require("@/assets/logo_waterfall.png"),
-      imgList: [
-        require("@/assets/logo_beach.png"),
-        require("@/assets/logo_street.png"),
-        require("@/assets/logo_aurora.png"),
-        require("@/assets/logo_mountains.png"),
-        require("@/assets/logo_desert.png"),
-        require("@/assets/logo_waterfall.png"),
-      ],
-      num: 0,
-    };
+    return {};
   },
   methods: {
     logoClick() {
       if (this.$route.path !== "/") {
         this.$router.push({ name: "AppHome" });
-      }
-    },
-    hello() {
-      this.img = this.imgList[this.num];
-      ++this.num;
-      if (this.num >= this.imgList.length) {
-        this.num = 0;
       }
     },
   },
@@ -58,14 +40,6 @@ export default {
   height: 50px;
   animation: slippery 1s linear 0s infinite alternate;
 }
-/* @keyframes slippery {
-  0% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
-  }
-} */
 .logo__right {
   margin-left: 10px;
 }

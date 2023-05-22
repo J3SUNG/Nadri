@@ -109,6 +109,21 @@ export default {
           trips: null,
           userNo: 1,
         },
+        6: {
+          content: "멋진 여행계획을 만들어봤습니다.",
+          createTime: "2023-05-16 17:27:01",
+          endDate: "2023-06-23 17:27:01",
+          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
+          isLike: 1,
+          likeCount: 11,
+          nickname: "예삐",
+          planNo: 6,
+          readCount: 13,
+          startDate: "2023-06-16 17:27:01",
+          subject: "첫번째 여행계획",
+          trips: null,
+          userNo: 1,
+        },
       },
     };
   },
@@ -153,13 +168,11 @@ export default {
   padding: 0px;
 }
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 10%, 0);
+  from {
+    transform: translate(0, 0);
   }
   to {
-    opacity: 1;
-    transform: translateZ(0);
+    transform: translate(100px, 100px);
   }
 }
 /* slide */
