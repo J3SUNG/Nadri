@@ -1,11 +1,6 @@
 package com.ssafy.trip.controller;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.trip.model.dto.BoardDto;
-import com.ssafy.trip.model.dto.BoardParameterDto;
-import com.ssafy.trip.model.dto.FileInfoDto;
 import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.TripDto;
 import com.ssafy.trip.service.PlanService;

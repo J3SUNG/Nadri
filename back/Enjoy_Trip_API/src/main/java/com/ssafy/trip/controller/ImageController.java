@@ -23,26 +23,25 @@ public class ImageController {
     public ResponseEntity<Resource> showImage(@RequestParam Map<String, String> param) {
         // 사진이 저장된 폴더 경로 변수 선언
         String imageRoot = "";
-        String saveFolder = "230521";
-        saveFolder = param.get("saveFolder");
+        String saveFolder = "230523";
+//        saveFolder = param.get("saveFolder");
+        System.out.println(saveFolder);
 //        String originalFile = "test2.png";
-        String saveFile = "f7546a53-fe0f-4de6-905f-57bf680deb69.png";
-        String saveFile2 = "e1ee1712-b450-4118-9c12-f710fc038c74.png";
-        imageRoot = new File("").getAbsolutePath() + "/resources/img/"+saveFolder+"/"+saveFile;
-        String imageRoot2 = new File("").getAbsolutePath() + "/resources/img/"+saveFolder+"/"+saveFile2;
+//        String saveFile = param.get("saveFile");
+        String saveFile2 = "5ac7a707-4538-4a3d-8131-992c52339403.jpg";
+        imageRoot = new File("").getAbsolutePath() + "/resources/img/"+saveFolder+"/"+saveFile2;
+
 
         // Resorce를 사용해서 로컬 서버에 저장된 이미지 경로 및 파일 명을 지정
         Resource resource = new FileSystemResource(imageRoot);
-        Resource[] res = new Resource[2];
-        res[0] = resource;
-        res[1] = new FileSystemResource(imageRoot2);
+
+        
         // 로컬 서버에 저장된 이미지 파일이 없을 경우
         if(!resource.exists()){
-            System.out.println("없다.");
             return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND); // 리턴 결과 반환 404
         }
 
-        // 로컬 서버에 저장된 이미지가 있는 경우 로직 처리
+     // 로컬 서버에 저장된 이미지가 있는 경우 로직 처리
         HttpHeaders header = new HttpHeaders();
         Path filePath = null;
         try {
@@ -53,7 +52,7 @@ public class ImageController {
         catch (Exception e){
             e.printStackTrace();
         }
-        // 이미지 리턴 실시 [브라우저에서 get 주소 확인 가능] //res를 보낼 순 없음 이미지는 하나씩만
-        return new ResponseEntity<Resource>(res[1], header, HttpStatus.OK);
+        // 이미지 리턴 실시 [브라우저에서 get 주소 확인 가능]
+        return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
     }
 }
