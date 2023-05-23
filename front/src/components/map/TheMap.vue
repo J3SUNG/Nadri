@@ -158,11 +158,11 @@ export default {
     if (window.kakao && window.kakao.maps) {
       // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
       // console.log("loadmap");
-      this.loadMap();
+      await this.loadMap();
     } else {
       // 없다면 카카오 스크립트 추가 후 맵 실행
       // console.log("loadscript");
-      this.loadScript();
+      await this.loadScript();
     }
 
     await http.get(`sidogugun`).then(({ data }) => {
@@ -176,7 +176,7 @@ export default {
       search: "",
     };
     // console.log("search : " + this.search);
-    this.getAttrs(item);
+    await this.getAttrs(item);
   },
   methods: {
     loadScript() {
@@ -387,9 +387,19 @@ h2 {
   flex-direction: column;
   align-items: start;
 }
+.map__left__box__main > p {
+  font-size: 14px;
+  text-align: left;
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 20px;
+}
 .map__left__box__main__up {
   display: flex;
   align-items: center;
+  height: 40px;
 }
 .map__left__box__main__up__title {
   width: 180px;
@@ -397,6 +407,10 @@ h2 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 16px;
+}
+.map__left__box__main__up__type {
+  font-size: 14px;
 }
 
 .map__box {

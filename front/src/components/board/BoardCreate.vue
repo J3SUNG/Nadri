@@ -21,6 +21,7 @@
             value="사진"
             placeholder="사진"
             @change="updateImg"
+            v-if="boardType"
           />
         </div>
         <!-- <img class="board__create__button board__create__button-img" src="@/assets/file.png" /> -->

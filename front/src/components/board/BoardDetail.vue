@@ -11,21 +11,23 @@
     <hr class="board-detail__hr" />
     <div class="board-deatil__main">
       <h1 class="board-deatil__main-title">{{ board.subject }}</h1>
-      <div class="board-deatil__main-imgs" v-for="(item, index) in imgArr" :key="index">
-        <img class="board-detail__main-img" :src="item" />
+      <div class="board-deatil__main-imgs__box" v-if="board.boardType">
+        <div class="board-deatil__main-imgs" v-for="(item, index) in imgArr" :key="index">
+          <img class="board-detail__main-img" :src="item" />
+        </div>
       </div>
       <p class="board-deatil__main-content">{{ board.content }}</p>
     </div>
     <hr class="board-detail__hr" />
     <div class="board-deatil__function">
       <button @click="moveBoardList">목록</button>
-      <div class="board-deatil__function-heart" v-if="isNotify">
+      <div class="board-deatil__function-heart" v-show="isNotify">
         <img class="board-deatil__function-heart-img" @click="heartClick" :src="heart" />
         <p class="board-deatil__function-heart-text">{{ this.heartCnt }}</p>
       </div>
       <div class="board-detail__function-admin">
-        <button @click="moveBoardUpdate">수정</button>
-        <button @click="deleteBoard">삭제</button>
+        <button v-if="isWriter" @click="moveBoardUpdate">수정</button>
+        <button v-if="isWriter" @click="deleteBoard">삭제</button>
       </div>
     </div>
     <hr class="board-detail__hr" v-if="isNotify" />
@@ -55,7 +57,7 @@ export default {
   data() {
     return {
       userImg: require("@/assets/jetty.jpg"),
-      imgArr: [require("@/assets/dummy1.jpg"), require("@/assets/dummy2.jpg")],
+      imgArr: [],
       heart: require("@/assets/heartOff.png"),
       heartChk: false,
       heartCnt: 0,
@@ -65,6 +67,7 @@ export default {
       comments: [],
       isNotify: 1,
       userNo: 0,
+      isWriter: true,
     };
   },
   computed: {
@@ -76,6 +79,8 @@ export default {
     }
     const response = await http.get(`board/${this.$route.params.boardNo}/${this.userNo}`);
     this.board = response.data;
+    this.imgArr = this.board.url;
+    console.log(this.board);
     this.heart =
       this.board.isLike == 1 ? require("@/assets/heartOn.png") : require("@/assets/heartOff.png");
     this.heartChk = this.board.isLike;
@@ -91,6 +96,12 @@ export default {
     this.comments = response2.data;
     console.log(this.comments);
     this.commentCnt = this.comments.length;
+
+    if (this.userInfo.userNo === this.board.userNo) {
+      this.isWriter = true;
+    } else {
+      this.isWriter = false;
+    }
   },
   methods: {
     moveBoardUpdate() {
@@ -176,6 +187,7 @@ export default {
   margin: 10px 0;
 }
 .board-deatil__main {
+  min-height: 400px;
   margin-left: 5%;
   width: 90%;
   text-align: left;
@@ -266,5 +278,8 @@ export default {
   height: 30px;
   padding: 0px;
   margin: 10px 0px 0px 0px;
+}
+.board-detail__function-admin {
+  width: 200px;
 }
 </style>

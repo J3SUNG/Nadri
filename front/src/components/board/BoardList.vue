@@ -85,6 +85,10 @@ export default {
       nextPage: 1,
       startPage: 1,
       selected: [true, false, false, false, false],
+      imgUrl: "",
+      thumUrl: "",
+      baseUrl: "",
+      index: 0,
     };
   },
   created() {
@@ -92,12 +96,26 @@ export default {
     http.get(`board?type=${this.type}&userNo=${userNo}`).then((response) => {
       this.boards = response.data.list;
       this.pageNav = response.data.pageNavigation;
+      console.log(this.boards);
       console.log(this.pageNav);
+      this.loadImg();
+      console.log(this.boards);
     });
   },
   methods: {
     moveBoardCreate() {
       this.$router.push({ name: "AppBoardCreate", params: { boardType: this.type } });
+    },
+    loadImg() {
+      this.baseUrl = "http://192.168.31.78";
+      // "http://192.168.31.78"  "http://59.151.232.152"
+      for (let i = 0; i < this.boards.length; ++i) {
+        this.imgUrl = `${this.baseUrl}:7777/image/showImage?saveFolder=${this.boards[i].imgSaveFolder}&saveFile=${this.boards[i].imgSaveFile}`;
+        this.boards[i].imgUrl = this.imgUrl;
+
+        this.thumUrl = `${this.baseUrl}:7777/image/showImage?saveFolder=${this.boards[i].saveFolder}&saveFile=${this.boards[i].saveFile}`;
+        this.boards[i].thumUrl = this.thumUrl;
+      }
     },
     movePage(page) {
       this.nextPage = page;
@@ -126,6 +144,7 @@ export default {
           this.startPage = this.pageNav.currentPage - 2;
           this.selected = [false, false, true, false, false];
         }
+        this.loadImg();
       });
     },
   },

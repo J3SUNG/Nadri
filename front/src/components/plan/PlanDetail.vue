@@ -32,8 +32,8 @@
         <p class="plan-deatil__function-heart-text">{{ this.heartCnt }}</p>
       </div>
       <div class="plan-detail__function-admin">
-        <button @click="movePlanUpdate">수정</button>
-        <button @click="deletePlan">삭제</button>
+        <button v-if="isWriter" @click="movePlanUpdate">수정</button>
+        <button v-if="isWriter" @click="deletePlan">삭제</button>
       </div>
     </div>
   </div>
@@ -41,6 +41,9 @@
 
 <script>
 import http from "@/util/http-common";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "PlanDetail",
@@ -66,6 +69,7 @@ export default {
           attrNo: 3,
         },
       },
+      userNo: 1,
       userImg: require("@/assets/jetty.jpg"),
       nickname: "Jetty",
       createTime: "2023-05-21 02:56",
@@ -74,7 +78,11 @@ export default {
       heart: require("@/assets/heartOff.png"),
       heartChk: false,
       heartCnt: 0,
+      isWriter: false,
     };
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     movePlanUpdate() {
@@ -112,6 +120,16 @@ export default {
       this.heartChk = this.heartChk === 0 ? 1 : 0;
       this.$forceUpdate();
     },
+  },
+  created() {
+    console.log(this.userInfo.userNo);
+    console.log(this.userNo);
+    if (this.userInfo.userNo === this.userNo) {
+      this.isWriter = true;
+    } else {
+      this.isWriter = false;
+    }
+    console.log(this.isWriter);
   },
 };
 </script>
@@ -247,5 +265,8 @@ export default {
   to {
     transform: scale(1.3);
   }
+}
+.plan-detail__function-admin {
+  width: 200px;
 }
 </style>

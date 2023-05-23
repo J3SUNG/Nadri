@@ -1,6 +1,6 @@
 <template>
   <div class="board__card" @click="moveBoardDetail">
-    <img class="board__card__img" :src="img[num]" />
+    <img class="board__card__img" :src="itemData.thumUrl" />
     <h3 class="board__card__subject">{{ itemData.subject }}</h3>
     <p class="board__card__content">
       {{ itemData.content }}
@@ -8,7 +8,7 @@
     <hr class="board__card__hr" />
     <div class="board__card__footer">
       <div class="board__card__footer__left">
-        <img class="board__card__footer__writer-img" src="@/assets/jetty.jpg" />
+        <img class="board__card__footer__writer-img" :src="itemData.imgUrl" />
         <p class="board__card__footer__writer-nickname">{{ itemData.nickname }}</p>
       </div>
       <div class="board__card__footer__right">
@@ -38,15 +38,6 @@ export default {
   name: "BoardCard",
   data() {
     return {
-      img: [
-        require("@/assets/dummy1.jpg"),
-        require("@/assets/dummy2.jpg"),
-        require("@/assets/dummy3.jpg"),
-        require("@/assets/dummy4.jpg"),
-        require("@/assets/dummy5.jpg"),
-        require("@/assets/dummy6.jpg"),
-      ],
-      num: Math.ceil(Math.random() * 6 - 1),
       commentCnt: Math.ceil(Math.random() * 20),
       heart: "",
       heartCnt: this.itemData.likeCount,

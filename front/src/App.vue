@@ -159,12 +159,4 @@ label {
     transform: translateZ(0);
   }
 }
-@keyframes scaling {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.3);
-  }
-}
 </style>

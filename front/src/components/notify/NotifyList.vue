@@ -7,7 +7,9 @@
           <input v-model="search" class="notify__search-input" />
           <button class="notify__search-button" @click="clickSearch">검색</button>
         </div>
-        <button class="notify__write-button" @click="moveNotifyCreate">글쓰기</button>
+        <button v-if="isAdmin" class="notify__write-button" @click="moveNotifyCreate">
+          글쓰기
+        </button>
       </div>
       <div class="notify__table__box">
         <table class="notify__table">
@@ -85,11 +87,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import http from "@/util/http-common";
 import NotifyListItem from "@/components/notify/NotifyListItem.vue";
 
+const memberStore = "memberStore";
+
 export default {
   name: "NotifyList",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   components: {
     NotifyListItem,
   },
@@ -102,6 +110,7 @@ export default {
       startPage: 1,
       selected: [true, false, false, false, false],
       search: "",
+      isAdmin: true,
     };
   },
   created() {
@@ -110,6 +119,12 @@ export default {
       this.pageNav = response.data.pageNavigation;
       console.log(this.pageNav);
     });
+    console.log(this.userInfo);
+    if (this.userInfo.grade === "A") {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
   },
   methods: {
     moveNotifyCreate() {
