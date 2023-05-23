@@ -14,4 +14,5 @@ public class TripDto {
 	private int planNo;
 	private int attractionNo;
 	private String image1;
+	private String attrName;
 }

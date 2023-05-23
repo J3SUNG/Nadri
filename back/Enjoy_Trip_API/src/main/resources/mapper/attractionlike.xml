@@ -2,11 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.trip.model.mapper.AttractionLikeMapper">
+<mapper
+	namespace="com.ssafy.trip.model.mapper.AttractionLikeMapper">
+
+	<resultMap type="AttractionDto" id="attraction">
+		<result column="attraction_no" property="attractionNo" />
+		<result column="title" property="title" />
+		<result column="addr1" property="addr1" />
+		<result column="addr2" property="addr2" />
+		<result column="zipcode" property="zipcode" />
+		<result column="tel" property="tel" />
+		<result column="content_type" property="contentType" />
+		<result column="image1" property="image1" />
+		<result column="image2" property="image2" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="overview" property="overview" />
+		<result column="gugun_no" property="gugunCode" />
+		<result column="sido_no" property="sidoCode" />
+	</resultMap>
+
+
 	<select id="get" parameterType="map" resultType="Integer">
 		select count(*)
-from like_attraction
-where attraction_no = #{attrNo} and user_no = #{userNo}
+		from like_attraction
+		where attraction_no = #{attrNo} and user_no =
+		#{userNo}
 	</select>
 	<insert id="create" parameterType="map">
 		insert into like_attraction
@@ -16,4 +37,43 @@ where attraction_no = #{attrNo} and user_no = #{userNo}
 		delete from like_attraction
 		where attraction_no = #{attrNo} and user_no = #{userNo}
 	</delete>
+
+	<insert id="log" parameterType="int"> INSERT INTO like_attraction
+		VALUES
+		(null, "2023-04-23 02:56:09", #{attrNo}, null);
+	</insert>
+
+	<select id="daily" resultMap="attraction">
+		select * from attraction_info ai
+		join(
+		SELECT attraction_no, count(*) cnt FROM
+		enjoy_trip.like_attraction
+		where date(registration_date) =
+		date(now())-1
+		group by attraction_no
+		order by cnt desc) cnt on
+		ai.attraction_no = cnt.attraction_no
+		limit 10;
+	</select>
+
+	<select id="weekly" resultMap="attraction">
+		select * from attraction_info ai
+		join(
+		SELECT attraction_no, count(*) cnt FROM enjoy_trip.like_attraction
+		where registration_date > date_add(now(),interval -7 day)
+		group by attraction_no
+		order by cnt desc) cnt on ai.attraction_no = cnt.attraction_no
+		limit 10;
+	</select>
+
+	<select id="monthly" resultMap="attraction">
+		select * from attraction_info ai
+		join(
+		SELECT attraction_no, count(*) cnt FROM enjoy_trip.like_attraction
+		where registration_date > date_add(now(),interval -30 day)
+		group by attraction_no
+		order by cnt desc) cnt on ai.attraction_no = cnt.attraction_no
+		limit 10;
+	</select>
+
 </mapper>

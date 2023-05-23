@@ -55,11 +55,11 @@ public class BoardController {
 
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public String write(@RequestParam("imgs") List<MultipartFile> imgs, BoardDto boardDto) throws Exception { //, BoardDto boardDto
+	public String write(@RequestParam(value = "imgs", required = false) List<MultipartFile> imgs, BoardDto boardDto) throws Exception { //, BoardDto boardDto
 		
 		logger.debug("게시판 글 작성 boardDto : {}", boardDto);
-
-		if (!imgs.get(0).isEmpty()) {
+		
+		if (!(imgs==null)) {
 			logger.debug(imgs.get(0).getOriginalFilename());
 			
 			String realPath = new File("").getAbsolutePath() + "/resources/img";
@@ -88,6 +88,10 @@ public class BoardController {
 			boardDto.setSaveFile(fileInfos.get(0).getSaveFile());
 			boardDto.setSaveFolder(fileInfos.get(0).getSaveFolder());
 			boardDto.setFileInfos(fileInfos);
+		} else {
+			boardDto.setSaveFile("no.png");
+			boardDto.setSaveFolder("image1");
+			boardDto.setFileInfos(null);
 		}
 		
 		boardService.writeArticle(boardDto);

@@ -22,4 +22,6 @@ public interface PlanService {
 
 	List<PlanDto> writelist(int userNo);
 
+	List<PlanDto> mylikelist(int userNo);
+
 }

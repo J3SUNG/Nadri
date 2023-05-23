@@ -14,8 +14,8 @@ public class PlanDto {
 	private String createTime;
 	private String subject;
 	private String content;
-	private String startDate;
-	private String endDate;
+//	private String startDate;
+//	private String endDate;
 	private int readCount;
 	private int userNo;
 	private String nickname;
@@ -23,5 +23,6 @@ public class PlanDto {
 	private int likeCount;
 	private List<TripDto> trips;
 	private String img;
-//	private List<FileInfoDto> fileInfos;
+	private String imgSaveFolder;
+	private String imgSaveFile;
 }

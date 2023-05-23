@@ -30,4 +30,6 @@ public interface PlanMapper {
 
 	void visitLog(Map<String, Integer> map);
 
+	List<PlanDto> mylikelist(int userNo);
+
 }

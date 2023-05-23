@@ -23,12 +23,8 @@ public class PlanLikeController {
 		this.planLikeService = planLikeService;
 	}
 
-	@GetMapping("/{planNo}")
+	@GetMapping("/{planNo}/{userNo}")
 	public int get(@PathVariable("planNo") int planNo, @PathVariable("userNo") int userNo) throws Exception {
-		/**
-		 * 세션??에서 사용자 번호를 가져와서 사용자가 planNo에 해당하는 게시글에 좋아요를 눌렀다면 1 아니면 0 반환
-		 */
-//		int userNo = 2;//test
 		logger.debug("like plan {} user {}", planNo,userNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("planNo", planNo);
@@ -41,7 +37,6 @@ public class PlanLikeController {
 	@PostMapping("/{planNo}/{userNo}")
 	public String create(@PathVariable("planNo") int planNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like plan number of : {}", planNo);
-//		int userNo = 2;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("planNo", planNo);
 		map.put("userNo", userNo);
