@@ -3,7 +3,10 @@
     <div class="notify__box">
       <h1>공지사항</h1>
       <div class="notify__header__box">
-        <the-search />
+        <div class="notify__search__box">
+          <input v-model="search" class="notify__search-input" />
+          <button class="notify__search-button" @click="clickSearch">검색</button>
+        </div>
         <button class="notify__write-button" @click="moveNotifyCreate">글쓰기</button>
       </div>
       <div class="notify__table__box">
@@ -84,13 +87,11 @@
 <script>
 import http from "@/util/http-common";
 import NotifyListItem from "@/components/notify/NotifyListItem.vue";
-import TheSearch from "@/components/search/TheSearch.vue";
 
 export default {
   name: "NotifyList",
   components: {
     NotifyListItem,
-    TheSearch,
   },
   data() {
     return {
@@ -100,6 +101,7 @@ export default {
       nextPage: 1,
       startPage: 1,
       selected: [true, false, false, false, false],
+      search: "",
     };
   },
   created() {
@@ -120,27 +122,37 @@ export default {
       } else if (this.nextPage >= this.pageNav.totalPageCount) {
         this.nextPage = this.pageNav.totalPageCount;
       }
-      http.get(`board?pg=${this.nextPage}&type=${this.type}`).then((response) => {
-        this.boards = response.data.list;
-        this.pageNav = response.data.pageNavigation;
-        console.log(this.pageNav);
-        if (!this.pageNav.startRange) {
-          this.startPage = 1;
-          this.selected = [true, false, false, false, false];
-        } else if (!this.pageNav.endRange) {
-          this.startPage = this.pageNav.totalPageCount - 4;
-          this.selected = [false, false, false, false, true];
-        } else if (!this.pageNav.startRange2) {
-          this.startPage = 1;
-          this.selected = [false, true, false, false, false];
-        } else if (!this.pageNav.endRange2) {
-          this.startPage = this.pageNav.totalPageCount - 4;
-          this.selected = [false, false, false, true, false];
-        } else {
-          this.startPage = this.pageNav.currentPage - 2;
-          this.selected = [false, false, true, false, false];
-        }
-      });
+      http
+        .get(`board?pg=${this.nextPage}&type=${this.type}&word=${this.search}`)
+        .then((response) => {
+          this.boards = response.data.list;
+          this.pageNav = response.data.pageNavigation;
+          console.log(this.pageNav);
+          if (!this.pageNav.startRange) {
+            this.startPage = 1;
+            this.selected = [true, false, false, false, false];
+          } else if (!this.pageNav.endRange) {
+            this.startPage = this.pageNav.totalPageCount - 4;
+            this.selected = [false, false, false, false, true];
+          } else if (!this.pageNav.startRange2) {
+            this.startPage = 1;
+            this.selected = [false, true, false, false, false];
+          } else if (!this.pageNav.endRange2) {
+            this.startPage = this.pageNav.totalPageCount - 4;
+            this.selected = [false, false, false, true, false];
+          } else {
+            this.startPage = this.pageNav.currentPage - 2;
+            this.selected = [false, false, true, false, false];
+          }
+        });
+    },
+    clickSearch() {
+      http
+        .get(`board?pg=${this.nextPage}&type=${this.type}&word=${this.search}`)
+        .then((response) => {
+          this.boards = response.data.list;
+          this.pageNav = response.data.pageNavigation;
+        });
     },
   },
 };
@@ -174,6 +186,30 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+}
+.notify__search__box {
+  width: 260px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.notify__search__box input,
+.notify__search__box select {
+  font-size: 12px;
+  padding: 8px 0px 8px 10px;
+}
+.notify__search-select {
+  width: 80px;
+  text-align: left;
+}
+.notify__search-input {
+  margin-left: 10px;
+  width: 200px;
+}
+.notify__search-button {
+  font-size: 12px;
+  width: 60px;
+  padding: 8px;
 }
 .notify__write-button {
   display: flex;

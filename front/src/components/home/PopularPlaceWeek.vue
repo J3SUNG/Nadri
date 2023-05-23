@@ -162,6 +162,7 @@ export default {
   text-align: left;
   margin-bottom: 10px;
   margin-left: 20px;
+  color: var(--color-black);
 }
 .popular-place-week__main__visited .popular-place-week__card {
   margin: 10px 0 0 0;

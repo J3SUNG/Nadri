@@ -345,7 +345,8 @@ export default {
 .map__left {
   margin-top: 100px;
   width: 360px;
-  height: 80vh;
+  height: 70vh;
+  top: 50px;
   left: 0;
   position: absolute;
   z-index: 10;
@@ -353,6 +354,7 @@ export default {
   backdrop-filter: brightness(20%);
   border-radius: 5px;
   cursor: pointer;
+  overflow-x: hidden;
 }
 .map__left p,
 h2 {

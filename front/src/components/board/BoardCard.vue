@@ -13,12 +13,12 @@
       </div>
       <div class="board__card__footer__right">
         <img
-          class="board__card__footer__icon card__footer__icon-comment"
+          class="board__card__footer__icon board__card__footer__icon-comment"
           src="@/assets/comment.png"
         />
         <p class="board__card__footer__text">{{ itemData.commentCount }}</p>
         <img
-          class="board__card__footer__icon card__footer__icon-heart"
+          class="board__card__footer__icon board__card__footer__icon-heart"
           @click="heartClick"
           :src="heart"
         />
@@ -155,6 +155,14 @@ export default {
   margin-left: 5px;
   width: 20px;
   height: 20px;
+}
+@keyframes scaling {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.3);
+  }
 }
 .board__card__footer__icon-heart:hover {
   animation: scaling 1s ease-in-out infinite;

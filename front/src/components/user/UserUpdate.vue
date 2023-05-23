@@ -126,7 +126,6 @@
 import TheLogo from "../logo/TheLogo.vue";
 import http from "@/util/http-common";
 import { mapState } from "vuex";
-import axios from "axios";
 
 const memberStore = "memberStore";
 
@@ -171,18 +170,11 @@ export default {
         frm.append("nickname", this.userData.nickname); //dymy
 
         console.log(frm);
-        axios
-          .post("http://192.168.31.78:7777/user/modify", frm, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then(function () {
-            alert(`회원정보 수정 완료!`);
-          })
-          .catch(function () {
-            alert("다시 시도 해주세요.");
-          });
+        http.post("user/modify", frm, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         setTimeout(() => {
           console.log("이미지 등록중");
           this.$router.push({ name: "AppMypage" });

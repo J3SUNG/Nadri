@@ -280,6 +280,7 @@ export default {
 .mypage__main__visited__title {
   text-align: left;
   margin-left: 20px;
+  color: var(--color-black);
 }
 .mypage__main__visited-attr .plan__card,
 .mypage__main__visited-plan .plan__card {

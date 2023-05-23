@@ -10,10 +10,23 @@
       ></textarea>
       <hr class="board__create__hr" />
       <div class="board__create__footer">
-        <img class="board__create__button board__create__button-img" src="@/assets/file.png" />
+        <div class="board__create__img-btn__box">
+          <input
+            class="board__create__img-btn"
+            name="file"
+            id="file"
+            multiple
+            ref="inputImage"
+            type="file"
+            value="사진"
+            placeholder="사진"
+            @change="updateImg"
+          />
+        </div>
+        <!-- <img class="board__create__button board__create__button-img" src="@/assets/file.png" /> -->
         <!-- 서버에 요청 보내기 -->
         <div class="board__create__button board__create__button-a" @click="createBoard">
-          <router-link :to="{ name: 'AppBoard' }">게시하기</router-link>
+          <p>게시하기</p>
         </div>
       </div>
     </div>
@@ -22,30 +35,65 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import http from "@/util/http-common";
+
+const memberStore = "memberStore";
+
 export default {
   name: "BoardCreate",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  mounted() {
+    if (this.$route.path === "/notifyCreate") {
+      this.type = 0;
+    } else {
+      this.type = 1;
+    }
+  },
   data() {
     return {
       boardType: this.$route.params.boardType,
       content: "",
       subject: "",
+      image: "",
+      type: 1,
+      filename: "does not exist file",
     };
   },
   methods: {
     createBoard() {
-      let item = {
-        boardType: this.boardType,
-        content: this.content,
-        subject: this.subject,
-      };
-      http.post(`board`, JSON.stringify(item)).then(() => {
-        if (this.boardType === 1) {
-          this.$router.push({ name: "AppBoard" });
-        } else {
-          this.$router.push({ name: "AppNotify" });
-        }
-      });
+      var frm = new FormData();
+      var files = this.image;
+
+      for (let i = 0; i < files.length; i++) {
+        frm.append("imgs", files[i]);
+      }
+      frm.append("subject", this.subject);
+      frm.append("content", this.content);
+      frm.append("userNo", this.userInfo.userNo);
+      frm.append("boardType", this.type);
+
+      http
+        .post("board", frm, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(() => {
+          if (this.type === 0) {
+            this.$router.push({ name: "AppNotify" });
+          } else {
+            this.$router.push({ name: "AppBoard" });
+          }
+        });
+    },
+    updateImg() {
+      this.image = this.$refs.inputImage.files;
+      this.files = this.image;
+      console.log(this.image);
+      console.log(this.files);
     },
   },
 };
@@ -103,6 +151,15 @@ textarea:focus {
   font-size: 18px;
   height: 50%;
 }
+
+.board__create__img-btn {
+  border-radius: 8px;
+  width: 300px;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+}
+
 .board__create__footer {
   display: flex;
   justify-content: space-between;

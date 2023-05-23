@@ -97,7 +97,11 @@ export default {
       this.$router.push({ name: "AppBoardUpdate", params: { boardNo: this.board.boardNo } });
     },
     moveBoardList() {
-      this.$router.push({ name: "AppBoard" });
+      if (this.board.boardType === 1) {
+        this.$router.push({ name: "AppBoard" });
+      } else {
+        this.$router.push({ name: "AppNotify" });
+      }
     },
     deleteBoard() {
       console.log(this.board.boardNo);
