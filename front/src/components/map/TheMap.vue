@@ -102,7 +102,12 @@
     </div>
     <div id="map" class="map">
       <div class="map__left">
-        <div class="map__left__box" v-for="(item, index) in positions" :key="index">
+        <div
+          class="map__left__box"
+          v-for="(item, index) in positions"
+          :key="index"
+          @click="detailView(item.attractionNo)"
+        >
           <img class="map__left__box__img" :src="item.image1" />
           <!-- <img :src="item.image2" /> -->
           <!-- 아마 image2가 썸네일 용이라 저화질, image가 없을때 no image 처리 필요-->
@@ -117,15 +122,28 @@
           <!-- <div>{{ item.overview }}</div> -->
         </div>
       </div>
+      <div :class="{ map__detail: true, map__detail__hide: detailHide }">
+        <img class="map__detail__img" :src="this.attr.image1" />
+        <p class="map__detail__title">{{ this.attr.title }}</p>
+        <p class="map__detail__addr1">주소 : {{ this.attr.addr1 }}</p>
+        <p class="map__detail__tel">전화번호 : {{ this.attr.tel }}</p>
+        <p class="map__detail__overview">{{ this.attr.overview }}</p>
+        <button class="map__detail__btn" @click.prevent="closeDetail">x</button>
+      </div>
     </div>
-    <div></div>
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "TheMap",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       map: null,
@@ -151,9 +169,17 @@ export default {
         38: "쇼핑",
         39: "음식점",
       },
+      attr: "",
+      attrNo: 0,
+      userNo: 0,
+      detailHide: true,
     };
   },
-  created() {},
+  created() {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+  },
   async mounted() {
     let paramContentType = ["0"];
     if (this.$route.params.contentType !== undefined) {
@@ -199,7 +225,6 @@ export default {
       };
       this.map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
     },
-
     changeSido() {
       console.log("시도 선택 ::: " + this.sidoCode);
       this.gugunCode = "0";
@@ -311,6 +336,10 @@ export default {
 
       this.positions.forEach((position) => {
         const infowindow = new window.kakao.maps.InfoWindow({
+          // content: `<img src="${position.image1}" width="100px" height="100px"/><p>
+          //   ${position.title}<br>
+          //   주소 : ${position.addr1} ${position.addr2}<br>
+          //   </p>`,
           content: `<img src="${position.image1}" width="100px" height="100px"/><p>
             ${position.title}<br>
             주소 : ${position.addr1} ${position.addr2}<br>
@@ -327,6 +356,9 @@ export default {
         });
 
         // 마커에 클릭이벤트를 등록
+        window.kakao.maps.event.addListener(marker, "click", () => {
+          this.detailView(position.attractionNo);
+        });
         window.kakao.maps.event.addListener(marker, "mouseover", () => {
           infowindow.open(this.map, marker);
         });
@@ -343,11 +375,77 @@ export default {
       );
       this.map.setBounds(bounds);
     },
+    closeDetail() {
+      this.detailHide = true;
+    },
+    detailView(num) {
+      http.get(`map/${num}/${this.userNo}`).then((response) => {
+        this.attr = response.data;
+      });
+      this.detailHide = false;
+    },
   },
 };
 </script>
 
 <style>
+.map__detail {
+  margin-top: 100px;
+  padding-bottom: 20px;
+  width: 400px;
+  min-height: 400px;
+  top: 45px;
+  left: 365px;
+  position: absolute;
+  z-index: 10;
+  backdrop-filter: brightness(20%);
+  border-radius: 5px;
+}
+.map__detail__img {
+  margin-top: 20px;
+  width: 360px;
+  height: 240px;
+}
+.map__detail p {
+  color: var(--color-white);
+  width: 360px;
+  text-align: left;
+  margin: 0px 20px;
+}
+.map__detail__title {
+  font-size: 24px;
+  padding-bottom: 15px;
+}
+.map__detail__addr1 {
+  font-size: 18px;
+  padding-bottom: 10px;
+}
+.map__detail__tel {
+  font-size: 18px;
+  padding-bottom: 10px;
+}
+.map__detail__overview {
+  font-size: 14px;
+}
+.map__detail__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0px;
+  background-color: transparent;
+  font-size: 24px;
+  border-radius: 70px;
+  backdrop-filter: brightness(50%);
+  position: absolute;
+  right: 25px;
+  top: 25px;
+}
+.map__detail__hide {
+  visibility: hidden;
+}
+
 .map__left {
   margin-top: 100px;
   width: 360px;
