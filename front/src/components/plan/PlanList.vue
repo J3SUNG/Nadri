@@ -100,6 +100,9 @@ export default {
   align-items: center;
   margin: 0px 0px 0 10px;
 }
+.plan-note__title {
+  color: var(--color-black);
+}
 .plan-note__cards {
   width: 100%;
   display: flex;

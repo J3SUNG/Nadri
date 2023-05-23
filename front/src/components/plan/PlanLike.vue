@@ -12,7 +12,7 @@
             </div>
             <div class="like-plan__main__bottom">
               <div class="like-plan__main__bottom__main">
-                <img class="like-plan__user-img" src="@/assets/jetty.jpg" />
+                <img class="like-plan__user-img" :src="item.imgUrl" />
                 <div class="like-plan__main__bottom__main__right">
                   <p class="like-plan__main__bottom__main__right-loc">{{ item.loc }}</p>
                   <p class="like-plan__main__bottom__main__right-user">{{ item.nickname }}</p>
@@ -34,34 +34,35 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "LikePlan",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
-      list: {
-        0: {
-          img: require("@/assets/dummy3.jpg"),
-          subject: "백두산 여행",
-          loc: "백두산",
-          nickname: "jetty",
-          planNo: 0,
-        },
-        1: {
-          img: require("@/assets/dummy4.jpg"),
-          subject: "여행가자",
-          loc: "서울",
-          nickname: "jetty",
-          planNo: 1,
-        },
-        2: {
-          img: require("@/assets/dummy5.jpg"),
-          subject: "배낭여행",
-          loc: "전주",
-          nickname: "jetty",
-          planNo: 2,
-        },
-      },
+      list: "",
     };
+  },
+  methods: {
+    loadImg() {
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
+      for (let i = 0; i < this.list.length; ++i) {
+        this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.list[i].imgSaveFolder}&saveFile=${this.list[i].imgSaveFile}`;
+        this.list[i].imgUrl = this.imgUrl;
+      }
+    },
+  },
+  created() {
+    http.get(`plan/mylikelist/${this.userInfo.userNo}`).then((response) => {
+      this.list = response.data;
+      this.loadImg();
+      console.log(this.list);
+    });
   },
 };
 </script>
@@ -75,6 +76,7 @@ export default {
   width: 100%;
   height: 10%;
   text-align: left;
+  color: var(--color-black);
 }
 .like-plan__box {
   width: 100%;

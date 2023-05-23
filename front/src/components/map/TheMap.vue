@@ -155,6 +155,11 @@ export default {
   },
   created() {},
   async mounted() {
+    let paramContentType = ["0"];
+    if (this.$route.params.contentType !== undefined) {
+      this.contentType = this.$route.params.contentType;
+      paramContentType = this.$route.params.contentType;
+    }
     if (window.kakao && window.kakao.maps) {
       // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
       // console.log("loadmap");
@@ -172,7 +177,7 @@ export default {
       //전국 좋아요 상위 200개? //현재는 테스트로 그냥 10개 가져옴
       areaCode: 0,
       sigunguCode: 0,
-      contentType: ["0"],
+      contentType: paramContentType,
       search: "",
     };
     // console.log("search : " + this.search);
@@ -346,8 +351,8 @@ export default {
 .map__left {
   margin-top: 100px;
   width: 360px;
-  height: 70vh;
-  top: 50px;
+  height: 100vh;
+  top: 45px;
   left: 0;
   position: absolute;
   z-index: 10;

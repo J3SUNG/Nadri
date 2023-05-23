@@ -13,7 +13,7 @@
       </div>
       <div class="plan__card__footer__right">
         <img
-          class="plan__card__footer__icon card__footer__icon-heart"
+          class="plan__card__footer__icon plan__card__footer__icon-heart"
           @click="heartClick"
           :src="heart"
         />
@@ -82,7 +82,6 @@ export default {
           this.heart = require("@/assets/heartOff.png");
         }
         this.heartChk = this.heartChk === 0 ? 1 : 0;
-        this.$forceUpdate();
       }
     },
   },

@@ -204,7 +204,7 @@ export default {
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px 0px;
 }
 .notify__search__box {
   margin-top: 30px;

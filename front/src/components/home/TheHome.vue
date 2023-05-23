@@ -23,12 +23,12 @@ import PopularPlaceMonth from "./PopularPlaceMonth.vue";
 export default {
   components: { PopularPlaceLoc, PopularPlaceRank, TheThema, PopularPlaceWeek, PopularPlaceMonth },
   name: "TheHome",
-  // data() {
-  //   return {
-  //     popularPlaceMonthShow: false,
-  //     lastScrollPosition: 0,
-  //   };
-  // },
+  data() {
+    return {
+      popularPlaceMonthShow: false,
+      lastScrollPosition: 0,
+    };
+  },
   // mounted() {
   //   window.addEventListener("scroll", this.onScroll);
   // },
@@ -76,5 +76,15 @@ export default {
   animation: fadeInUp 1s;
   animation-delay: 0.6s;
   animation-fill-mode: forwards;
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
 }
 </style>

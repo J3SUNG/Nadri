@@ -3,28 +3,28 @@
     <h2 class="best-plan__title">BEST 여행노트</h2>
     <div class="best-plan__slideShow">
       <ul class="best-plan__slides" :style="`left:${left}`">
-        <li v-for="item in plan" :key="item.attrNo">
+        <li v-for="item in plans" :key="item.attrNo">
           <div class="best-plan__img__box">
             <img class="best-plan__img" :src="item.img" />
             <div class="best-plan__box-right">
-              <h3 class="best-plan__box-title">여행코스소개</h3>
+              <h3 class="best-plan__box-title">{{ item.subject }}</h3>
               <hr class="best-plan__box-hr" />
               <ul class="best-plan__course-box">
                 <li
                   class="best-plan__course"
-                  v-for="(courseItem, index) in item.course"
-                  :key="courseItem.attr_no"
+                  v-for="(courseItem, index) in item.trips"
+                  :key="courseItem.trip_no"
                 >
                   <p class="best-plan__course-no">{{ index * 1 + 1 }}</p>
-                  <p class="best-plan__course-loc">{{ courseItem.loc }}</p>
+                  <p class="best-plan__course-loc">{{ courseItem.attrName }}</p>
                 </li>
               </ul>
               <hr class="best-plan__footer-hr" />
               <div class="best-plan__footer">
-                <img class="best-plan__footer-img" src="@/assets/jetty.jpg" />
+                <img class="best-plan__footer-img" :src="item.imgUrl" />
                 <div class="best-plan__footer-right">
                   <p class="best-plan__footer-nickname">{{ item.nickname }}</p>
-                  <p class="best-plan__footer-createtime">{{ item.createtime }}</p>
+                  <p class="best-plan__footer-createtime">{{ item.createTime }}</p>
                 </div>
               </div>
             </div>
@@ -40,90 +40,22 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "BestPlan",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       left: 0,
       currentIdx: 0, //현재 슬라이드 index
-      slideCount: 2, // 슬라이드 개수
+      slideCount: 10, // 슬라이드 개수
       index: 0,
-      plan: {
-        0: {
-          course: {
-            0: {
-              attr_no: 1,
-              loc: "해운대 해수욕장",
-            },
-            1: {
-              attr_no: 2,
-              loc: "해운대 식당",
-            },
-            2: {
-              attr_no: 3,
-              loc: "해운대 카페",
-            },
-            3: {
-              attr_no: 4,
-              loc: "해운대 횟집",
-            },
-            4: {
-              attr_no: 5,
-              loc: "해운대 숙소",
-            },
-            5: {
-              attr_no: 6,
-              loc: "해운대 숙소",
-            },
-            6: {
-              attr_no: 7,
-              loc: "해운대 숙소",
-            },
-            7: {
-              attr_no: 8,
-              loc: "해운대 숙소",
-            },
-            8: {
-              attr_no: 9,
-              loc: "해운대 숙소",
-            },
-            9: {
-              attr_no: 10,
-              loc: "해운대 숙소",
-            },
-          },
-          createtime: "2023-05-20 21:20",
-          nickname: "jetty",
-          img: require("@/assets/dummy1.jpg"),
-        },
-        1: {
-          course: {
-            0: {
-              attr_no: 11,
-              loc: "첨성대 해수욕장",
-            },
-            1: {
-              attr_no: 12,
-              loc: "첨성대 식당",
-            },
-            2: {
-              attr_no: 13,
-              loc: "첨성대 카페",
-            },
-            3: {
-              attr_no: 14,
-              loc: "첨성대 횟집",
-            },
-            4: {
-              attr_no: 15,
-              loc: "첨성대 숙소",
-            },
-          },
-          createtime: "2023-05-20 21:20",
-          nickname: "cola",
-          img: require("@/assets/dummy2.jpg"),
-        },
-      },
+      plans: "",
     };
   },
   methods: {
@@ -151,8 +83,20 @@ export default {
       }, 3000);
       return interval;
     },
+    loadImg() {
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
+      for (let i = 0; i < this.plans.length; ++i) {
+        this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.plans[i].imgSaveFolder}&saveFile=${this.plans[i].imgSaveFile}`;
+        this.plans[i].imgUrl = this.imgUrl;
+      }
+    },
   },
   created() {
+    http.get(`plan/likelist/${this.userInfo.userNo}`).then((response) => {
+      this.plans = response.data;
+      this.loadImg();
+      console.log(this.plans);
+    });
     setInterval(() => {
       this.index = this.index === 0 ? 1 : 0;
     }, 3000);
@@ -173,6 +117,7 @@ export default {
   height: 10%;
   text-align: left;
   margin-left: 10px;
+  color: var(--color-black);
 }
 .best-plan__img__box {
   width: 640px;

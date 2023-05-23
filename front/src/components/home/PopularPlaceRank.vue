@@ -4,71 +4,29 @@
     <hr class="popular-place-rank__hr" />
     <ol ckass="popular-place-rank__loc__box">
       <li class="popular-place-rank__loc" v-for="(item, index) in popularPlace" :key="item.attrNo">
-        <p class="popular-place-rank__loc-rank">{{ index * 1 + 1 }}위</p>
-        <p class="popular-place-rank__loc-rank">{{ item.name }}</p>
+        <p class="popular-place-rank__loc-rank popular-place-rank__loc-rank__nth">
+          {{ index * 1 + 1 }}위
+        </p>
+        <p class="popular-place-rank__loc-rank__title">{{ item.title }}</p>
       </li>
     </ol>
   </div>
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "PopularPlaceRank",
   data() {
     return {
-      popularPlace: {
-        0: {
-          img: require("@/assets/dummy1.jpg"),
-          name: "서울역 카페",
-          attrNo: "1",
-        },
-        1: {
-          img: require("@/assets/dummy2.jpg"),
-          name: "구미역 식당",
-          attrNo: "2",
-        },
-        2: {
-          img: require("@/assets/dummy3.jpg"),
-          name: "대구역 클라이밍",
-          attrNo: "3",
-        },
-        3: {
-          img: require("@/assets/dummy4.jpg"),
-          name: "인천 해수욕장",
-          attrNo: "4",
-        },
-        4: {
-          img: require("@/assets/dummy5.jpg"),
-          name: "부산 숙소",
-          attrNo: "5",
-        },
-        5: {
-          img: require("@/assets/dummy6.jpg"),
-          name: "광주 카페",
-          attrNo: "6",
-        },
-        6: {
-          img: require("@/assets/dummy1.jpg"),
-          name: "대전 식당",
-          attrNo: "7",
-        },
-        7: {
-          img: require("@/assets/dummy2.jpg"),
-          name: "경주 클라이밍",
-          attrNo: "8",
-        },
-        8: {
-          img: require("@/assets/dummy3.jpg"),
-          name: "안동 해수욕장",
-          attrNo: "9",
-        },
-        9: {
-          img: require("@/assets/dummy4.jpg"),
-          name: "제주도 숙소",
-          attrNo: "10",
-        },
-      },
+      popularPlace: "",
     };
+  },
+  created() {
+    http.get("attractionlike/daily").then((response) => {
+      this.popularPlace = response.data;
+      console.log(response);
+    });
   },
 };
 </script>
@@ -170,6 +128,18 @@ export default {
   align-items: center;
   opacity: 0;
 }
+.popular-place-rank__loc-rank__nth {
+  width: 40px;
+  text-align: center;
+}
+.popular-place-rank__loc-rank__title {
+  width: 160px;
+  text-align: left;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .popular-place-rank__loc p {
   color: var(--color-white);
 }
@@ -179,9 +149,7 @@ export default {
 
 .popular-place-rank__loc-rank {
   display: inline-block;
-  margin-left: 20px;
-  min-width: 30px;
-  text-align: center;
+  margin: 0px 20px;
 }
 .popular-place-rank__loc-text {
   display: inline-block;

@@ -4,7 +4,7 @@
       <h2 class="popular-place-month__main__visited__title">월간 인기 관광지</h2>
       <div class="popular-place-month__visited__slideShow">
         <ul class="popular-place-month__visited__slides" :style="`left:${this.left}`">
-          <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
+          <li v-for="item in places" :key="item.placeNo"><place-card :itemData="item" /></li>
         </ul>
         <p class="popular-place-month__visited__controller">
           <img
@@ -24,92 +24,23 @@
 </template>
 
 <script>
-import PlanCard from "@/components/plan/PlanCard.vue";
+import PlaceCard from "./PlaceCard.vue";
+import http from "@/util/http-common";
 export default {
   name: "PopularPlaceMonth",
+  created() {
+    http.get("attractionlike/monthly").then((response) => {
+      this.places = response.data;
+      console.log(response);
+    });
+  },
   data() {
     return {
       left: 0,
       currentIdx: 0, //현재 슬라이드 index
-      slideCount: 3, // 슬라이드 개수
+      slideCount: 8, // 슬라이드 개수
 
-      plans: {
-        0: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 1,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        1: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 2,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        2: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 3,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        4: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 4,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        5: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 5,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-      },
+      places: "",
     };
   },
   methods: {
@@ -131,7 +62,7 @@ export default {
     },
   },
   components: {
-    PlanCard,
+    PlaceCard,
   },
 };
 </script>
@@ -154,13 +85,11 @@ export default {
   padding: 0px;
 }
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 10%, 0);
+  from {
+    transform: translate(0, 0);
   }
   to {
-    opacity: 1;
-    transform: translateZ(0);
+    transform: translate(100px, 100px);
   }
 }
 /* slide */
@@ -177,7 +106,7 @@ export default {
   width: 2000px;
   transition: left 0.3s ease-out;
 }
-.popular-place-month__visited__slides .plan__card {
+.popular-place-month__visited__slides .place__card {
   margin: 10px 30px 0 0px;
 }
 .popular-place-month__visited__slides li:first-child {

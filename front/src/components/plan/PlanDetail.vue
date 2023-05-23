@@ -1,35 +1,35 @@
 <template>
   <div class="plan-detail">
     <div class="plan-detail__header">
-      <h3 class="plan-detail__header-title">여행노트</h3>
+      <h2 class="plan-detail__header-title">여행노트</h2>
       <div class="plan-detail__header__right">
-        <img class="plan-detail__header-img" :src="userImg" />
-        <p class="plan-detail__header-nickname">{{ this.nickname }}</p>
-        <p class="plan-detail__header-createtime">{{ this.createTime }}</p>
+        <img class="plan-detail__header-img" :src="plans.imgUrl" />
+        <p class="plan-detail__header-nickname">{{ plans.nickname }}</p>
+        <p class="plan-detail__header-createtime">{{ plans.createTime }}</p>
       </div>
     </div>
     <hr class="plan-detail__hr" />
-    <div class="plan-detail__item" v-for="(item, index) in plans" :key="item.attrNo">
-      <img :src="item.img" class="plan-detail__item-img" />
+    <div class="plan-detail__item" v-for="(item, index) in plans.trips" :key="item.tripNo">
+      <img :src="item.image1" class="plan-detail__item-img" />
       <div class="plan-detail__item-box">
         <div class="plan-detail__item-box__header">
-          <p class="plan-detail__item-order">경로 : {{ index }}번</p>
-          <h2 class="plan-detail__item-name">{{ item.name }}</h2>
+          <p class="plan-detail__item-order">경로 : {{ index * 1 + 1 }}번</p>
+          <h2 class="plan-detail__item-name">{{ item.attrName }}</h2>
         </div>
         <hr class="plan-detail__item-box__hr" />
-        <p class="plan-detail__item-content">{{ item.content }}</p>
+        <p class="plan-detail__item-content">{{ item.memo }}</p>
       </div>
     </div>
     <div class="plan-deatil__main">
-      <h1 class="plan-deatil__main-title">{{ this.subject }}</h1>
-      <p class="plan-deatil__main-content">{{ this.content }}</p>
+      <h1 class="plan-deatil__main-title">{{ plans.subject }}</h1>
+      <p class="plan-deatil__main-content">{{ plans.content }}</p>
     </div>
     <hr class="plan-detail__hr" />
     <div class="plan-deatil__function">
       <button @click="movePlanList">목록</button>
       <div class="plan-deatil__function-heart">
         <img class="plan-deatil__function-heart-img" @click="heartClick" :src="heart" />
-        <p class="plan-deatil__function-heart-text">{{ this.heartCnt }}</p>
+        <p class="plan-deatil__function-heart-text">{{ plans.likeCount }}</p>
       </div>
       <div class="plan-detail__function-admin">
         <button v-if="isWriter" @click="movePlanUpdate">수정</button>
@@ -49,36 +49,12 @@ export default {
   name: "PlanDetail",
   data() {
     return {
-      plans: {
-        0: {
-          img: require("@/assets/dummy6.jpg"),
-          name: "서해안 도로",
-          content: "드라이브 하기 좋은 길",
-          attrNo: 1,
-        },
-        1: {
-          img: require("@/assets/dummy5.jpg"),
-          name: "서해 바다",
-          content: "바다가 예뻐요",
-          attrNo: 2,
-        },
-        2: {
-          img: require("@/assets/dummy4.jpg"),
-          name: "서해 카페",
-          content: "뷰가 좋아요",
-          attrNo: 3,
-        },
-      },
-      userNo: 1,
-      userImg: require("@/assets/jetty.jpg"),
-      nickname: "Jetty",
-      createTime: "2023-05-21 02:56",
-      subject: "여름의 여행 계획",
-      content: "최고의 여행 계획이야!!",
+      plans: "",
       heart: require("@/assets/heartOff.png"),
       heartChk: false,
       heartCnt: 0,
       isWriter: false,
+      planNo: 0,
     };
   },
   computed: {
@@ -118,10 +94,21 @@ export default {
         this.heart = require("@/assets/heartOff.png");
       }
       this.heartChk = this.heartChk === 0 ? 1 : 0;
-      this.$forceUpdate();
+    },
+    loadImg() {
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
+      this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.plans.imgSaveFolder}&saveFile=${this.plans.imgSaveFile}`;
+      this.plans.imgUrl = this.imgUrl;
     },
   },
   created() {
+    this.planNo = this.$route.params.planNo;
+    http.get(`plan/${this.planNo}/${this.userInfo.userNo}`).then((response) => {
+      this.plans = response.data;
+      this.heartChk = this.plans.isLike === 1 ? true : false;
+      this.loadImg();
+      console.log(this.plans);
+    });
     console.log(this.userInfo.userNo);
     console.log(this.userNo);
     if (this.userInfo.userNo === this.userNo) {
@@ -145,8 +132,8 @@ export default {
   justify-content: space-between;
 }
 .plan-detail__header-title {
-  font-size: 20px;
   font-weight: bold;
+  color: var(--color-black);
 }
 .plan-detail__header__right {
   display: flex;
@@ -197,13 +184,16 @@ export default {
   margin-bottom: 20px;
 }
 .plan-detail__item-order {
-  font-size: 28px;
+  font-size: 20px;
   margin-left: 20px;
   text-align: left;
+  width: 100px;
 }
 .plan-detail__item-name {
-  font-size: 28px;
+  font-size: 20px;
   margin-left: 20px;
+  color: var(--color-black);
+  width: 200px;
 }
 .plan-detail__item-box__hr {
   width: 100%;
@@ -211,6 +201,7 @@ export default {
 .plan-detail__item-content {
   text-align: left;
   padding: 20px;
+  color: var(--color-black);
 }
 .plan-deatil__main {
   margin-left: 5%;

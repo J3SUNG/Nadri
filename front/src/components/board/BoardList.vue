@@ -3,19 +3,19 @@
     <h1 class="board__title">커뮤니티</h1>
     <div class="board__header__box">
       <div class="board__write">
-        <div class="board__search__box">
-          <select name="subject" class="board__search-select" v-model="searchType">
-            <option value="subject" selected>제목</option>
-            <option value="nickname">닉네임</option>
-          </select>
-          <input v-model="search" class="board__search-input" />
-          <button class="board__search-button" @click="clickSearch">검색</button>
-        </div>
         <button class="board__write-button" @click="moveBoardCreate" v-if="isUser">글쓰기</button>
       </div>
     </div>
     <div class="board__cards">
       <board-card v-for="item in boards" :itemData="item" :key="item.boardNo" />
+    </div>
+    <div class="board__search__box">
+      <select name="subject" class="board__search-select">
+        <option value="subject" selected>제목</option>
+        <option value="nickname">닉네임</option>
+      </select>
+      <input v-model="search" class="board__search-input" />
+      <button class="board__search-button" @click="clickSearch">검색</button>
     </div>
     <div class="board__pagenation__box">
       <button
@@ -86,7 +86,6 @@ export default {
     return {
       boards: [],
       pageNav: {},
-      searchType: "",
       type: "1",
       nextPage: 1,
       startPage: 1,
@@ -179,13 +178,13 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
 }
 .board__search__box {
-  width: 360px;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 .board__search__box input,
