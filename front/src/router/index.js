@@ -58,11 +58,13 @@ const routes = [
   {
     path: "/mypage",
     name: "AppMypage",
+    beforeEnter: onlyAuthUser,
     component: AppMypage,
   },
   {
     path: "/userUpdate",
     name: "AppUserUpdate",
+    beforeEnter: onlyAuthUser,
     component: AppUserUpdate,
   },
   {

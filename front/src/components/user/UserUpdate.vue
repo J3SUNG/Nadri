@@ -4,30 +4,16 @@
       <div class="user-update__logo">
         <TheLogo />
       </div>
-      <label class="user-update__label user-update__label-id">아이디</label>
+      <label class="user-update__label user-update__label-img">프로필 사진 변경</label>
       <input
-        v-model="userData.id"
-        type="text"
-        class="user-update__input user-update__input-id"
-        placeholder="ID"
-        pattern="^([a-z0-9_]){6,16}$"
-        title="형식: 6~16글자, 영어와 숫자를 포함한 아이디를 입력하세요."
-        @input="checkValidate"
-        required="required"
-        maxlength="16"
-        readonly
+        class="user-update__img-btn"
+        name="file"
+        id="file"
+        multiple
+        ref="inputImage"
+        type="file"
+        @change="updateUserImg"
       />
-      <p
-        :class="{
-          'user-update__check--green': attrChk[0],
-          'user-update__check--red': !attrChk[0],
-          'user-update__check': true,
-          'user-update__check-id': true,
-        }"
-      >
-        {{ attrText[0] }}
-      </p>
-
       <label class="user-update__label user-update__label-pw">비밀번호</label>
       <input
         v-model="userData.password"
@@ -139,20 +125,27 @@
 <script>
 import TheLogo from "../logo/TheLogo.vue";
 import http from "@/util/http-common";
+import { mapState } from "vuex";
+import axios from "axios";
+
+const memberStore = "memberStore";
 
 export default {
   name: "UserUpdate",
   components: { TheLogo },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       userData: {
-        id: "",
         password: "",
         email: "",
         nickname: "",
+        files: "",
       },
       passwordConfirm: "",
-      attrChk: [false, false, false, false, false],
+      attrChk: [true, false, false, false, false],
       attrText: ["ㅤ", "ㅤ", "ㅤ", "ㅤ", "ㅤ"],
       attr: ["아이디", "비밀번호", "비밀번호", "이메일", "닉네임"],
       activeButton: false,
@@ -168,15 +161,32 @@ export default {
         this.attrChk[3] &&
         this.attrChk[4]
       ) {
-        http.post(`user`, JSON.stringify(this.userData)).then((response) => {
-          console.log(response);
-          if (response.data === "success") {
+        var frm = new FormData();
+
+        frm.append("img", this.files[0]);
+        frm.append("id", this.userInfo.id); //dumy
+        frm.append("userNo", this.userInfo.userNo); //dumy
+        frm.append("password", this.userData.password); //dumy
+        frm.append("email", this.userData.email); //dymy
+        frm.append("nickname", this.userData.nickname); //dymy
+
+        console.log(frm);
+        axios
+          .post("http://192.168.31.78:7777/user/modify", frm, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then(function () {
             alert(`회원정보 수정 완료!`);
-            this.$router.push({ name: "AppMypage" });
-          } else {
+          })
+          .catch(function () {
             alert("다시 시도 해주세요.");
-          }
-        });
+          });
+        setTimeout(() => {
+          console.log("이미지 등록중");
+          this.$router.push({ name: "AppMypage" });
+        }, 1000);
       }
     },
     moveMypage() {
@@ -271,6 +281,10 @@ export default {
         this.activeButton = true;
       }
     },
+    updateUserImg() {
+      this.image = this.$refs.inputImage.files;
+      this.files = this.image;
+    },
   },
   mounted() {
     this.activeButton = true;
@@ -298,6 +312,11 @@ export default {
   width: 120px;
   text-align: left;
   font-weight: bold;
+}
+.user-update__img-btn {
+  width: 300px;
+  border-radius: 8px;
+  margin-bottom: 40px;
 }
 .user-update__input {
   width: 300px;

@@ -1,24 +1,26 @@
 <template>
   <div class="mypage">
     <div class="mypage__header">
-      <img class="mypage__header-img" :src="userImg" />
+      <img class="mypage__header-img" :src="this.userInfo.url" />
       <div class="mypage__header-info__box mypage__header-info__box-id">
         <p class="mypage__header-info">아이디</p>
-        <p class="mypage__header-info__data">{{ this.id }}</p>
+        <p class="mypage__header-info__data">{{ this.userInfo.id }}</p>
       </div>
       <div class="mypage__header-info__box mypage__header-info__box-nickname">
         <p class="mypage__header-info">닉네임</p>
-        <p class="mypage__header-info__data">{{ this.nickname }}</p>
+        <p class="mypage__header-info__data">{{ this.userInfo.nickname }}</p>
       </div>
       <div class="mypage__header-info__box mypage__header-info__box-email">
         <p class="mypage__header-info">이메일</p>
-        <p class="mypage__header-info__data">{{ this.email }}</p>
+        <p class="mypage__header-info__data">{{ this.userInfo.email }}</p>
       </div>
       <div class="mypage__header-button__box">
         <button class="mypage__header-button mypage__header-button__update" @click="moveUserUpdate">
           프로필수정
         </button>
-        <button class="mypage__header-button mypage__header-button__delete">회원탈퇴</button>
+        <button class="mypage__header-button mypage__header-button__delete" @click="moveUserDelete">
+          회원탈퇴
+        </button>
       </div>
     </div>
     <div class="mypage__main">
@@ -52,8 +54,20 @@
 
 <script>
 import PlanCard from "@/components/plan/PlanCard.vue";
+import { mapActions, mapGetters, mapState } from "vuex";
+import http from "@/util/http-common";
+
+const memberStore = "memberStore";
+
 export default {
   name: "TheMypage",
+  computed: {
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+  },
+  updated() {
+    console.log(this.userInfo);
+  },
   data() {
     return {
       attrLeft: 0,
@@ -63,10 +77,7 @@ export default {
       planCurrentIdx: 0, //현재 슬라이드 index
       planSlideCount: 3, // 슬라이드 개수
 
-      userImg: require("@/assets/jetty.jpg"),
-      id: "jetty1234",
-      nickname: "제티먹은콜라",
-      email: "jetty1234@naver.com",
+      image: "",
 
       plans: {
         0: {
@@ -148,12 +159,26 @@ export default {
     };
   },
   methods: {
+    ...mapActions(memberStore, ["userLogout"]),
     moveUserUpdate() {
       this.$router.push({ name: "AppUserUpdate" });
     },
-    //
+    moveUserDelete() {
+      if (confirm("정말 계정을 삭제하시겠습니까?")) {
+        http.delete(`user/${this.userInfo.id}`).then(() => {
+          if (this.userLogout !== null) {
+            console.log(this.userInfo.id);
+            this.userLogout(this.userInfo.id);
+          }
+          sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+          sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+
+          this.$router.push({ name: "AppHome" });
+        });
+      }
+    },
     movePlanSlide(num) {
-      this.planLeft = -num * 300 + "px";
+      this.planLeft = -num * 370 + "px";
       this.planCurrentIdx = num;
     },
     movePlanLeft() {
@@ -165,7 +190,7 @@ export default {
       }
     },
     moveAttrSlide(num) {
-      this.attrLeft = -num * 300 + "px";
+      this.attrLeft = -num * 370 + "px";
       this.attrCurrentIdx = num;
     },
     moveAttrLeft() {
