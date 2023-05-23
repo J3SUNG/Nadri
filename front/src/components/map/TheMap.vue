@@ -182,9 +182,8 @@ export default {
     loadScript() {
       const script = document.createElement("script");
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.VUE_APP_KAKAOMAP_KEY}&autoload=false`; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
-      script.onload = () => window.kakao.maps.load(this.loadMap); // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
-
       document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가
+      script.onload = () => window.kakao.maps.load(this.loadMap); // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
     },
     loadMap() {
       const container = document.getElementById("map"); // 지도를 담을 DOM 영역
@@ -289,20 +288,20 @@ export default {
     },
     displayMarker() {
       let imageSrc = {
-        12: require("@/assets/type_white/type_white_trip.png"),
-        14: require("@/assets/type_white/type_white_cultural.png"),
-        15: require("@/assets/type_white/type_white_event.png"),
-        25: require("@/assets/type_white/type_white_course.png"),
-        28: require("@/assets/type_white/type_white_leport.png"),
-        32: require("@/assets/type_white/type_white_home.png"),
-        38: require("@/assets/type_white/type_white_shopping.png"),
-        39: require("@/assets/type_white/type_white_food.png"),
+        12: require("@/assets/type_back_2/type_back_trip.png"),
+        14: require("@/assets/type_back_2/type_back_cultural.png"),
+        15: require("@/assets/type_back_2/type_back_event.png"),
+        25: require("@/assets/type_back_2/type_back_course.png"),
+        28: require("@/assets/type_back_2/type_back_leport.png"),
+        32: require("@/assets/type_back_2/type_back_home.png"),
+        38: require("@/assets/type_back_2/type_back_shopping.png"),
+        39: require("@/assets/type_back_2/type_back_food.png"),
       }; // 마커 이미지
-      let imageSize = new window.kakao.maps.Size(30, 30); //마커 이미지 크기
+      let imageSize = new window.kakao.maps.Size(50, 50); //마커 이미지 크기
       console.log(window.kakao.maps);
-      let markerImage = new window.kakao.maps.MarkerImage(imageSrc[12], imageSize);
+      let markerImage;
       console.log(this.positions);
-      // console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
+      console.log(this.positions[0].contentType); //타입 별로 다른 마커 이미지 구현!!!!!!!XXXXXXXXXXXXXXXXXXXXXXXX
       // let bounds = new window.kakao.maps.LatLngBounds(); // 지도 범위 재설정
 
       this.positions.forEach((position) => {
@@ -312,6 +311,8 @@ export default {
             주소 : ${position.addr1} ${position.addr2}<br>
             </p>`,
         });
+
+        markerImage = new window.kakao.maps.MarkerImage(imageSrc[position.contentType], imageSize);
 
         const marker = new window.kakao.maps.Marker({
           map: this.map, // 마커를 표시할 지도

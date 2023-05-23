@@ -61,7 +61,7 @@ textarea {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   width: 100%;
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   position: relative;
   padding-bottom: 120px;
   background-color: var(--color-white);

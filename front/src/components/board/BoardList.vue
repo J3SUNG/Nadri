@@ -2,9 +2,16 @@
   <div class="board">
     <h1 class="board__title">커뮤니티</h1>
     <div class="board__header__box">
-      <the-search />
       <div class="board__write">
-        <button class="board__write-button" @click="moveBoardCreate">글쓰기</button>
+        <div class="board__search__box">
+          <select name="subject" class="board__search-select" v-model="searchType">
+            <option value="subject" selected>제목</option>
+            <option value="nickname">닉네임</option>
+          </select>
+          <input v-model="search" class="board__search-input" />
+          <button class="board__search-button" @click="clickSearch">검색</button>
+        </div>
+        <button class="board__write-button" @click="moveBoardCreate" v-if="isUser">글쓰기</button>
       </div>
     </div>
     <div class="board__cards">
@@ -64,7 +71,6 @@
 import http from "@/util/http-common";
 import BoardCard from "./BoardCard.vue";
 import { mapState } from "vuex";
-import TheSearch from "../search/TheSearch.vue";
 
 const memberStore = "memberStore";
 
@@ -72,7 +78,6 @@ export default {
   name: "BoardList",
   components: {
     BoardCard,
-    TheSearch,
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
@@ -81,6 +86,7 @@ export default {
     return {
       boards: [],
       pageNav: {},
+      searchType: "",
       type: "1",
       nextPage: 1,
       startPage: 1,
@@ -89,6 +95,8 @@ export default {
       thumUrl: "",
       baseUrl: "",
       index: 0,
+      isUser: true,
+      search: "",
     };
   },
   created() {
@@ -96,10 +104,13 @@ export default {
     http.get(`board?type=${this.type}&userNo=${userNo}`).then((response) => {
       this.boards = response.data.list;
       this.pageNav = response.data.pageNavigation;
-      console.log(this.boards);
-      console.log(this.pageNav);
       this.loadImg();
-      console.log(this.boards);
+
+      if (this.userInfo != null) {
+        this.isUser = true;
+      } else {
+        this.isUser = false;
+      }
     });
   },
   methods: {
@@ -107,13 +118,12 @@ export default {
       this.$router.push({ name: "AppBoardCreate", params: { boardType: this.type } });
     },
     loadImg() {
-      this.baseUrl = "http://192.168.31.78";
-      // "http://192.168.31.78"  "http://59.151.232.152"
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
       for (let i = 0; i < this.boards.length; ++i) {
-        this.imgUrl = `${this.baseUrl}:7777/image/showImage?saveFolder=${this.boards[i].imgSaveFolder}&saveFile=${this.boards[i].imgSaveFile}`;
+        this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.boards[i].imgSaveFolder}&saveFile=${this.boards[i].imgSaveFile}`;
         this.boards[i].imgUrl = this.imgUrl;
 
-        this.thumUrl = `${this.baseUrl}:7777/image/showImage?saveFolder=${this.boards[i].saveFolder}&saveFile=${this.boards[i].saveFile}`;
+        this.thumUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.boards[i].saveFolder}&saveFile=${this.boards[i].saveFile}`;
         this.boards[i].thumUrl = this.thumUrl;
       }
     },
@@ -147,6 +157,9 @@ export default {
         this.loadImg();
       });
     },
+    clickSearch() {
+      http.get(`board?pg=${this.nextPage}&type=${this.type}&word=${this.search}`).then;
+    },
   },
 };
 </script>
@@ -163,11 +176,35 @@ export default {
   margin: 20px 0px 0 10px;
 }
 .board__write {
-  text-align: right;
+  width: 100%;
   height: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
+}
+.board__search__box {
+  width: 360px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.board__search__box input,
+.board__search__box select {
+  font-size: 12px;
+  padding: 8px 0px 8px 10px;
+}
+.board__search-select {
+  width: 80px;
+  text-align: left;
+}
+.board__search-input {
+  margin-left: 12px;
+  width: 200px;
+}
+.board__search-button {
+  font-size: 12px;
+  width: 60px;
+  padding: 8px;
 }
 .board__cards {
   width: 100%;
@@ -192,6 +229,7 @@ export default {
   color: var(--color-main);
 }
 .board__pagenation__hidden {
-  visibility: hidden;
+  color: var(--color-lightgray);
+  cursor: default;
 }
 </style>

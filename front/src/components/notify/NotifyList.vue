@@ -3,10 +3,6 @@
     <div class="notify__box">
       <h1>공지사항</h1>
       <div class="notify__header__box">
-        <div class="notify__search__box">
-          <input v-model="search" class="notify__search-input" />
-          <button class="notify__search-button" @click="clickSearch">검색</button>
-        </div>
         <button v-if="isAdmin" class="notify__write-button" @click="moveNotifyCreate">
           글쓰기
         </button>
@@ -34,6 +30,10 @@
             ></notify-list-item>
           </tbody>
         </table>
+      </div>
+      <div class="notify__search__box">
+        <input v-model="search" class="notify__search-input" />
+        <button class="notify__search-button" @click="clickSearch">검색</button>
       </div>
       <div class="notify__pagenation__box">
         <button
@@ -111,6 +111,7 @@ export default {
       selected: [true, false, false, false, false],
       search: "",
       isAdmin: true,
+      isUser: false,
     };
   },
   created() {
@@ -120,7 +121,10 @@ export default {
       console.log(this.pageNav);
     });
     console.log(this.userInfo);
-    if (this.userInfo.grade === "A") {
+    if (this.userInfo === null) {
+      this.isUser = false;
+      this.iseAdmin = false;
+    } else if (this.userInfo.grade === "A") {
       this.isAdmin = true;
     } else {
       this.isAdmin = false;
@@ -198,19 +202,20 @@ export default {
 }
 .notify__header__box {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   margin-top: 20px;
 }
 .notify__search__box {
-  width: 260px;
+  margin-top: 30px;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 .notify__search__box input,
 .notify__search__box select {
-  font-size: 12px;
+  font-size: 14px;
   padding: 8px 0px 8px 10px;
 }
 .notify__search-select {
@@ -222,7 +227,7 @@ export default {
   width: 200px;
 }
 .notify__search-button {
-  font-size: 12px;
+  font-size: 14px;
   width: 60px;
   padding: 8px;
 }
@@ -253,6 +258,7 @@ export default {
   color: var(--color-main);
 }
 .notify__pagenation__hidden {
-  visibility: hidden;
+  color: var(--color-lightgray);
+  cursor: default;
 }
 </style>

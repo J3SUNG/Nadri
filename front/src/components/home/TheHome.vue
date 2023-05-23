@@ -8,9 +8,7 @@
     <div :class="{ home__component: true, 'home__popular-place-week__show': true }">
       <popular-place-week />
     </div>
-    <div
-      :class="{ home__component: true, 'home__popular-place-month__show': popularPlaceMonthShow }"
-    >
+    <div :class="{ home__component: true, 'home__popular-place-month__show': true }">
       <popular-place-month />
     </div>
   </div>
@@ -25,34 +23,34 @@ import PopularPlaceMonth from "./PopularPlaceMonth.vue";
 export default {
   components: { PopularPlaceLoc, PopularPlaceRank, TheThema, PopularPlaceWeek, PopularPlaceMonth },
   name: "TheHome",
-  data() {
-    return {
-      popularPlaceMonthShow: false,
-      lastScrollPosition: 0,
-    };
-  },
-  mounted() {
-    window.addEventListener("scroll", this.onScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.onScroll);
-  },
-  methods: {
-    onScroll() {
-      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      if (currentScrollPosition < 0) {
-        this.popularPlaceMonthShow = false;
-        return;
-      }
-      // Stop executing this function if the difference between
-      // current scroll position and last scroll position is less than some offset
-      if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 320) {
-        this.popularPlaceMonthShow = false;
-        return;
-      }
-      this.popularPlaceMonthShow = true;
-    },
-  },
+  // data() {
+  //   return {
+  //     popularPlaceMonthShow: false,
+  //     lastScrollPosition: 0,
+  //   };
+  // },
+  // mounted() {
+  //   window.addEventListener("scroll", this.onScroll);
+  // },
+  // beforeDestroy() {
+  //   window.removeEventListener("scroll", this.onScroll);
+  // },
+  // methods: {
+  // onScroll() {
+  //   const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  //   if (currentScrollPosition < 0) {
+  //     this.popularPlaceMonthShow = false;
+  //     return;
+  //   }
+  //   // Stop executing this function if the difference between
+  //   // current scroll position and last scroll position is less than some offset
+  //   if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 280) {
+  //     this.popularPlaceMonthShow = false;
+  //     return;
+  //   }
+  //   this.popularPlaceMonthShow = true;
+  // },
+  // },
 };
 </script>
 
@@ -76,7 +74,7 @@ export default {
 }
 .home__popular-place-month__show {
   animation: fadeInUp 1s;
-  animation-delay: 0.3s;
+  animation-delay: 0.6s;
   animation-fill-mode: forwards;
 }
 </style>

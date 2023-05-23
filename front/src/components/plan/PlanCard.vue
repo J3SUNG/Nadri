@@ -1,6 +1,6 @@
 <template>
   <div class="plan__card" @click="movePlanDetail">
-    <img class="plan__card__img" :src="img[num]" />
+    <img class="plan__card__img" :src="itemData.img" />
     <h3 class="plan__card__subject">{{ itemData.subject }}</h3>
     <p class="plan__card__content">
       {{ itemData.content }}
@@ -8,15 +8,10 @@
     <hr class="plan__card__hr" />
     <div class="plan__card__footer">
       <div class="plan__card__footer__left">
-        <img class="plan__card__footer__writer-img" src="@/assets/jetty.jpg" />
+        <img class="plan__card__footer__writer-img" :src="itemData.imgUrl" />
         <p class="plan__card__footer__writer-nickname">{{ itemData.nickname }}</p>
       </div>
       <div class="plan__card__footer__right">
-        <img
-          class="plan__card__footer__icon card__footer__icon-comment"
-          src="@/assets/comment.png"
-        />
-        <p class="plan__card__footer__text">{{ itemData.commentCount }}</p>
         <img
           class="plan__card__footer__icon card__footer__icon-heart"
           @click="heartClick"

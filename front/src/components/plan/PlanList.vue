@@ -7,71 +7,6 @@
     <div class="plan-note__cards">
       <plan-card v-for="item in plans" :itemData="item" :key="item.planNo" />
     </div>
-    <div class="'plan-note__pagenation'__box">
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__hidden': !this.pageNav.startRange,
-        }"
-        @click="movePage(startPage - 1)"
-      >
-        &lt;
-      </button>
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__selected': this.selected[0],
-        }"
-        @click="movePage(startPage)"
-      >
-        {{ this.startPage }}
-      </button>
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__selected': this.selected[1],
-        }"
-        @click="movePage(startPage + 1)"
-      >
-        {{ this.startPage + 1 }}
-      </button>
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__selected': this.selected[2],
-        }"
-        @click="movePage(startPage + 2)"
-      >
-        {{ this.startPage + 2 }}
-      </button>
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__selected': this.selected[3],
-        }"
-        @click="movePage(startPage + 3)"
-      >
-        {{ this.startPage + 3 }}
-      </button>
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__selected': this.selected[4],
-        }"
-        @click="movePage(startPage + 4)"
-      >
-        {{ this.startPage + 4 }}
-      </button>
-      <button
-        :class="{
-          'plan-note__pagenation': true,
-          'plan-note__pagenation__hidden': !this.pageNav.endRange,
-        }"
-        @click="movePage(startPage + 5)"
-      >
-        &gt;
-      </button>
-    </div>
   </div>
 </template>
 
@@ -95,10 +30,6 @@ export default {
       plans: [],
       type: "1",
       userNo: 0,
-      pageNav: {},
-      nextPage: 1,
-      startPage: 1,
-      selected: [true, false, false, false, false],
     };
   },
   created() {
@@ -107,7 +38,8 @@ export default {
     }
     http.get(`plan/list/${this.userNo}`).then((response) => {
       this.plans = response.data;
-      console.log(response.data);
+      this.loadImg();
+      console.log(this.plans);
     });
   },
   methods: {
@@ -125,6 +57,7 @@ export default {
         this.plans = response.data.list;
         this.pageNav = response.data.pageNavigation;
         console.log(this.pageNav);
+        console.log(111);
         if (!this.pageNav.startRange) {
           this.startPage = 1;
           this.selected = [true, false, false, false, false];
@@ -141,7 +74,15 @@ export default {
           this.startPage = this.pageNav.currentPage - 2;
           this.selected = [false, false, true, false, false];
         }
+        this.loadImg();
       });
+    },
+    loadImg() {
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
+      for (let i = 0; i < this.plans.length; ++i) {
+        this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.plans[i].imgSaveFolder}&saveFile=${this.plans[i].imgSaveFile}`;
+        this.plans[i].imgUrl = this.imgUrl;
+      }
     },
   },
 };
@@ -182,6 +123,7 @@ export default {
   color: var(--color-main);
 }
 .plan-note__pagenation__hidden {
-  visibility: hidden;
+  color: var(--color-lightgray);
+  cursor: default;
 }
 </style>

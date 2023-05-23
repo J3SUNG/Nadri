@@ -81,6 +81,8 @@ export default {
     this.board = response.data;
     this.imgArr = this.board.url;
     console.log(this.board);
+    console.log("-------");
+    console.log(this.userInfo);
     this.heart =
       this.board.isLike == 1 ? require("@/assets/heartOn.png") : require("@/assets/heartOff.png");
     this.heartChk = this.board.isLike;
@@ -97,7 +99,7 @@ export default {
     console.log(this.comments);
     this.commentCnt = this.comments.length;
 
-    if (this.userInfo.userNo === this.board.userNo) {
+    if (this.userInfo !== null && this.userInfo.userNo === this.board.userNo) {
       this.isWriter = true;
     } else {
       this.isWriter = false;
