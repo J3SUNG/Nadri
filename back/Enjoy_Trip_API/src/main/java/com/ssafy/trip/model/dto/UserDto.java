@@ -16,4 +16,7 @@ public class UserDto {
 	private String joinDate;
 	private String grade;
 	private FileInfoDto file;
+	private String url;
+	private String saveFolder;
+	private String saveFile;
 }

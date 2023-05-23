@@ -14,6 +14,10 @@
 		<result column="nickname" property="nickname" />
 		<result column="comment_cnt" property="commentCount" />
 		<result column="isLike" property="isLike" />
+		<result column="save_folder" property="saveFolder"/>
+		<result column="save_file" property="saveFile"/>
+		<result column="img_folder" property="imgSaveFolder"/>
+		<result column="img_file" property="imgSaveFile"/>
 	</resultMap>
 	
 	<resultMap type="BoardDto" id="viewboard" extends="board">
@@ -53,13 +57,13 @@
 		</if>
 	</sql>
 
-	<select id="listArticle" parameterType="map" resultMap="boardlist">
+	<select id="listArticle" parameterType="map" resultMap="board">
 	        select *
 from file_info f
 right outer join
 		(select b.board_no, b.board_type, b.subject subject, b.content content,
 		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
-		count(bl.like_no) like_count, b.user_no, u.nickname,
+		count(bl.like_no) like_count, b.user_no, b.save_folder, b.save_file, u.nickname, u.save_file img_file, u.save_folder img_folder,
 		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0) isLike
         ,min(idx) idx
 		from
@@ -95,7 +99,7 @@ right outer join
 		right outer join
 		(select b.board_no, b.board_type, b.subject subject, b.content content,
 		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
-		count(bl.like_no) like_count, b.user_no, u.nickname,
+		count(bl.like_no) like_count, b.user_no, u.nickname, 
 		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0) isLike
         ,min(idx) idx
 		from
@@ -133,16 +137,20 @@ right outer join
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board
 		(board_no, board_type, create_time, subject, content,
-		user_no)
+		user_no, save_file, save_folder)
 		values
 		(null,#{boardType}, now(),#{subject}, #{content},
-		#{userNo})
+		#{userNo},#{saveFile},#{saveFolder})
 		<selectKey resultType="int" keyProperty="boardNo"
 			order="AFTER">
 			select LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-
+	
+<!-- <update id="insertImage" parameterType="int">
+		update board set save_file = "dummy${imgNo}.jpg"
+		where board_type = 1 and board_no = #{boardNo}
+	</update> -->
 	<insert id="fileRegister" parameterType="boardDto">
 		insert into file_info(board_no, save_folder, original_file, save_file)
 		values
@@ -164,7 +172,7 @@ right outer join
 		b.board_no, b.board_type, b.subject subject, b.content content,
 		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
 		count(bl.like_no) like_count,
-		b.user_no, u.nickname,
+		b.user_no, u.nickname,b.save_folder, b.save_file, u.save_file img_file, u.save_folder img_folder,
 		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0)
 		isLike
 		from

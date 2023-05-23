@@ -24,13 +24,19 @@ public class UserServiceImpl implements UserService {
 		this.userMapper = userMapper;
 	}
 
-	@Override
-	public UserDto getUser(String id) throws Exception {
-		UserDto user = userMapper.getUser(id);
-		FileInfoDto file = userMapper.getFile(user.getUserNo());
-		user.setFile(file);
-		return user;
-	}
+//	@Override
+//	public UserDto getUser(String id) throws Exception {
+//		UserDto user = userMapper.getUser(id);
+//		System.out.println("user nick : "+user.getNickname());
+//		
+//		FileInfoDto file = userMapper.getFile(user.getUserNo());
+//		if(file==null) {
+//			file = userMapper.getFile(1);
+//		}
+//		user.setFile(file);
+//		System.out.println(user);
+//		return user;
+//	}
 	
 	@Override
 	public void joinUser(UserDto userDto) throws Exception {
@@ -46,6 +52,7 @@ public class UserServiceImpl implements UserService {
 	public void modifyUser(UserDto userDto) throws Exception {
 		userMapper.modifyUser(userDto);
 		System.out.println(userDto.getUserNo());
+		userMapper.deleteFile(userDto.getUserNo());
 		userMapper.fileRegister(userDto);
 	}
 

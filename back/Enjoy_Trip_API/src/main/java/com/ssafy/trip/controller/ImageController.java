@@ -23,13 +23,9 @@ public class ImageController {
     public ResponseEntity<Resource> showImage(@RequestParam Map<String, String> param) {
         // 사진이 저장된 폴더 경로 변수 선언
         String imageRoot = "";
-        String saveFolder = "230523";
-//        saveFolder = param.get("saveFolder");
-        System.out.println(saveFolder);
-//        String originalFile = "test2.png";
-//        String saveFile = param.get("saveFile");
-        String saveFile2 = "5ac7a707-4538-4a3d-8131-992c52339403.jpg";
-        imageRoot = new File("").getAbsolutePath() + "/resources/img/"+saveFolder+"/"+saveFile2;
+        String saveFolder = param.get("saveFolder");
+        String saveFile = param.get("saveFile");
+        imageRoot = new File("").getAbsolutePath() + "/resources/img/"+saveFolder+"/"+saveFile;
 
 
         // Resorce를 사용해서 로컬 서버에 저장된 이미지 경로 및 파일 명을 지정

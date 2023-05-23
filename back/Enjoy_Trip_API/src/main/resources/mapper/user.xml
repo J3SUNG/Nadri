@@ -41,7 +41,7 @@
 	</select>
 
 	<insert id="joinUser" parameterType="UserDto">
-		insert into user
+		insert into user (user_no, id, password, nickname, email, join_date, grade)
 		values
 		(null, #{id}, #{password}, #{nickname}, #{email} ,now(),'U')
 	</insert>
@@ -54,7 +54,7 @@
 
 	<update id="modifyUser" parameterType="UserDto">
 		update user
-		set email = #{email}, nickname = #{nickname}
+		set email = #{email}, nickname = #{nickname}, password = #{password}, save_folder = #{file.saveFolder}, save_file = #{file.saveFile}
 		where id = #{id}
 	</update>
 
@@ -65,6 +65,11 @@
 		(#{userNo}, #{file.saveFolder}, #{file.originalFile},
 		#{file.saveFile})
 	</insert>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from file_user
+		where user_no = #{userNo}
+	</delete>
 
 	<select id="check" parameterType="map" resultType="int">
 		select

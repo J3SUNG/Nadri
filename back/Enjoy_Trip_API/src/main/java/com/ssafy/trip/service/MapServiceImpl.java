@@ -25,9 +25,9 @@ public class MapServiceImpl implements MapService {
 	}
 
 	@Override
-	public AttractionDto getAttr(Map<String, Object> map) {
+	public AttractionDto getAttr(Map<String, Integer> map) {
 		mapMapper.visitLog(map);
-		return mapMapper.getAttr((String) map.get("attrNo"));
+		return mapMapper.getAttr(map.get("attrNo"));
 	}
 
 }

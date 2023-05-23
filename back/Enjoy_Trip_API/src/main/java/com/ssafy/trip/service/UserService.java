@@ -11,7 +11,7 @@ public interface UserService {
 	void joinUser(UserDto userDto) throws Exception;	
 	void deleteUser(String id) throws Exception;
 	void modifyUser(UserDto userDto) throws Exception;
-	UserDto getUser(String id) throws Exception;
+//	UserDto getUser(String id) throws Exception;
 	int check(Map<String, String> map) throws Exception;
 	boolean authEmail(Map<String, String> map);
 	List<PlanDto> getLikePlan(int userNo);

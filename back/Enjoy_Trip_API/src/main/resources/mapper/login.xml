@@ -9,6 +9,8 @@
 		<result column="nickname" property="nickname" />
 		<result column="email" property="email" />
 		<result column="grade" property="grade" />
+		<result column="save_folder" property="saveFolder" />
+		<result column="save_file" property="saveFile" />
 </resultMap>
 	
 <!-- 
@@ -26,7 +28,7 @@
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="user">
-		select user_no, nickname, id, email, grade
+		select user_no, nickname, id, email, grade, save_folder, save_file
 		from user
 		where id = #{userid}
 	</select>

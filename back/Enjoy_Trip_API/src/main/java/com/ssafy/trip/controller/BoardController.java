@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,15 +54,14 @@ public class BoardController {
 	BoardLikeService boardLikeService;
 
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping(consumes = {org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public String write(@RequestParam("imgs") List<MultipartFile> imgs, BoardDto boardDto) throws Exception { //, BoardDto boardDto
-		
-		logger.debug(imgs.get(0).getOriginalFilename());
-		logger.debug(imgs.get(1).getOriginalFilename());
 		
 		logger.debug("게시판 글 작성 boardDto : {}", boardDto);
 
 		if (!imgs.get(0).isEmpty()) {
+			logger.debug(imgs.get(0).getOriginalFilename());
+			
 			String realPath = new File("").getAbsolutePath() + "/resources/img";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
@@ -84,9 +84,12 @@ public class BoardController {
 				}
 				fileInfos.add(fileInfoDto);
 			}
+			
+			boardDto.setSaveFile(fileInfos.get(0).getSaveFile());
+			boardDto.setSaveFolder(fileInfos.get(0).getSaveFolder());
 			boardDto.setFileInfos(fileInfos);
 		}
-
+		
 		boardService.writeArticle(boardDto);
 		// paging
 		return "success";
@@ -99,6 +102,7 @@ public class BoardController {
 		logger.debug("list parameter boardType : {}", boardParameterDto);
 		if ("0".equals(boardParameterDto.getType())) {
 			boardParameterDto.setSpp(10);
+			boardParameterDto.setKey("subject");
 			logger.debug("공지사항");
 		} else {
 			boardParameterDto.setSpp(21);

@@ -12,8 +12,8 @@ public interface MapMapper {
 
 	List<AttractionDto> search(SearchDto searchDto);
 
-	AttractionDto getAttr(String attrNo);
+	AttractionDto getAttr(Integer integer);
 
-	void visitLog(Map<String, Object> map);
+	void visitLog(Map<String, Integer> map);
 
 }

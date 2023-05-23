@@ -28,4 +28,6 @@ public interface PlanMapper {
 
 	List<PlanDto> writelist(int userNo);
 
+	void visitLog(Map<String, Integer> map);
+
 }

@@ -92,6 +92,7 @@ public class LoginController {
 //				로그인 사용자 정보.
 				UserDto userDto = loginService.userInfo(userid);
 				resultMap.put("userInfo", userDto);
+				logger.debug("UserDto getinfo : {}",userDto);
 				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
 			} catch (Exception e) {

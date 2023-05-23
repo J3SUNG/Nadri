@@ -1,5 +1,6 @@
 package com.ssafy.trip.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +95,19 @@ public class BoardServiceImpl implements BoardService {
 		BoardDto boardDto = boardMapper.getArticle(map);
 		List<FileInfoDto> files = boardMapper.fileInfoList(boardDto.getBoardNo());
 		boardDto.setFileInfos(files);
+		List<String> filelist = new ArrayList<String>();
+		for(FileInfoDto file : files) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("http://192.168.31.78");
+//			sb.append("http://59.151.232.152");
+			sb.append(":7777/image/showImage?saveFolder=");
+			sb.append(file.getSaveFolder());
+			sb.append("&saveFile=");
+			sb.append(file.getSaveFile());
+			filelist.add(sb.toString());
+		}
+		boardDto.setUrl(filelist);
+		//각 파일에 대해서 url 생성해서 보내줌
 		return boardDto;
 	}
 

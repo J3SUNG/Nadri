@@ -45,12 +45,13 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/{id}")
-	public UserDto getUser(@PathVariable("id") String id) throws Exception {//
-//		UserDto userDto = new UserDto(); // test code
-//		userDto.setId("ssafy");//
-		return userService.getUser(id); 
-	}
+//	@GetMapping("/{id}")
+//	public UserDto getUser(@PathVariable("id") String id) throws Exception {//
+////		UserDto userDto = new UserDto(); // test code
+////		userDto.setId("ssafy");//
+//		logger.debug("**************get user****************");
+//		return userService.getUser(id); 
+//	}
 
 	@PostMapping()
 	public String join(@RequestBody UserDto userDto) {

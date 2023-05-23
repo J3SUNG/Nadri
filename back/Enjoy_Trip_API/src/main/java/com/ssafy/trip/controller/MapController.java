@@ -31,14 +31,16 @@ public class MapController {
 		this.mapService = mapService;
 	}
 
-	@GetMapping("/{attrNo}")
-	public AttractionDto detail(@PathVariable String attrNo, HttpSession session) throws Exception {
-		logger.debug("attraction_no info : {}", attrNo);
+	@GetMapping("/{attrNo}/{userNo}")
+	public AttractionDto detail(@PathVariable int attrNo, @PathVariable int userNo) throws Exception {
+		logger.debug("attraction_no detail : {}", attrNo);
 		//UserDto userDto = (UserDto) session.getAttribute("userinfo"); //test시 주석
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
-		map.put("userid","7" );//test userDto.getId()
+		map.put("userNo",userNo );//test userDto.getId()
+//		logger.debug(map.toString());	
 		return mapService.getAttr(map);
+//		return null;
 	}
 
 	@PostMapping("")

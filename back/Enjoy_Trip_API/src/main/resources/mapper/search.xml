@@ -27,7 +27,7 @@
 		select *
 		from attraction_info ai
 		<where>
-		<if test="areaCode != 0"> <!-- 수정중 !!!!!!!!!!!!!!!!!!!! -->
+		<if test="areaCode != 0">
 			ai.sido_no = #{areaCode}
 			<if test="sigunguCode != 0">
 				AND ai.gugun_no = #{sigunguCode} 
@@ -49,13 +49,13 @@
 		
 </select>	
 
-<select id="getAttr" parameterType="String" resultMap="attraction">
+<select id="getAttr" parameterType="int" resultMap="attraction">
 select *
 		from attraction_info ai
-		where ai.attraction_no = #{attractionNo}
+		where ai.attraction_no = #{attrNo}
 </select>	
 	
 <insert id="visitLog" parameterType="map">
-insert into log_attraction values(null, curdate(),#{attrNo},#{userid});
+insert into log_attraction values(null, now(),#{attrNo},#{userNo});
 </insert>
 </mapper>

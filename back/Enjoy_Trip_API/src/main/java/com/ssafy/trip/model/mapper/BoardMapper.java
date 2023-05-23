@@ -29,4 +29,6 @@ public interface BoardMapper {
 	void fileRegister(BoardDto boardDto);
 
 	List<FileInfoDto> fileInfoList(int boardNo);
+	
+//	void insertImage(int boardNo, int imgNo);
 }

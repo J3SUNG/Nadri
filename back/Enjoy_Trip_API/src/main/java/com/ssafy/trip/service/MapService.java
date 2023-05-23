@@ -10,6 +10,6 @@ public interface MapService {
 
 	List<AttractionDto> search(SearchDto searchDto) throws Exception;
 
-	AttractionDto getAttr(Map<String, Object> map);
+	AttractionDto getAttr(Map<String, Integer> map);
 
 }

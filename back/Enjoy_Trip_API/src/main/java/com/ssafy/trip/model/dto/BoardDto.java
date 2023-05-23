@@ -20,5 +20,11 @@ public class BoardDto {
 	private String nickname;
 	private int commentCount;
 	private int isLike;
+	private List<String> url;
 	private List<FileInfoDto> fileInfos;
+	private String imgSaveFolder;
+	private String imgSaveFile;
+	private String saveFolder;
+	private String saveFile;
+	
 }

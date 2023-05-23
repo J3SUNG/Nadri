@@ -22,6 +22,7 @@ public class PlanServiceImpl implements PlanService {
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		map.put("planNo", planNo);
 		map.put("userNo", userNo);
+		planMapper.visitLog(map);
 		return planMapper.get(map);
 	}
 

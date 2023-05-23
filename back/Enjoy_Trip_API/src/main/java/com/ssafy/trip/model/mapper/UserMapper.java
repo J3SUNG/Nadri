@@ -21,4 +21,6 @@ public interface UserMapper {
 	void fileRegister(UserDto userDto);
 	List<PlanDto> getLikePlan(int userNo);
 	FileInfoDto getFile(int userNo);
+	void deleteFile(int userNo);
+	
 }
