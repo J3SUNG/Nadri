@@ -8,14 +8,14 @@
 		<result column="create_time" property="createTime" />
 		<result column="subject" property="subject" />
 		<result column="content" property="content" />
-		<result column="start_date" property="startDate" />
-		<result column="end_date" property="endDate" />
 		<result column="read_count" property="readCount" />
 		<result column="user_no" property="userNo" />
 		<result column="nickname" property="nickname" />
 		<result column="isLike" property="isLike" />
 		<result column="like_count" property="likeCount" />
 		<result column="img" property="img" />
+		<result column="img_folder" property="imgSaveFolder"/>
+		<result column="img_file" property="imgSaveFile"/>
 		<!-- <collection property="fileInfos" column="planNo" javaType="list" ofType="FileInfoDto" 
 			select="fileInfoList" /> -->
 	</resultMap>
@@ -23,8 +23,8 @@
 	<select id="get" parameterType="map" resultMap="plan">
 		select p.plan_no,
 		create_time, subject, content, start_date, end_date,
-		read_count, p.user_no, nickname, count(pl.like_no) like_count, ifnull(isLike, 0)
-		isLike
+		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count, ifnull(isLike, 0)
+		isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
@@ -43,8 +43,8 @@
 	<select id="list" parameterType="int" resultMap="plan">
 		select
 		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count,img, p.user_no, nickname, count(pl.like_no) like_count,
-		ifnull(isLike, 0) isLike
+		read_count,img, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike, 0) isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
@@ -60,8 +60,8 @@
 	<select id="likelist" parameterType="int" resultMap="plan">
 		select
 		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count, p.user_no, nickname, count(pl.like_no) like_count,
-		ifnull(isLike, 0) isLike
+		read_count, img, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike, 0) isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
@@ -79,8 +79,8 @@
 	<select id="writelist" parameterType="int" resultMap="plan">
 		select
 		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count, p.user_no, nickname, count(pl.like_no) like_count,
-		ifnull(isLike, 0) isLike
+		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike, 0) isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
@@ -94,6 +94,24 @@
 		#{userNo}
 		group by p.plan_no
 		;
+	</select>
+	
+	<select id="mylikelist" parameterType="int" resultMap="plan">
+		select * from (select
+		p.plan_no, create_time, subject, content, start_date, end_date,
+		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike, 0) isLike, img
+		from plan p
+		join user u
+		on p.user_no = u.user_no
+		left join plan_like pl
+		on p.plan_no = pl.plan_no
+		left join
+		(select plan_no, count(*) isLike from plan_like where user_no = #{userNo}
+		group by plan_no) pll
+		on p.plan_no = pll.plan_no
+		group by p.plan_no
+		order by create_time desc) tb where isLike != 0 limit 3;
 	</select>
 
 	<insert id="write" parameterType="PlanDto">

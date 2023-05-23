@@ -13,4 +13,6 @@ public interface PlanLikeMapper {
 
 	void delete(HashMap<String, Integer> map);
 
+	void log(int attrNo);
+
 }

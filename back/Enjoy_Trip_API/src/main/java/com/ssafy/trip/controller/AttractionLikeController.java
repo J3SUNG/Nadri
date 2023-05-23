@@ -1,6 +1,7 @@
 package com.ssafy.trip.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.trip.model.dto.AttractionDto;
 import com.ssafy.trip.service.AttractionLikeService;
 
 @RestController
@@ -23,12 +25,8 @@ public class AttractionLikeController {
 		this.attractionLikeService = attractionLikeService;
 	}
 	
-	@GetMapping("/{attrNo}")
-	public int get(@PathVariable("attrNo") int attrNo) throws Exception {
-		/**
-		 * 세션??에서 사용자 번호를 가져와서 사용자가 attrNo에 해당하는 게시글에 좋아요를 눌렀다면 1 아니면 0 반환
-		 */
-		int userNo = 1;//test
+	@GetMapping("/{attrNo}/{userNo}")
+	public int get(@PathVariable("attrNo") int attrNo,@PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like board {} user {}", attrNo,userNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
@@ -38,10 +36,9 @@ public class AttractionLikeController {
 		return result;
 	}
 	
-	@PostMapping("/{attrNo}")
-	public String create(@PathVariable("attrNo") int attrNo) throws Exception {
+	@PostMapping("/{attrNo}/{userNo}")
+	public String create(@PathVariable("attrNo") int attrNo,@PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like board number of : {}", attrNo);
-		int userNo = 1;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
 		map.put("userNo", userNo);
@@ -49,10 +46,9 @@ public class AttractionLikeController {
 		return "success";
 	}
 	
-	@DeleteMapping("/{attrNo}")
-	public String delete(@PathVariable("attrNo") int attrNo) throws Exception {
+	@DeleteMapping("/{attrNo}/{userNo}")
+	public String delete(@PathVariable("attrNo") int attrNo,@PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("unlike board number of : {}", attrNo);
-		int userNo = 1;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
 		map.put("userNo", userNo);
@@ -60,4 +56,21 @@ public class AttractionLikeController {
 		return "success";
 	}
 	
+	@GetMapping("/daily")
+	public List<AttractionDto> dailyTop10(){
+		logger.debug("daily top 10");
+		return attractionLikeService.dailyTop10();
+	}
+	
+	@GetMapping("/weekly")
+	public List<AttractionDto> weeklyTop10(){
+		logger.debug("weekly top 10");
+		return attractionLikeService.weeklyTop10();
+	}
+	
+	@GetMapping("/monthly")
+	public List<AttractionDto> monthlyTop10(){
+		logger.debug("weekly top 10");
+		return attractionLikeService.monthlyTop10();
+	}
 }

@@ -63,4 +63,9 @@ public class PlanServiceImpl implements PlanService {
 		return planMapper.writelist(userNo);
 	}
 
+	@Override
+	public List<PlanDto> mylikelist(int userNo) {
+		return planMapper.mylikelist(userNo);
+	}
+
 }
