@@ -122,7 +122,7 @@
           <!-- <div>{{ item.overview }}</div> -->
         </div>
       </div>
-      <div :class="{ map__detail: true, map__detail__hide: detailHide }">
+      <div :class="{ map__detail: true, map__detail__hide: detailHide }" @click="showTripNote">
         <img class="map__detail__img" :src="this.attr.image1" />
         <p class="map__detail__title">{{ this.attr.title }}</p>
         <p class="map__detail__addr1">주소 : {{ this.attr.addr1 }}</p>
@@ -131,7 +131,10 @@
         <button class="map__detail__btn" @click.prevent="closeDetail">x</button>
         <button class="map__detail__add" @click.prevent="addCourse">+</button>
       </div>
-      <div class="map__course" v-if="isLogin">
+      <div class="map__course__toggle" v-if="isLogin && noteHide" @click="showTripNote">
+        <p class="map__course__toggle__text">여행노트 작성</p>
+      </div>
+      <div class="map__course" v-if="isLogin && !noteHide">
         <h2 class="map__course__title">여행노트</h2>
         <hr class="map__course__hr" />
         <ul class="map__course__box__ul">
@@ -158,11 +161,11 @@
           </div>
         </div>
         <div class="map__course__btn__box">
-          <button class="map__course__btn map__course__cancel" @click.prevent="createTripNote">
-            취소
-          </button>
           <button class="map__course__btn map__course__post" @click.prevent="createTripNote">
             노트 생성
+          </button>
+          <button class="map__course__btn map__course__cancel" @click.prevent="cancelTripNote">
+            취소
           </button>
         </div>
       </div>
@@ -209,11 +212,13 @@ export default {
       attrNo: 0,
       userNo: 0,
       detailHide: true,
+      noteHide: true,
       lists: [],
       listMemos: [],
       title: "",
       content: "",
       isLogin: false,
+      polyline: "",
     };
   },
   created() {
@@ -429,6 +434,16 @@ export default {
       );
       this.map.setBounds(bounds);
     },
+    cancelTripNote() {
+      this.noteHide = true;
+      this.lists = [];
+      if (this.polyline.setMap !== undefined) {
+        this.polyline.setMap(null);
+      }
+    },
+    showTripNote() {
+      this.noteHide = false;
+    },
     closeDetail() {
       this.detailHide = true;
     },
@@ -458,15 +473,15 @@ export default {
       }
 
       // 지도에 표시할 선을 생성합니다
-      var polyline = new window.kakao.maps.Polyline({
+      this.polyline = new window.kakao.maps.Polyline({
         path: linePath, // 선을 구성하는 좌표배열 입니다
         strokeWeight: 5, // 선의 두께 입니다
-        strokeColor: "#FFAE00", // 선의 색깔입니다
+        strokeColor: "red", // 선의 색깔입니다
         strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle: "solid", // 선의 스타일입니다
       });
 
-      polyline.setMap(this.map);
+      this.polyline.setMap(this.map);
     },
     createTripNote() {
       let tripsData = [];
@@ -503,6 +518,23 @@ export default {
 </script>
 
 <style>
+.map__course__toggle {
+  margin-top: 100px;
+  width: 30px;
+  padding: 20px;
+  min-height: 100px;
+  top: 45px;
+  right: -5px;
+  position: absolute;
+  z-index: 10;
+  backdrop-filter: brightness(20%);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.map__course__toggle__text {
+  font-size: 24px;
+  color: var(--color-white);
+}
 .map__course {
   margin-top: 100px;
   width: 360px;
