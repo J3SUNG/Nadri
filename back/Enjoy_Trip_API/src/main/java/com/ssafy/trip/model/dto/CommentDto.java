@@ -14,4 +14,6 @@ public class CommentDto {
 	private int userNo;
 	private int boardNo;
 	private String nickname;
+	private String imgSaveFolder;
+	private String imgSaveFile;
 }

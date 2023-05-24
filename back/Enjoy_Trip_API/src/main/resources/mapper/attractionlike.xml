@@ -117,4 +117,14 @@
 		ap.sido_no = ai.sido_no and maxcnt = an.cnt
 		order by ancnt desc;
 	</select>
+
+	<select id="day" parameterType="String" resultType="logDto">
+		select a.attraction_no attrNo, title, cnt from attraction_info a
+		join
+		(select attraction_no, count(*) cnt from log_attraction where
+		DATE(log_date)=#{date} group by attraction_no order by cnt desc
+		limit 5) b
+		on a.attraction_no = b.attraction_no limit 5;
+	</select>
+
 </mapper>

@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 		Map<String, Object> param = new HashMap<String, Object>();
 		String key = boardParameterDto.getKey();
 		if ("user_no".equals(key))
-			key = "b.user_no";
+			key = "user_no";
 		param.put("key", key == null ? "" : key);
 		param.put("word", boardParameterDto.getWord() == null ? "" : boardParameterDto.getWord());
 		int pgNo = boardParameterDto.getPg() == 0 ? 1 : boardParameterDto.getPg();
@@ -100,8 +100,8 @@ public class BoardServiceImpl implements BoardService {
 		List<String> filelist = new ArrayList<String>();
 		for(FileInfoDto file : files) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("http://192.168.31.78");
-//			sb.append("http://59.151.232.152");
+//			sb.append("http://192.168.31.78");
+			sb.append("http://59.151.232.152");
 			sb.append(":7777/image/showImage?saveFolder=");
 			sb.append(file.getSaveFolder());
 			sb.append("&saveFile=");

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.trip.model.dto.AttractionDto;
+import com.ssafy.trip.model.dto.LogDto;
 import com.ssafy.trip.model.mapper.AttractionLikeMapper;
 
 @Service
@@ -54,5 +55,10 @@ public class AttractionLikeServiceImpl implements AttractionLikeService {
 	@Override
 	public List<AttractionDto> sidoTop10() {
 		return attractionLikeMapper.sido();
+	}
+
+	@Override
+	public List<LogDto> day(String date) {
+		return attractionLikeMapper.day(date);
 	}
 }
