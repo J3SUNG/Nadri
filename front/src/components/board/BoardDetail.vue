@@ -164,6 +164,7 @@ export default {
         .post(`comment/${commentData.content}/${commentData.userNo}/${commentData.boardNo}`)
         .then((response) => {
           console.log(response);
+          window.location.reload();
         });
       // http
       //   .post(`comment?content=${this.content}&userNo=${this.userNo}&boardNo=${this.boardNo}`)
