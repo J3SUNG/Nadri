@@ -30,7 +30,6 @@ public class PlanServiceImpl implements PlanService {
 	public void write(PlanDto planDto) {
 		planMapper.write(planDto);
 		System.out.println(planDto.getPlanNo());
-		planMapper.fileRegister(planDto);
 	}
 
 	@Override
@@ -66,6 +65,11 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public List<PlanDto> mylikelist(int userNo) {
 		return planMapper.mylikelist(userNo);
+	}
+
+	@Override
+	public List<PlanDto> watch(int userNo) {
+		return planMapper.watch(userNo);
 	}
 
 }

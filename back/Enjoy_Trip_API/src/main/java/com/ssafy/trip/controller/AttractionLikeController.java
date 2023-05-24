@@ -70,7 +70,13 @@ public class AttractionLikeController {
 	
 	@GetMapping("/monthly")
 	public List<AttractionDto> monthlyTop10(){
-		logger.debug("weekly top 10");
+		logger.debug("monthly top 10");
 		return attractionLikeService.monthlyTop10();
+	}
+	
+	@GetMapping("/sido")
+	public List<AttractionDto> sidoTop10(){
+		logger.debug("sido top 10");
+		return attractionLikeService.sidoTop10(); 
 	}
 }

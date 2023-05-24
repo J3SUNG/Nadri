@@ -89,7 +89,7 @@ public class BoardController {
 			boardDto.setSaveFolder(fileInfos.get(0).getSaveFolder());
 			boardDto.setFileInfos(fileInfos);
 		} else {
-			boardDto.setSaveFile("no.png");
+			boardDto.setSaveFile("no_img.png");
 			boardDto.setSaveFolder("image1");
 			boardDto.setFileInfos(null);
 		}

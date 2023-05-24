@@ -1,7 +1,6 @@
 package com.ssafy.trip.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ssafy.trip.model.dto.BoardDto;
 import com.ssafy.trip.model.dto.CommentDto;
 import com.ssafy.trip.service.CommentService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/comment")
@@ -37,15 +36,19 @@ public class CommentController {
 		return list;
 	}
 	
-	@PostMapping("")
-	public String write(CommentDto commentDto) {
-		logger.debug("write boardNo : {}", commentDto.getBoardNo());
+	@PostMapping("/{content}/{userNo}/{boardNo}")
+	public String write(@PathVariable String content,@PathVariable String userNo,@PathVariable String boardNo) {
+		logger.debug("write boardNo : {} {} {}", content, userNo, boardNo);
+		CommentDto commentDto = new CommentDto();
+		commentDto.setContent(content);
+		commentDto.setUserNo(Integer.parseInt(userNo));
+		commentDto.setBoardNo(Integer.parseInt(boardNo));
 		commentService.write(commentDto);
 		return "success";
 	}
 	
 	@PutMapping("")
-	public CommentDto modify(CommentDto commentDto) throws Exception {
+	public CommentDto modify(@RequestBody CommentDto commentDto) throws Exception {
 		logger.debug("modify commentDto : {}", commentDto);
 		commentService.modify(commentDto);
 		return commentDto;

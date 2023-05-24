@@ -24,4 +24,6 @@ public interface PlanService {
 
 	List<PlanDto> mylikelist(int userNo);
 
+	List<PlanDto> watch(int userNo);
+
 }

@@ -12,4 +12,6 @@ public interface MapService {
 
 	AttractionDto getAttr(Map<String, Integer> map);
 
+	List<AttractionDto> watch(int userNo);
+
 }

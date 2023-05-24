@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TripDto {
 	private int tripNo;
-	private int order;
-	private String memo;
-	private int planNo;
-	private int attractionNo;
+	private int order;  		//
+	private String memo; 		//
+	private int planNo;			
+	private int attractionNo;	//
 	private String image1;
 	private String attrName;
 }

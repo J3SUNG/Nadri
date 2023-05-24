@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.model.dto.AttractionDto;
+import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.SearchDto;
 import com.ssafy.trip.service.MapService;
 
@@ -48,5 +49,12 @@ public class MapController {
 		logger.debug("searchDto info : {}", searchDto);
 		List<AttractionDto> attractionDto = mapService.search(searchDto);
 		return attractionDto;
+	}
+	
+	@GetMapping("/watch/{userNo}")
+	public List<AttractionDto> watchlist(@PathVariable("userNo") int userNo) throws Exception {
+		logger.debug("get recently watched list of attraction");
+		List<AttractionDto> list = mapService.watch(userNo);
+		return list;
 	}
 }

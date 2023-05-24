@@ -19,4 +19,6 @@ public interface TripMapper {
 
 	void delete(int tripDto);
 
+	void writetrip(TripDto tripDto);
+
 }

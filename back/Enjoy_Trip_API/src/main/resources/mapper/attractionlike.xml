@@ -48,32 +48,73 @@
 		join(
 		SELECT attraction_no, count(*) cnt FROM
 		enjoy_trip.like_attraction
-		where date(registration_date) =
-		date(now())-1
+		where registration_date >
+		date_add('2023-05-24 18:06:37',interval -1 day)
 		group by attraction_no
-		order by cnt desc) cnt on
-		ai.attraction_no = cnt.attraction_no
+		order by cnt
+		desc) cnt on ai.attraction_no = cnt.attraction_no
 		limit 10;
 	</select>
 
 	<select id="weekly" resultMap="attraction">
 		select * from attraction_info ai
 		join(
-		SELECT attraction_no, count(*) cnt FROM enjoy_trip.like_attraction
-		where registration_date > date_add(now(),interval -7 day)
+		SELECT attraction_no, count(*) cnt FROM
+		enjoy_trip.like_attraction
+		where registration_date >
+		date_add(now(),interval -7 day)
 		group by attraction_no
-		order by cnt desc) cnt on ai.attraction_no = cnt.attraction_no
+		order by cnt
+		desc) cnt on ai.attraction_no = cnt.attraction_no
 		limit 10;
 	</select>
 
 	<select id="monthly" resultMap="attraction">
 		select * from attraction_info ai
 		join(
-		SELECT attraction_no, count(*) cnt FROM enjoy_trip.like_attraction
-		where registration_date > date_add(now(),interval -30 day)
+		SELECT attraction_no, count(*) cnt FROM
+		enjoy_trip.like_attraction
+		where registration_date >
+		date_add(now(),interval -30 day)
 		group by attraction_no
-		order by cnt desc) cnt on ai.attraction_no = cnt.attraction_no
+		order by cnt
+		desc) cnt on ai.attraction_no = cnt.attraction_no
 		limit 10;
 	</select>
 
+	<select id="sido" resultMap="attraction">
+		select ai.attraction_no, title,
+		addr1, addr2, zipcode, tel, content_type, image1,
+		image2, latitude,
+		longitude, overview, gugun_no, ai.sido_no, ifnull(cnt, 0)
+		ancnt from
+		attraction_info ai
+		left join (
+		select a.attraction_no,
+		ifnull(count(*),0) cnt
+		from attraction_info a
+		join like_attraction l
+		on
+		a.attraction_no = l.attraction_no
+		group by l.attraction_no
+		) an
+		on
+		ai.attraction_no = an.attraction_no
+		right join (
+		select sido_no,
+		max(cnt) maxcnt
+		from (
+		select a.sido_no, count(*) cnt
+		from
+		attraction_info a
+		join like_attraction l
+		on a.attraction_no =
+		l.attraction_no
+		group by l.attraction_no ) ar
+		group by sido_no
+		) ap
+		on
+		ap.sido_no = ai.sido_no and maxcnt = an.cnt
+		order by ancnt desc;
+	</select>
 </mapper>

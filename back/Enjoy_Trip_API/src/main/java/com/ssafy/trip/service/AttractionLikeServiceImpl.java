@@ -50,4 +50,9 @@ public class AttractionLikeServiceImpl implements AttractionLikeService {
 	public List<AttractionDto> monthlyTop10() {
 		return attractionLikeMapper.monthly();
 	}
+
+	@Override
+	public List<AttractionDto> sidoTop10() {
+		return attractionLikeMapper.sido();
+	}
 }

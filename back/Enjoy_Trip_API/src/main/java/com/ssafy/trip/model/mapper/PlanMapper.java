@@ -32,4 +32,6 @@ public interface PlanMapper {
 
 	List<PlanDto> mylikelist(int userNo);
 
+	List<PlanDto> watch(int userNo);
+
 }

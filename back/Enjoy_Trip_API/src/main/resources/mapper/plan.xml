@@ -14,27 +14,31 @@
 		<result column="isLike" property="isLike" />
 		<result column="like_count" property="likeCount" />
 		<result column="img" property="img" />
-		<result column="img_folder" property="imgSaveFolder"/>
-		<result column="img_file" property="imgSaveFile"/>
+		<result column="img_folder" property="imgSaveFolder" />
+		<result column="img_file" property="imgSaveFile" />
 		<!-- <collection property="fileInfos" column="planNo" javaType="list" ofType="FileInfoDto" 
 			select="fileInfoList" /> -->
 	</resultMap>
 
 	<select id="get" parameterType="map" resultMap="plan">
 		select p.plan_no,
-		create_time, subject, content, start_date, end_date,
-		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count, ifnull(isLike, 0)
+		create_time, subject, content, read_count,
+		p.user_no, nickname,u.save_file img_file, u.save_folder img_folder,
+		count(pl.like_no) like_count, ifnull(isLike, 0)
 		isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
 		left join
 		plan_like pl
-		on p.plan_no = pl.plan_no
+		on p.plan_no =
+		pl.plan_no
 		left join
-		(select plan_no, count(*) isLike from plan_like where user_no = #{userNo}
+		(select plan_no, count(*) isLike from plan_like
+		where user_no = #{userNo}
 		group by plan_no) pll
-		on p.plan_no = pll.plan_no
+		on p.plan_no =
+		pll.plan_no
 		where p.plan_no =
 		#{planNo}
 	</select>
@@ -42,44 +46,57 @@
 
 	<select id="list" parameterType="int" resultMap="plan">
 		select
-		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count,img, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
-		ifnull(isLike, 0) isLike, img
+		p.plan_no, create_time, subject, content,
+		read_count,img, p.user_no, nickname,u.save_file img_file,
+		u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike,
+		0) isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
-		left join plan_like pl
+		left join
+		plan_like pl
 		on p.plan_no = pl.plan_no
 		left join
-		(select plan_no, count(*) isLike from plan_like where user_no = #{userNo}
-		group by plan_no) pll
+		(select plan_no,
+		count(*) isLike from plan_like where user_no = #{userNo}
+		group by
+		plan_no) pll
 		on p.plan_no = pll.plan_no
-		group by p.plan_no;
+		group by p.plan_no
+		order by create_time desc;
 	</select> <!-- 수정 필요함!!!!!!!!!!!******************** -->
 
 	<select id="likelist" parameterType="int" resultMap="plan">
 		select
-		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count, img, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
-		ifnull(isLike, 0) isLike, img
+		p.plan_no, create_time, subject, content,
+		read_count, img, p.user_no, nickname,u.save_file img_file,
+		u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike,
+		0) isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
-		left join plan_like pl
+		left join
+		plan_like pl
 		on p.plan_no = pl.plan_no
 		left join
-		(select plan_no, count(*) isLike from plan_like where user_no = #{userNo}
-		group by plan_no) pll
+		(select plan_no,
+		count(*) isLike from plan_like where user_no = #{userNo}
+		group by
+		plan_no) pll
 		on p.plan_no = pll.plan_no
 		group by p.plan_no
-		order by like_count desc
+		order by
+		like_count desc
 		limit 10;
 	</select>
 
 	<select id="writelist" parameterType="int" resultMap="plan">
 		select
-		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
+		p.plan_no, create_time, subject, content,
+		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder
+		img_folder, count(pl.like_no) like_count,
 		ifnull(isLike, 0) isLike, img
 		from plan p
 		join user u
@@ -87,53 +104,72 @@
 		left join plan_like pl
 		on p.plan_no = pl.plan_no
 		left join
-		(select plan_no, count(*) isLike from plan_like where user_no = #{userNo}
+		(select plan_no, count(*) isLike
+		from plan_like where user_no = #{userNo}
 		group by plan_no) pll
-		on p.plan_no = pll.plan_no
+		on
+		p.plan_no = pll.plan_no
 		where p.user_no =
 		#{userNo}
 		group by p.plan_no
 		;
 	</select>
-	
+
 	<select id="mylikelist" parameterType="int" resultMap="plan">
-		select * from (select
-		p.plan_no, create_time, subject, content, start_date, end_date,
-		read_count, p.user_no, nickname,u.save_file img_file, u.save_folder img_folder, count(pl.like_no) like_count,
-		ifnull(isLike, 0) isLike, img
+		select *
+		from (select
+		p.plan_no, create_time, subject, content,
+		read_count, p.user_no, nickname,u.save_file img_file,
+		u.save_folder img_folder, count(pl.like_no) like_count,
+		ifnull(isLike,
+		0) isLike, img
 		from plan p
 		join user u
 		on p.user_no = u.user_no
-		left join plan_like pl
+		left join
+		plan_like pl
 		on p.plan_no = pl.plan_no
 		left join
-		(select plan_no, count(*) isLike from plan_like where user_no = #{userNo}
-		group by plan_no) pll
+		(select plan_no,
+		count(*) isLike from plan_like where user_no = #{userNo}
+		group by
+		plan_no) pll
 		on p.plan_no = pll.plan_no
 		group by p.plan_no
-		order by create_time desc) tb where isLike != 0 limit 3;
+		order by
+		create_time desc) tb where isLike != 0 limit 3;
+	</select>
+
+	<select id="watch" parameterType="int" resultMap="plan">
+		select
+		p.plan_no, create_time, subject, content,
+		read_count, p.user_no, img,
+		nickname,u.save_file img_file,
+		u.save_folder img_folder from plan p
+		join
+		(select log_no, max(log_date) time, plan_no, user_no from log_plan where
+		user_no = #{userNo} 
+		group by plan_no) l
+		on p.plan_no = l.plan_no
+		join
+		user u
+		on u.user_no = p.user_no
+		order by time desc limit 10;
 	</select>
 
 	<insert id="write" parameterType="PlanDto">
 		insert into plan
-		values(null,now(),#{subject},#{content},#{startDate},
-		#{endDate},0,#{userNo})
+		values(null,now(),#{subject},#{content},0,#{userNo},#{img})
 		<selectKey resultType="int" keyProperty="planNo"
 			order="AFTER">
 			select LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 
-	<!-- <insert id="fileRegister" parameterType="PlanDto"> insert into file_plan(plan_no, 
-		save_folder, original_file, save_file) values <foreach collection="fileInfos" 
-		item="fileinfo" separator=" , "> (#{planNo}, #{fileinfo.saveFolder}, #{fileinfo.originalFile}, 
-		#{fileinfo.saveFile}) </foreach> </insert> -->
-
 	<update id="modify" parameterType="PlanDto">
 		update plan
 		set subject =
-		#{subject}, content = #{content}, start_date = #{startDate}, end_date
-		= #{endDate}
+		#{subject}, content = #{content},
 		where plan_no = #{planNo}
 	</update>
 
@@ -151,6 +187,7 @@
 	</update>
 
 	<insert id="visitLog" parameterType="map">
-		insert into log_plan values(null, now(),#{planNo},#{userNo});
+		insert into log_plan
+		values(null, now(),#{planNo},#{userNo});
 	</insert>
 </mapper>

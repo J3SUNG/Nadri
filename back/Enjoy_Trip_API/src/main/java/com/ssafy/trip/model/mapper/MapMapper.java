@@ -16,4 +16,6 @@ public interface MapMapper {
 
 	void visitLog(Map<String, Integer> map);
 
+	List<AttractionDto> watch(int userNo);
+
 }

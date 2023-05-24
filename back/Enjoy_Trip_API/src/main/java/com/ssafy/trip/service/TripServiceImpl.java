@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.TripDto;
 import com.ssafy.trip.model.mapper.TripMapper;
 
@@ -40,4 +41,11 @@ public class TripServiceImpl implements TripService {
 	public void delete(int tripDto) {
 		tripMapper.delete(tripDto);
 	}
+
+	@Override
+	public void write(TripDto tripDto, int planNo) {
+		tripDto.setPlanNo(planNo);
+		tripMapper.write(tripDto);
+	}
+
 }

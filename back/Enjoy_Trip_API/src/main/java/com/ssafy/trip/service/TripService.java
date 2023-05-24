@@ -2,6 +2,7 @@ package com.ssafy.trip.service;
 
 import java.util.List;
 
+import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.ReviewDto;
 import com.ssafy.trip.model.dto.TripDto;
 
@@ -16,5 +17,7 @@ public interface TripService {
 	void modify(TripDto tripDto);
 
 	void delete(int tripDto);
+
+	void write(TripDto tripDto, int planNo);
 
 }

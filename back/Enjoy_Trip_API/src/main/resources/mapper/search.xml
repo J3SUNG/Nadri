@@ -3,59 +3,86 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.trip.model.mapper.MapMapper">
-	
-<resultMap type="AttractionDto" id="attraction">
-		<result column="attraction_no" property="attractionNo"/>
-		<result column="title" property="title"/>
-		<result column="addr1" property="addr1"/>
-		<result column="addr2" property="addr2"/>
-		<result column="zipcode" property="zipcode"/>
-		<result column="tel" property="tel"/>
-		<result column="content_type" property="contentType"/>
-		<result column="image1" property="image1"/>
-		<result column="image2" property="image2"/>
-		<result column="latitude" property="latitude"/>
-		<result column="longitude" property="longitude"/>
-		<result column="overview" property="overview"/>
-		<result column="gugun_no" property="gugunCode"/>
-		<result column="sido_no" property="sidoCode"/>
-</resultMap>
+
+	<resultMap type="AttractionDto" id="attraction">
+		<result column="attraction_no" property="attractionNo" />
+		<result column="title" property="title" />
+		<result column="addr1" property="addr1" />
+		<result column="addr2" property="addr2" />
+		<result column="zipcode" property="zipcode" />
+		<result column="tel" property="tel" />
+		<result column="content_type" property="contentType" />
+		<result column="image1" property="image1" />
+		<result column="image2" property="image2" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="overview" property="overview" />
+		<result column="gugun_no" property="gugunCode" />
+		<result column="sido_no" property="sidoCode" />
+	</resultMap>
 
 
 
-<select id="search" parameterType="searchDto" resultMap="attraction">
-		select *
-		from attraction_info ai
+	<select id="search" parameterType="searchDto"
+		resultMap="attraction">
+		select ai.attraction_no, title, addr1, addr2, zipcode, tel,
+		content_type, image1, image2, latitude, longitude, overview, gugun_no,
+		sido_no, ifnull(cnt, 0) cnt from attraction_info ai
+		left join (
+		select
+		a.attraction_no, ifnull(count(*),0)cnt
+		from attraction_info a
+		join
+		like_attraction l
+		on a.attraction_no = l.attraction_no
+		group by
+		l.attraction_no
+		) an
+		on ai.attraction_no = an.attraction_no
 		<where>
-		<if test="areaCode != 0">
-			ai.sido_no = #{areaCode}
-			<if test="sigunguCode != 0">
-				AND ai.gugun_no = #{sigunguCode} 
+			<if test="areaCode != 0">
+				ai.sido_no = #{areaCode}
+				<if test="sigunguCode != 0">
+					AND ai.gugun_no = #{sigunguCode}
+				</if>
 			</if>
-		</if> 
-		<if test="contentType[0] != 0">
+			<if test="contentType[0] != 0">
 				AND content_type in
 				<foreach item="item" index="index" collection="contentType"
-				open="(" separator="," close=")">
+					open="(" separator="," close=")">
 					#{item}
 				</foreach>
-		</if>
-		<if test="search != null">
+			</if>
+			<if test="search != null">
 				and title like concat('%', #{search}, '%')
 			</if>
 		</where>
-		order by title desc
-		limit 10
-		
-</select>	
+		order by cnt desc
+		limit 100;
+	</select>
 
-<select id="getAttr" parameterType="int" resultMap="attraction">
-select *
-		from attraction_info ai
+	<select id="getAttr" parameterType="int" resultMap="attraction">
+		select *
+		from
+		attraction_info ai
 		where ai.attraction_no = #{attrNo}
-</select>	
-	
-<insert id="visitLog" parameterType="map">
-insert into log_attraction values(null, now(),#{attrNo},#{userNo});
-</insert>
+	</select>
+
+	<insert id="visitLog" parameterType="map">
+		insert into log_attraction
+		values(null, now(),#{attrNo},#{userNo});
+	</insert>
+
+
+	<select id="watch" parameterType="int" resultMap="attraction">
+		select * from
+		attraction_info a
+		join
+		(select like_no, max(registration_date) time, attraction_no, user_no from
+		like_attraction where user_no = #{userNo} 
+		group by attraction_no) l
+		on a.attraction_no = l.attraction_no
+		order by time desc;
+	</select>
+
 </mapper>

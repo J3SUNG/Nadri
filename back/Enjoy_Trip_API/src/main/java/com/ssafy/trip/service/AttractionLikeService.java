@@ -19,5 +19,7 @@ public interface AttractionLikeService {
 
 	List<AttractionDto> monthlyTop10();
 
+	List<AttractionDto> sidoTop10();
+
 
 }
