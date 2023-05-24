@@ -116,13 +116,16 @@ export default {
       isUser: true,
       search: "",
       searchType: "subject",
+      userNo: 0,
     };
   },
   created() {
-    http.get(`board?type=${this.type}&type=${this.type}`).then((response) => {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+    http.get(`board?type=${this.type}&userNo=${this.userNo}&type=${this.type}`).then((response) => {
       this.boards = response.data.list;
       this.pageNav = response.data.pageNavigation;
-      console.log(this.boards);
       this.loadImg();
 
       if (this.userInfo != null) {

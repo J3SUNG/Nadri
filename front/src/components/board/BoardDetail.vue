@@ -101,6 +101,7 @@ export default {
 
     const response2 = await http.get(`comment/${this.board.boardNo}`);
     this.comments = response2.data;
+    console.log("AA");
     console.log(this.comments);
     this.commentCnt = this.comments.length;
 

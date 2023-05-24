@@ -57,15 +57,19 @@
 </template>
 
 <script>
-import PlanCard from "@/components/plan/PlanCard.vue";
 import { mapActions, mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
-import PlaceCard from "../home/PlaceCard.vue";
+// import PlanCard from "@/components/plan/PlanCard.vue";
+// import PlaceCard from "../home/PlaceCard.vue";
 
 const memberStore = "memberStore";
 
 export default {
   name: "TheMypage",
+  components: {
+    // PlanCard,
+    // PlaceCard,
+  },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
     ...mapGetters(["checkUserInfo"]),
@@ -93,16 +97,16 @@ export default {
     if (this.userInfo !== null) {
       this.userNo = this.userInfo.userNo;
     }
-    http.get(`map/watch/${this.userNo}`).then((response) => {
-      this.places = response.data;
-      console.log(this.places);
-      this.loadImg();
-    });
-    http.get(`plan/watch/${this.userNo}`).then((response) => {
-      this.plans = response.data;
-      console.log(this.plans);
-      this.loadImg();
-    });
+    // http.get(`map/watch/${this.userNo}`).then((response) => {
+    //   this.places = response.data;
+    //   console.log(this.places);
+    //   this.loadImg();
+    // });
+    // http.get(`plan/watch/${this.userNo}`).then((response) => {
+    //   this.plans = response.data;
+    //   console.log(this.plans);
+    //   this.loadImg();
+    // });
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
@@ -118,7 +122,6 @@ export default {
           }
           sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
           sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-
           this.$router.push({ name: "AppHome" });
         });
       }
@@ -154,10 +157,6 @@ export default {
         this.plans[i].imgUrl = this.imgUrl;
       }
     },
-  },
-  components: {
-    PlanCard,
-    PlaceCard,
   },
 };
 </script>
