@@ -56,6 +56,7 @@ export default {
       slideCount: 10, // 슬라이드 개수
       index: 0,
       plans: "",
+      userNo: 0,
     };
   },
   methods: {
@@ -92,7 +93,10 @@ export default {
     },
   },
   created() {
-    http.get(`plan/likelist/${this.userInfo.userNo}`).then((response) => {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+    http.get(`plan/likelist/${this.userNo}`).then((response) => {
       this.plans = response.data;
       this.loadImg();
       console.log(this.plans);

@@ -29,7 +29,7 @@
       <button @click="movePlanList">목록</button>
       <div class="plan-deatil__function-heart">
         <img class="plan-deatil__function-heart-img" @click="heartClick" :src="heart" />
-        <p class="plan-deatil__function-heart-text">{{ plans.likeCount }}</p>
+        <p class="plan-deatil__function-heart-text">{{ this.heartCnt }}</p>
       </div>
       <div class="plan-detail__function-admin">
         <button v-if="isWriter" @click="movePlanUpdate">수정</button>
@@ -55,6 +55,7 @@ export default {
       heartCnt: 0,
       isWriter: false,
       planNo: 0,
+      userNo: 0,
     };
   },
   computed: {
@@ -62,7 +63,7 @@ export default {
   },
   methods: {
     movePlanUpdate() {
-      this.$router.push({ name: "AppPlanUpdate", params: { planNo: this.plan.planNo } });
+      this.$router.push({ name: "AppPlanUpdate", params: { planNo: this.plans.planNo } });
     },
     movePlanList() {
       this.$router.push({ name: "AppPlan" });
@@ -70,8 +71,8 @@ export default {
     deletePlan() {
       console.log(this.plan.planNo);
       if (confirm("정말 삭제하시겠습니까?")) {
-        http.delete(`plan/${this.plan.planNo}`).then(() => {
-          if (this.plan.planType === 1) {
+        http.delete(`plan/${this.plans.planNo}`).then(() => {
+          if (this.plans.planType === 1) {
             this.$router.push({ name: "AppPlan" });
           } else {
             this.$router.push({ name: "AppNotify" });
@@ -80,20 +81,20 @@ export default {
       }
     },
     heartClick() {
-      if (this.heartChk === 0) {
-        http.post(`planlike/${this.plan.planNo}/${this.userInfo.userNo}`).then((response) => {
-          ++this.heartCnt;
-          console.log(response);
-        });
-        this.heart = require("@/assets/heartOn.png");
-      } else {
-        http.delete(`planlike/${this.plan.planNo}/${this.userInfo.userNo}`).then((response) => {
+      if (this.heartChk) {
+        http.post(`planlike/${this.plans.planNo}/${this.userNo}`).then((response) => {
           --this.heartCnt;
           console.log(response);
         });
         this.heart = require("@/assets/heartOff.png");
+      } else {
+        http.delete(`planlike/${this.plans.planNo}/${this.userNo}`).then((response) => {
+          ++this.heartCnt;
+          console.log(response);
+        });
+        this.heart = require("@/assets/heartOn.png");
       }
-      this.heartChk = this.heartChk === 0 ? 1 : 0;
+      this.heartChk = !this.heartChk;
     },
     loadImg() {
       this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
@@ -102,16 +103,25 @@ export default {
     },
   },
   created() {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
     this.planNo = this.$route.params.planNo;
-    http.get(`plan/${this.planNo}/${this.userInfo.userNo}`).then((response) => {
+    console.log(this.planNo);
+    http.get(`plan/${this.planNo}/${this.userNo}`).then((response) => {
       this.plans = response.data;
+      this.heartCnt = this.plans.likeCount;
       this.heartChk = this.plans.isLike === 1 ? true : false;
+      if (this.heartChk) {
+        this.heart = require("@/assets/heartOn.png");
+      } else {
+        this.heart = require("@/assets/heartOff.png");
+      }
       this.loadImg();
       console.log(this.plans);
     });
-    console.log(this.userInfo.userNo);
-    console.log(this.userNo);
-    if (this.userInfo.userNo === this.userNo) {
+
+    if (this.userInfo !== null && this.userInfo.userNo === this.userNo) {
       this.isWriter = true;
     } else {
       this.isWriter = false;

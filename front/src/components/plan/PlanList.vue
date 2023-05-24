@@ -2,7 +2,7 @@
   <div class="plan-note">
     <div class="plan-note__header">
       <h2 class="plan-note__title">여행노트</h2>
-      <button class="plan-note__write-button" @click="movePlanCreate">글쓰기</button>
+      <button class="plan-note__write-button" @click="movePlanCreate" v-if="isLogin">글쓰기</button>
     </div>
     <div class="plan-note__cards">
       <plan-card v-for="item in plans" :itemData="item" :key="item.planNo" />
@@ -30,11 +30,14 @@ export default {
       plans: [],
       type: "1",
       userNo: 0,
+      isLogin: false,
+      isLikePlan: [false, false, false],
     };
   },
   created() {
     if (this.userInfo !== null) {
       this.userNo = this.userInfo.userNo;
+      this.isLogin = true;
     }
     http.get(`plan/list/${this.userNo}`).then((response) => {
       this.plans = response.data;

@@ -21,6 +21,15 @@
             </div>
           </div>
         </li>
+        <li class="like-plan__my-plan like-plan__my-plan-none" v-if="!isLikePlan[0]">
+          <p>찜한 내용이 없습니다.</p>
+        </li>
+        <li class="like-plan__my-plan like-plan__my-plan-none" v-if="!isLikePlan[1]">
+          <p>찜한 내용이 없습니다.</p>
+        </li>
+        <li class="like-plan__my-plan like-plan__my-plan-none" v-if="!isLikePlan[2]">
+          <p>찜한 내용이 없습니다.</p>
+        </li>
         <li class="like-plan__save-plan">
           <img class="like-plan__save-plan__icon" src="@/assets/favorite.png" />
           <div class="like-plan__save-plan__text">
@@ -39,6 +48,7 @@ import { mapState } from "vuex";
 
 const memberStore = "memberStore";
 export default {
+  components: {},
   name: "LikePlan",
   computed: {
     ...mapState(memberStore, ["userInfo"]),
@@ -46,6 +56,9 @@ export default {
   data() {
     return {
       list: "",
+      userNo: 0,
+      isLogin: false,
+      isLikePlan: [false, false, false],
     };
   },
   methods: {
@@ -58,11 +71,24 @@ export default {
     },
   },
   created() {
-    http.get(`plan/mylikelist/${this.userInfo.userNo}`).then((response) => {
-      this.list = response.data;
-      this.loadImg();
-      console.log(this.list);
-    });
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+      http.get(`plan/mylikelist/${this.userNo}`).then((response) => {
+        this.list = response.data;
+        this.loadImg();
+        console.log(this.list);
+
+        if (this.list.length === 0) {
+          this.isLikePlan = [false, false, false];
+        } else if (this.list.length === 1) {
+          this.isLikePlan = [true, false, false];
+        } else if (this.list.length === 2) {
+          this.isLikePlan = [true, true, false];
+        } else {
+          this.isLikePlan = [true, true, true];
+        }
+      });
+    }
   },
 };
 </script>
@@ -96,6 +122,15 @@ export default {
   display: flex;
   padding-bottom: 3px;
   border-bottom: 1px solid var(--color-lightgray);
+}
+.like-plan__my-plan-none {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-week2);
+}
+.like-plan__my-plan-none p {
+  font-size: 22px;
 }
 .like-plan__img {
   height: 100%;
