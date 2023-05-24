@@ -73,20 +73,22 @@ export default {
       }
     },
     heartClick() {
-      if (this.heartChk) {
-        http.post(`planlike/${this.plans.planNo}/${this.userNo}`).then((response) => {
-          --this.heartCnt;
-          console.log(response);
-        });
-        this.heart = require("@/assets/heartOff.png");
-      } else {
-        http.delete(`planlike/${this.plans.planNo}/${this.userNo}`).then((response) => {
-          ++this.heartCnt;
-          console.log(response);
-        });
-        this.heart = require("@/assets/heartOn.png");
+      if (this.userInfo !== null) {
+        if (!this.heartChk) {
+          http.post(`planlike/${this.plans.planNo}/${this.userNo}`).then((response) => {
+            ++this.heartCnt;
+            console.log(response);
+          });
+          this.heart = require("@/assets/heartOn.png");
+        } else {
+          http.delete(`planlike/${this.plans.planNo}/${this.userNo}`).then((response) => {
+            --this.heartCnt;
+            console.log(response);
+          });
+          this.heart = require("@/assets/heartOff.png");
+        }
+        this.heartChk = !this.heartChk;
       }
-      this.heartChk = !this.heartChk;
     },
     loadImg() {
       this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
@@ -102,6 +104,11 @@ export default {
     console.log(this.planNo);
     http.get(`plan/${this.planNo}/${this.userNo}`).then((response) => {
       this.plans = response.data;
+      if (this.plans.userNo === this.userNo) {
+        this.isWriter = true;
+      } else {
+        this.isWriter = false;
+      }
       this.heartCnt = this.plans.likeCount;
       this.heartChk = this.plans.isLike === 1 ? true : false;
       if (this.heartChk) {

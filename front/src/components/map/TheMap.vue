@@ -157,7 +157,14 @@
             <textarea class="map__course__content-input" v-model="content"></textarea>
           </div>
         </div>
-        <button class="map__course__post" @click.prevent="createTripNote">노트 생성</button>
+        <div class="map__course__btn__box">
+          <button class="map__course__btn map__course__cancel" @click.prevent="createTripNote">
+            취소
+          </button>
+          <button class="map__course__btn map__course__post" @click.prevent="createTripNote">
+            노트 생성
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -191,7 +198,7 @@ export default {
       type: {
         12: "관광지",
         14: "문화시설",
-        15: "축제공연행사",
+        15: "행사",
         25: "여행코스",
         28: "레포츠",
         32: "숙박",
@@ -254,6 +261,7 @@ export default {
   methods: {
     loadScript() {
       const script = document.createElement("script");
+      script.async = true;
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.VUE_APP_KAKAOMAP_KEY}&autoload=false`; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
       document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가
       script.onload = () => window.kakao.maps.load(this.loadMap); // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
@@ -497,9 +505,10 @@ export default {
 <style>
 .map__course {
   margin-top: 100px;
-  width: 400px;
+  width: 360px;
+  padding: 0px 20px;
   min-height: 320px;
-  max-height: 700px;
+  max-height: 740px;
   top: 45px;
   right: 0px;
   position: absolute;
@@ -508,98 +517,113 @@ export default {
   border-radius: 5px;
   overflow: scroll;
   overflow-x: hidden;
+  margin-bottom: 20px;
 }
 .map__course__title {
   margin-top: 20px;
 }
 .map__course__hr {
-  width: 80%;
-  margin-left: 10%;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  width: 320px;
+  margin: 20px 20px 0px 20px;
 }
 .map__course__box__ul {
   width: 320px;
+  padding: 0px 20px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
 }
 .map__course__box {
-  margin-left: 10%;
-  margin-right: 10%;
-  text-align: left;
+  text-align: center;
   width: 100%;
-  height: 180px;
 }
 .map__course__box__small {
   display: flex;
+  align-items: center;
   width: 100%;
+  margin-top: 20px;
 }
 .map__course__box p {
   color: var(--color-white);
 }
 .map__course__box__index {
-  width: 50px;
-  display: inline-block;
-  margin-right: 10px;
+  width: 40px;
+  padding-right: 10px;
 }
 .map__course__box__title {
-  display: inline-block;
+  text-align: left;
+  width: 270px;
 }
 .map__course__box__input {
-  margin-top: 20px;
-  width: 300px;
+  width: 250px;
   height: 60px;
+  padding: 10px;
+  border-radius: 5px;
 }
 .map__course__box__memo {
   font-size: 14px;
-  width: 50px;
-  margin-top: 20px;
+  width: 40px;
+  padding-right: 10px;
 }
 .map__course__box__hr {
   margin-top: 20px;
   color: gray;
 }
 .map__course__main {
+  width: 320px;
+  padding: 0px 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
-  margin: 0px 10%;
 }
 .map__course__title__box {
   display: flex;
   align-items: center;
-  justify-content: start;
   width: 100%;
+  margin-top: 20px;
 }
 .map__course__content__box {
   display: flex;
   align-items: center;
-  justify-content: start;
   width: 100%;
 }
 .map__course__title-label,
 .map__course__content-label {
-  width: 50px;
+  width: 40px;
+  padding-right: 10px;
   color: var(--color-white);
 }
 .map__course__title-input {
-  width: 100%;
+  width: 270px;
   border-radius: 5px;
 }
 
 .map__course__content-input {
-  width: 100%;
+  width: 250px;
   border-radius: 5px;
   height: 100px;
+  padding: 10px;
 }
-.map__course__post {
-  margin-left: 250px;
+.map__course__btn__box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 40px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.map__course__btn {
   padding: 5px;
-  border: solid 0px white;
+  /* border: solid 3px tomato; */
+  border-radius: 20px;
   background-color: var(--color-main);
+  /* background-color: transparent; */
   color: white;
   font-size: 14px;
+  width: 80px;
+}
+.map__course__cancel {
+  background-color: var(--color-tomato);
 }
 
 .map__detail {
@@ -732,8 +756,11 @@ h2 {
   height: 20px;
 }
 .map__left__box__main__up {
+  width: 230px;
+  margin-right: 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 40px;
 }
 .map__left__box__main__up__title {

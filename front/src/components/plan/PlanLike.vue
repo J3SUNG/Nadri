@@ -3,7 +3,12 @@
     <h2 class="like-plan__title">찜한 여행노트</h2>
     <div class="like-plan__box">
       <ul class="like-paln__box-small">
-        <li class="like-plan__my-plan" v-for="item in list" :key="item.planNo">
+        <li
+          class="like-plan__my-plan like-plan__my-plan-on"
+          v-for="item in list"
+          :key="item.planNo"
+          @click="movePlanDetail(item.planNo)"
+        >
           <img class="like-plan__img" :src="item.img" />
           <div class="like-plan__main">
             <div class="like-plan__main__top">
@@ -34,7 +39,7 @@
           <img class="like-plan__save-plan__icon" src="@/assets/favorite.png" />
           <div class="like-plan__save-plan__text">
             <h3 class="like-plan__save-plan__text-title">내가 찜한 여행노트</h3>
-            <p class="like-plan__save-plan__text-sub">좋아요 누른 여행노트를 한눈에..!</p>
+            <p class="like-plan__save-plan__text-sub">최근 좋아요 누른 여행노트를 한눈에..!</p>
           </div>
         </li>
       </ul>
@@ -68,6 +73,9 @@ export default {
         this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.list[i].imgSaveFolder}&saveFile=${this.list[i].imgSaveFile}`;
         this.list[i].imgUrl = this.imgUrl;
       }
+    },
+    movePlanDetail(num) {
+      this.$router.push({ name: "AppPlanDetail", params: { planNo: num } });
     },
   },
   created() {
@@ -123,6 +131,9 @@ export default {
   padding-bottom: 3px;
   border-bottom: 1px solid var(--color-lightgray);
 }
+.like-plan__my-plan-on {
+  cursor: pointer;
+}
 .like-plan__my-plan-none {
   display: flex;
   justify-content: center;
@@ -134,7 +145,8 @@ export default {
 }
 .like-plan__img {
   height: 100%;
-  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
 }
 .like-plan__main {
   display: flex;

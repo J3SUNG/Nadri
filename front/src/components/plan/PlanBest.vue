@@ -4,7 +4,7 @@
     <div class="best-plan__slideShow">
       <ul class="best-plan__slides" :style="`left:${left}`">
         <li v-for="item in plans" :key="item.attrNo">
-          <div class="best-plan__img__box">
+          <div class="best-plan__img__box" @click="movePlanDetail(item.planNo)">
             <img class="best-plan__img" :src="item.img" />
             <div class="best-plan__box-right">
               <h3 class="best-plan__box-title">{{ item.subject }}</h3>
@@ -91,6 +91,9 @@ export default {
         this.plans[i].imgUrl = this.imgUrl;
       }
     },
+    movePlanDetail(num) {
+      this.$router.push({ name: "AppPlanDetail", params: { planNo: num } });
+    },
   },
   created() {
     if (this.userInfo !== null) {
@@ -125,7 +128,7 @@ export default {
 }
 .best-plan__img__box {
   width: 640px;
-  height: 100%;
+  height: 440px;
   display: flex;
   position: relative;
   justify-content: right;

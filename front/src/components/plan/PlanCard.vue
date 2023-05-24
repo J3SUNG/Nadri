@@ -11,7 +11,7 @@
         <img class="plan__card__footer__writer-img" :src="itemData.imgUrl" />
         <p class="plan__card__footer__writer-nickname">{{ itemData.nickname }}</p>
       </div>
-      <div class="plan__card__footer__right" v-if="isMypage">
+      <div class="plan__card__footer__right" v-if="!isMypage">
         <img
           class="plan__card__footer__icon plan__card__footer__icon-heart"
           @click="heartClick"
@@ -50,10 +50,14 @@ export default {
     }
   },
   mounted() {
-    if (this.isMypageValue === true) {
-      this.isMypage = true;
+    console.log("AA");
+    console.log(this.isMypageValue);
+    if (this.isMypageValue === undefined) {
+      this.isMypage = false;
+      console.log(1);
     } else {
-      false;
+      this.isMypage = true;
+      console.log(2);
     }
     this.heart =
       this.itemData.isLike === 0

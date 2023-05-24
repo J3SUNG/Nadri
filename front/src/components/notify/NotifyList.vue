@@ -52,25 +52,41 @@
           {{ this.startPage }}
         </button>
         <button
-          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[1] }"
+          :class="{
+            notify__pagenation: true,
+            notify__pagenation__selected: this.selected[1],
+            notify__pagenation__hidden: this.pageNav.totalPageCount < 2,
+          }"
           @click="movePage(startPage + 1)"
         >
           {{ this.startPage + 1 }}
         </button>
         <button
-          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[2] }"
+          :class="{
+            notify__pagenation: true,
+            notify__pagenation__selected: this.selected[2],
+            notify__pagenation__hidden: this.pageNav.totalPageCount < 3,
+          }"
           @click="movePage(startPage + 2)"
         >
           {{ this.startPage + 2 }}
         </button>
         <button
-          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[3] }"
+          :class="{
+            notify__pagenation: true,
+            notify__pagenation__selected: this.selected[3],
+            notify__pagenation__hidden: this.pageNav.totalPageCount < 4,
+          }"
           @click="movePage(startPage + 3)"
         >
           {{ this.startPage + 3 }}
         </button>
         <button
-          :class="{ notify__pagenation: true, notify__pagenation__selected: this.selected[4] }"
+          :class="{
+            notify__pagenation: true,
+            notify__pagenation__selected: this.selected[4],
+            notify__pagenation__hidden: this.pageNav.totalPageCount < 5,
+          }"
           @click="movePage(startPage + 4)"
         >
           {{ this.startPage + 4 }}
@@ -118,6 +134,7 @@ export default {
     http.get(`board?pg=${this.nextPage}&type=${this.type}`).then((response) => {
       this.boards = response.data.list;
       this.pageNav = response.data.pageNavigation;
+      this.pageFunc();
       console.log(this.pageNav);
     });
     console.log(this.userInfo);
@@ -147,30 +164,36 @@ export default {
           this.boards = response.data.list;
           this.pageNav = response.data.pageNavigation;
           console.log(this.pageNav);
-          if (!this.pageNav.startRange) {
-            this.startPage = 1;
-            this.selected = [true, false, false, false, false];
-          } else if (!this.pageNav.endRange) {
-            this.startPage = this.pageNav.totalPageCount - 4;
-            this.selected = [false, false, false, false, true];
-          } else if (!this.pageNav.startRange2) {
-            this.startPage = 1;
-            this.selected = [false, true, false, false, false];
-          } else if (!this.pageNav.endRange2) {
-            this.startPage = this.pageNav.totalPageCount - 4;
-            this.selected = [false, false, false, true, false];
-          } else {
-            this.startPage = this.pageNav.currentPage - 2;
-            this.selected = [false, false, true, false, false];
-          }
+          this.pageFunc();
         });
     },
+    pageFunc() {
+      if (!this.pageNav.startRange) {
+        this.startPage = 1;
+        this.selected = [true, false, false, false, false];
+      } else if (!this.pageNav.endRange) {
+        this.startPage = this.pageNav.totalPageCount - 4;
+        this.selected = [false, false, false, false, true];
+      } else if (!this.pageNav.startRange2) {
+        this.startPage = 1;
+        this.selected = [false, true, false, false, false];
+      } else if (!this.pageNav.endRange2) {
+        this.startPage = this.pageNav.totalPageCount - 4;
+        this.selected = [false, false, false, true, false];
+      } else {
+        this.startPage = this.pageNav.currentPage - 2;
+        this.selected = [false, false, true, false, false];
+      }
+    },
     clickSearch() {
+      this.nextPage = 1;
       http
         .get(`board?pg=${this.nextPage}&type=${this.type}&word=${this.search}`)
         .then((response) => {
           this.boards = response.data.list;
           this.pageNav = response.data.pageNavigation;
+          this.startPage = 1;
+          this.pageFunc();
         });
     },
   },
