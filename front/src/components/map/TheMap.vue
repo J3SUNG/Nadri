@@ -334,7 +334,7 @@ export default {
         38: require("@/assets/type_back_2/type_back_shopping.png"),
         39: require("@/assets/type_back_2/type_back_food.png"),
       }; // 마커 이미지
-      let imageSize = new window.kakao.maps.Size(50, 50); //마커 이미지 크기
+      let imageSize = new window.kakao.maps.Size(35, 35); //마커 이미지 크기
       console.log(window.kakao.maps);
       let markerImage;
       console.log(this.positions);

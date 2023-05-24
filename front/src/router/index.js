@@ -14,6 +14,7 @@ import AppNotifyCreate from "@/views/AppNotifyCreate.vue";
 import AppNotifyUpdate from "@/views/AppNotifyUpdate.vue";
 import AppPlan from "@/views/AppPlan.vue";
 import AppPlanDetail from "@/views/AppPlanDetail.vue";
+import AppPlanCreate from "@/views/AppPlanCreate.vue";
 import AppNotify from "@/views/AppNotify.vue";
 import AppMap from "@/views/AppMap.vue";
 import AppSignup from "@/views/AppSignup.vue";
@@ -81,6 +82,12 @@ const routes = [
     path: "/planDetail",
     name: "AppPlanDetail",
     component: AppPlanDetail,
+  },
+  {
+    path: "/planCreate",
+    name: "AppPlanCreate",
+    beforeEnter: onlyAuthUser,
+    component: AppPlanCreate,
   },
   {
     path: "/board",

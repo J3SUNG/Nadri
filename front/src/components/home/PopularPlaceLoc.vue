@@ -143,8 +143,8 @@ export default {
   cursor: pointer;
 }
 .popular-place-loc__img {
-  width: 100%;
-  height: 100%;
+  width: 800px;
+  height: 400px;
   border-radius: 20px;
 }
 .popular-place-loc__img__box {
