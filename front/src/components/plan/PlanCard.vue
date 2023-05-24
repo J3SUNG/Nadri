@@ -11,7 +11,7 @@
         <img class="plan__card__footer__writer-img" :src="itemData.imgUrl" />
         <p class="plan__card__footer__writer-nickname">{{ itemData.nickname }}</p>
       </div>
-      <div class="plan__card__footer__right">
+      <div class="plan__card__footer__right" v-if="isMypage">
         <img
           class="plan__card__footer__icon plan__card__footer__icon-heart"
           @click="heartClick"
@@ -33,26 +33,28 @@ export default {
   name: "PlanCard",
   data() {
     return {
-      img: [
-        require("@/assets/dummy1.jpg"),
-        require("@/assets/dummy2.jpg"),
-        require("@/assets/dummy3.jpg"),
-        require("@/assets/dummy4.jpg"),
-        require("@/assets/dummy5.jpg"),
-        require("@/assets/dummy6.jpg"),
-      ],
-      num: Math.ceil(Math.random() * 6 - 1),
-      commentCnt: Math.ceil(Math.random() * 20),
       heartChk: this.itemData.isLike,
       heartCnt: this.itemData.likeCount,
       heart: "",
+      isMypage: false,
+      userNo: 0,
     };
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
-  props: ["itemData"],
+  props: ["itemData", "isMypageValue"],
+  created() {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+  },
   mounted() {
+    if (this.isMypageValue === true) {
+      this.isMypage = true;
+    } else {
+      false;
+    }
     this.heart =
       this.itemData.isLike === 0
         ? require("@/assets/heartOff.png")

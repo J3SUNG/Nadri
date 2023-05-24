@@ -110,7 +110,7 @@ export default {
       startPage: 1,
       selected: [true, false, false, false, false],
       search: "",
-      isAdmin: true,
+      isAdmin: false,
       isUser: false,
     };
   },

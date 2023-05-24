@@ -35,7 +35,11 @@
       <p class="board-deatil__comment-text">댓글</p>
       <p class="board-deatil__comment-cnt">{{ commentCnt }}</p>
       <div class="board-deatil__comment-box">
-        <input class="board-deatil__comment-input" /><button class="board-deatil__comment-button">
+        <input class="board-deatil__comment-input" v-model="commentInput" /><button
+          class="board-deatil__comment-button"
+          @click="postComment"
+          v-if="this.userNo !== 0"
+        >
           등록
         </button>
       </div>
@@ -68,6 +72,7 @@ export default {
       isNotify: 1,
       userNo: 0,
       isWriter: true,
+      commentInput: "",
     };
   },
   computed: {
@@ -99,7 +104,7 @@ export default {
     console.log(this.comments);
     this.commentCnt = this.comments.length;
 
-    if (this.userInfo !== null && this.userInfo.userNo === this.board.userNo) {
+    if (this.userInfo !== null && this.userNo === this.board.userNo) {
       this.isWriter = true;
     } else {
       this.isWriter = false;
@@ -130,13 +135,13 @@ export default {
     },
     heartClick() {
       if (this.heartChk === 0) {
-        http.post(`boardlike/${this.board.boardNo}/${this.userInfo.userNo}`).then((response) => {
+        http.post(`boardlike/${this.board.boardNo}/${this.userNo}`).then((response) => {
           ++this.heartCnt;
           console.log(response);
         });
         this.heart = require("@/assets/heartOn.png");
       } else {
-        http.delete(`boardlike/${this.board.boardNo}/${this.userInfo.userNo}`).then((response) => {
+        http.delete(`boardlike/${this.board.boardNo}/${this.userNo}`).then((response) => {
           --this.heartCnt;
           console.log(response);
         });
@@ -144,6 +149,27 @@ export default {
       }
       this.heartChk = this.heartChk === 0 ? 1 : 0;
       this.$forceUpdate();
+    },
+    postComment() {
+      let commentData = {
+        content: this.commentInput,
+        userNo: this.userNo,
+        boardNo: this.board.boardNo,
+      };
+      console.log(commentData);
+      // http.post(`comment`, JSON.stringify(commentData)).then((response) => {
+      //   console.log(response);
+      // });
+      http
+        .post(`comment/${commentData.content}/${commentData.userNo}/${commentData.boardNo}`)
+        .then((response) => {
+          console.log(response);
+        });
+      // http
+      //   .post(`comment?content=${this.content}&userNo=${this.userNo}&boardNo=${this.boardNo}`)
+      //   .then((response) => {
+      //     console.log(response);
+      //   });
     },
   },
 };
@@ -270,7 +296,7 @@ export default {
 }
 .board-deatil__comment-input {
   height: 100px;
-  padding: 0px;
+  padding: 0 10px;
   margin: 0px;
   border: 0px;
 }
