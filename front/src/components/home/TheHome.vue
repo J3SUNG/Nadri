@@ -11,6 +11,7 @@
     <div :class="{ home__component: true, 'home__popular-place-month__show': true }">
       <popular-place-month />
     </div>
+    <!-- <div class="crawling-info__box"><crawling-info />asdfasdf</div> -->
   </div>
 </template>
 
@@ -20,8 +21,16 @@ import PopularPlaceLoc from "./PopularPlaceLoc.vue";
 import PopularPlaceRank from "./PopularPlaceRank.vue";
 import TheThema from "./TheThema.vue";
 import PopularPlaceMonth from "./PopularPlaceMonth.vue";
+// import CrawlingInfo from "./CrawlingInfo.vue";
 export default {
-  components: { PopularPlaceLoc, PopularPlaceRank, TheThema, PopularPlaceWeek, PopularPlaceMonth },
+  components: {
+    PopularPlaceLoc,
+    PopularPlaceRank,
+    TheThema,
+    PopularPlaceWeek,
+    PopularPlaceMonth,
+    // CrawlingInfo,
+  },
   name: "TheHome",
   data() {
     return {
@@ -86,5 +95,9 @@ export default {
     opacity: 1;
     transform: translateZ(0);
   }
+}
+.crawling-info__box {
+  width: 200px;
+  height: 200px;
 }
 </style>

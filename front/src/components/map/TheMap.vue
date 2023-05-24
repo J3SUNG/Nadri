@@ -122,7 +122,7 @@
           <!-- <div>{{ item.overview }}</div> -->
         </div>
       </div>
-      <div :class="{ map__detail: true, map__detail__hide: detailHide }" @click="showTripNote">
+      <div :class="{ map__detail: true, map__detail__hide: detailHide }">
         <img class="map__detail__img" :src="this.attr.image1" />
         <p class="map__detail__title">{{ this.attr.title }}</p>
         <p class="map__detail__addr1">주소 : {{ this.attr.addr1 }}</p>
@@ -131,10 +131,21 @@
         <button class="map__detail__btn" @click.prevent="closeDetail">x</button>
         <button class="map__detail__add" @click.prevent="addCourse">+</button>
       </div>
-      <div class="map__course__toggle" v-if="isLogin && noteHide" @click="showTripNote">
+      <div
+        :class="{
+          map__course__toggle: true,
+          'map__course__toggle-hide': !noteHide,
+          'map__course__toggle-show': noteHide,
+        }"
+        @click="showTripNote"
+        v-if="userNo !== 0"
+      >
         <p class="map__course__toggle__text">여행노트 작성</p>
       </div>
-      <div class="map__course" v-if="isLogin && !noteHide">
+      <div
+        :class="{ map__course: true, 'map__course-hide': noteHide, 'map__course-show': !noteHide }"
+        v-if="userNo !== 0"
+      >
         <h2 class="map__course__title">여행노트</h2>
         <hr class="map__course__hr" />
         <ul class="map__course__box__ul">
@@ -459,6 +470,7 @@ export default {
       this.detailHide = false;
     },
     addCourse() {
+      this.showTripNote();
       this.lists.push(this.attr);
       console.log(this.lists);
       this.closeDetail();
@@ -531,9 +543,29 @@ export default {
   border-radius: 10px;
   cursor: pointer;
 }
+.map__course__toggle-hide {
+  animation: moveRight 1s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+.map__course__toggle-show {
+  animation: moveLeft 1s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
 .map__course__toggle__text {
   font-size: 24px;
   color: var(--color-white);
+}
+.map__course-hide {
+  animation: moveRight 1s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+.map__course-show {
+  animation: moveLeft 1s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
 }
 .map__course {
   margin-top: 100px;
@@ -732,7 +764,6 @@ export default {
 .map__detail__hide {
   visibility: hidden;
 }
-
 .map__left {
   margin-top: 100px;
   width: 360px;
@@ -867,5 +898,25 @@ h2 {
   position: relative;
   width: 16px;
   margin-right: 15px;
+}
+@keyframes moveLeft {
+  0% {
+    /* opacity: 0; */
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    /* opacity: 1; */
+    transform: translateZ(0);
+  }
+}
+@keyframes moveRight {
+  0% {
+    transform: translate3d(0, 0, 0);
+    /* opacity: 1; */
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+    /* opacity: 0; */
+  }
 }
 </style>
