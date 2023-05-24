@@ -1,20 +1,17 @@
 <template>
-  <div class="plan-create">
-    <div class="plan-create__loc__box">
-      <img class="plan-create__loc-img" />
-    </div>
-    <input />
-    <textarea></textarea>
-  </div>
+  <the-map />
 </template>
 
 <script>
+import TheMap from "../map/TheMap.vue";
+
 export default {
   name: "PlanCreate",
   data() {
     return {};
   },
   methods: {},
+  components: { TheMap },
 };
 </script>
 

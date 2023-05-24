@@ -32,7 +32,6 @@
         <p class="plan-deatil__function-heart-text">{{ this.heartCnt }}</p>
       </div>
       <div class="plan-detail__function-admin">
-        <button v-if="isWriter" @click="movePlanUpdate">수정</button>
         <button v-if="isWriter" @click="deletePlan">삭제</button>
       </div>
     </div>
@@ -62,21 +61,14 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    movePlanUpdate() {
-      this.$router.push({ name: "AppPlanUpdate", params: { planNo: this.plans.planNo } });
-    },
     movePlanList() {
       this.$router.push({ name: "AppPlan" });
     },
     deletePlan() {
-      console.log(this.plan.planNo);
+      console.log(this.plans.planNo);
       if (confirm("정말 삭제하시겠습니까?")) {
         http.delete(`plan/${this.plans.planNo}`).then(() => {
-          if (this.plans.planType === 1) {
-            this.$router.push({ name: "AppPlan" });
-          } else {
-            this.$router.push({ name: "AppNotify" });
-          }
+          this.$router.push({ name: "AppPlan" });
         });
       }
     },

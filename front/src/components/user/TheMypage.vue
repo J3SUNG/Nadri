@@ -28,7 +28,9 @@
         <h2 class="mypage__main__visited__title">최근 본 관광지</h2>
         <div class="mypage__visited__slideShow">
           <ul class="mypage__visited__slides" :style="`left:${this.attrLeft}`">
-            <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
+            <li v-for="item in places" :key="item.planNo">
+              <place-card :itemData="item" />
+            </li>
           </ul>
           <p class="mypage__visited__controller">
             <img src="@/assets/next.png" class="mypage__visited__prev" @click="moveAttrLeft" />
@@ -40,7 +42,9 @@
         <h2 class="mypage__main__visited__title">최근 본 여행노트</h2>
         <div class="mypage__visited__slideShow">
           <ul class="mypage__visited__slides" :style="`left:${this.planLeft}`">
-            <li v-for="item in plans" :key="item.planNo"><plan-card :itemData="item" /></li>
+            <li v-for="item in plans" :key="item.planNo">
+              <plan-card :itemData="item" :isMypage="true" />
+            </li>
           </ul>
           <p class="mypage__visited__controller">
             <img src="@/assets/next.png" class="mypage__visited__prev" @click="movePlanLeft" />
@@ -56,6 +60,7 @@
 import PlanCard from "@/components/plan/PlanCard.vue";
 import { mapActions, mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
+import PlaceCard from "../home/PlaceCard.vue";
 
 const memberStore = "memberStore";
 
@@ -72,91 +77,32 @@ export default {
     return {
       attrLeft: 0,
       attrCurrentIdx: 0, //현재 슬라이드 index
-      attrSlideCount: 3, // 슬라이드 개수
+      attrSlideCount: 8, // 슬라이드 개수
       planLeft: 0,
       planCurrentIdx: 0, //현재 슬라이드 index
-      planSlideCount: 3, // 슬라이드 개수
+      planSlideCount: 8, // 슬라이드 개수 n-2
 
       image: "",
 
-      plans: {
-        0: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 1,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        1: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 2,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        2: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 3,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        4: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 4,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-        5: {
-          content: "멋진 여행계획을 만들어봤습니다.",
-          createTime: "2023-05-16 17:27:01",
-          endDate: "2023-06-23 17:27:01",
-          image1: "http://tong.visitkorea.or.kr/cms/resource/96/2690196_image2_1.jpg",
-          isLike: 1,
-          likeCount: 11,
-          nickname: "예삐",
-          planNo: 5,
-          readCount: 13,
-          startDate: "2023-06-16 17:27:01",
-          subject: "첫번째 여행계획",
-          trips: null,
-          userNo: 1,
-        },
-      },
+      plans: "",
+      places: "",
+      userNo: 0,
     };
+  },
+  created() {
+    if (this.userInfo !== null) {
+      this.userNo = this.userInfo.userNo;
+    }
+    http.get(`map/watch/${this.userNo}`).then((response) => {
+      this.places = response.data;
+      console.log(this.places);
+      this.loadImg();
+    });
+    http.get(`plan/watch/${this.userNo}`).then((response) => {
+      this.plans = response.data;
+      console.log(this.plans);
+      this.loadImg();
+    });
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
@@ -201,9 +147,17 @@ export default {
         this.moveAttrSlide(this.attrCurrentIdx + 1);
       }
     },
+    loadImg() {
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
+      for (let i = 0; i < this.plans.length; ++i) {
+        this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.plans[i].imgSaveFolder}&saveFile=${this.plans[i].imgSaveFile}`;
+        this.plans[i].imgUrl = this.imgUrl;
+      }
+    },
   },
   components: {
     PlanCard,
+    PlaceCard,
   },
 };
 </script>

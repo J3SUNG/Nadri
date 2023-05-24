@@ -129,6 +129,35 @@
         <p class="map__detail__tel">전화번호 : {{ this.attr.tel }}</p>
         <p class="map__detail__overview">{{ this.attr.overview }}</p>
         <button class="map__detail__btn" @click.prevent="closeDetail">x</button>
+        <button class="map__detail__add" @click.prevent="addCourse">+</button>
+      </div>
+      <div class="map__course" v-if="isLogin">
+        <h2 class="map__course__title">여행노트</h2>
+        <hr class="map__course__hr" />
+        <ul class="map__course__box__ul">
+          <li class="map__course__box" v-for="(list, index) in lists" :key="list.attractionNo">
+            <div class="map__course__box__small">
+              <p class="map__course__box__index">{{ index * 1 + 1 }}번</p>
+              <p class="map__course__box__title">{{ list.title }}{{ list.title }}</p>
+            </div>
+            <div class="map__course__box__small">
+              <p class="map__course__box__memo">메모</p>
+              <textarea class="map__course__box__input" v-model="listMemos[index]"></textarea>
+            </div>
+            <hr class="map__course__box__hr" />
+          </li>
+        </ul>
+        <div class="map__course__main">
+          <div class="map__course__title__box">
+            <label class="map__course__title-label">제목</label>
+            <input class="map__course__title-input" v-model="title" />
+          </div>
+          <div class="map__course__content__box">
+            <label class="map__course__content-label">내용</label>
+            <textarea class="map__course__content-input" v-model="content"></textarea>
+          </div>
+        </div>
+        <button class="map__course__post" @click.prevent="createTripNote">노트 생성</button>
       </div>
     </div>
   </div>
@@ -173,11 +202,17 @@ export default {
       attrNo: 0,
       userNo: 0,
       detailHide: true,
+      lists: [],
+      listMemos: [],
+      title: "",
+      content: "",
+      isLogin: false,
     };
   },
   created() {
     if (this.userInfo !== null) {
       this.userNo = this.userInfo.userNo;
+      this.isLogin = true;
     }
   },
   async mounted() {
@@ -335,6 +370,8 @@ export default {
         39: require("@/assets/type_back_2/type_back_food.png"),
       }; // 마커 이미지
       let imageSize = new window.kakao.maps.Size(35, 35); //마커 이미지 크기
+      //let imageOption = { offset: new window.kakao.maps.Point(27, 69) }; //마커 옵션 마커와 커스텀 오버레이 위치가 안맞을때
+
       console.log(window.kakao.maps);
       let markerImage;
       console.log(this.positions);
@@ -342,18 +379,20 @@ export default {
       // let bounds = new window.kakao.maps.LatLngBounds(); // 지도 범위 재설정
 
       this.positions.forEach((position) => {
-        const infowindow = new window.kakao.maps.InfoWindow({
-          // content: `<img src="${position.image1}" width="100px" height="100px"/><p>
-          //   ${position.title}<br>
-          //   주소 : ${position.addr1} ${position.addr2}<br>
-          //   </p>`,
-          content: `<img src="${position.image1}" width="100px" height="100px"/><p>
-            ${position.title}<br>
-            주소 : ${position.addr1} ${position.addr2}<br>
-            </p>`,
+        const overlay = new window.kakao.maps.CustomOverlay({
+          content: `<div class="customoverlay">
+      <a href="https://map.kakao.com/link/map/11394059" target="_blank">
+        <span class="title">${position.title}</span>
+      </a>
+    </div>`,
+          position: position.latlng,
+          //yAnchor: 2.7,//올려주기
         });
-
-        markerImage = new window.kakao.maps.MarkerImage(imageSrc[position.contentType], imageSize);
+        markerImage = new window.kakao.maps.MarkerImage(
+          imageSrc[position.contentType],
+          imageSize
+          //imageOption
+        );
 
         const marker = new window.kakao.maps.Marker({
           map: this.map, // 마커를 표시할 지도
@@ -367,10 +406,10 @@ export default {
           this.detailView(position.attractionNo);
         });
         window.kakao.maps.event.addListener(marker, "mouseover", () => {
-          infowindow.open(this.map, marker);
+          overlay.setMap(this.map);
         });
         window.kakao.maps.event.addListener(marker, "mouseout", () => {
-          infowindow.close(this.map, marker);
+          overlay.setMap(null);
         });
         this.markers.push(marker);
       }); //positions foreach end ****************
@@ -396,11 +435,173 @@ export default {
       });
       this.detailHide = false;
     },
+    addCourse() {
+      this.lists.push(this.attr);
+      console.log(this.lists);
+      this.closeDetail();
+      this.drawLine();
+    },
+    drawLine() {
+      var linePath = [];
+      for (let i = 0; i < this.lists.length; ++i) {
+        console.log(this.lists[i].latitude);
+        console.log(this.lists[i].longitude);
+        linePath[i] = new window.kakao.maps.LatLng(this.lists[i].latitude, this.lists[i].longitude);
+      }
+
+      // 지도에 표시할 선을 생성합니다
+      var polyline = new window.kakao.maps.Polyline({
+        path: linePath, // 선을 구성하는 좌표배열 입니다
+        strokeWeight: 5, // 선의 두께 입니다
+        strokeColor: "#FFAE00", // 선의 색깔입니다
+        strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: "solid", // 선의 스타일입니다
+      });
+
+      polyline.setMap(this.map);
+    },
+    createTripNote() {
+      let tripsData = [];
+      for (let i = 0; i < this.lists.length; ++i) {
+        tripsData[i] = {
+          order: i,
+          memo: this.listMemos[i],
+          attractionNo: this.lists[i].attractionNo,
+          image1: this.lists[i].image1,
+        };
+        console.log("@@");
+        console.log(this.lists[0]);
+      }
+      let planData = {
+        subject: this.title,
+        content: this.content,
+        userNo: this.userNo,
+        trips: tripsData,
+      };
+      console.log("!!!!");
+      console.log(planData);
+      http.post(`plan`, JSON.stringify(planData)).then((response) => {
+        console.log(response);
+        if (response.data === "success") {
+          alert(`성공`);
+          this.$router.push({ name: "AppPlan" });
+        } else {
+          alert("실패");
+        }
+      });
+    },
   },
 };
 </script>
 
 <style>
+.map__course {
+  margin-top: 100px;
+  width: 400px;
+  min-height: 320px;
+  max-height: 700px;
+  top: 45px;
+  right: 0px;
+  position: absolute;
+  z-index: 10;
+  backdrop-filter: brightness(20%);
+  border-radius: 5px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.map__course__title {
+  margin-top: 20px;
+}
+.map__course__hr {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.map__course__box__ul {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+.map__course__box {
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: left;
+  width: 100%;
+  height: 180px;
+}
+.map__course__box__small {
+  display: flex;
+  width: 100%;
+}
+.map__course__box p {
+  color: var(--color-white);
+}
+.map__course__box__index {
+  width: 50px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.map__course__box__title {
+  display: inline-block;
+}
+.map__course__box__input {
+  margin-top: 20px;
+  width: 300px;
+  height: 60px;
+}
+.map__course__box__memo {
+  font-size: 14px;
+  width: 50px;
+  margin-top: 20px;
+}
+.map__course__box__hr {
+  margin-top: 20px;
+  color: gray;
+}
+.map__course__main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 10%;
+}
+.map__course__title__box {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+}
+.map__course__content__box {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+}
+.map__course__title-label,
+.map__course__content-label {
+  width: 50px;
+  color: var(--color-white);
+}
+.map__course__title-input {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.map__course__content-input {
+  width: 100%;
+  border-radius: 5px;
+  height: 100px;
+}
+.map__course__post {
+  margin-left: 250px;
+  padding: 5px;
+  border: solid 0px white;
+  background-color: var(--color-main);
+  color: white;
+  font-size: 14px;
+}
+
 .map__detail {
   margin-top: 100px;
   padding-bottom: 20px;
@@ -418,7 +619,7 @@ export default {
 }
 .map__detail__img {
   margin-top: 20px;
-  width: 360px;
+  width: 340px;
   height: 240px;
 }
 .map__detail p {
@@ -456,6 +657,21 @@ export default {
   position: absolute;
   right: 25px;
   top: 25px;
+}
+.map__detail__add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0px;
+  background-color: transparent;
+  font-size: 24px;
+  border-radius: 70px;
+  backdrop-filter: brightness(50%);
+  position: absolute;
+  right: 25px;
+  top: 215px;
 }
 .map__detail__hide {
   visibility: hidden;
