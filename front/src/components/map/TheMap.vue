@@ -182,9 +182,16 @@ export default {
   },
   async mounted() {
     let paramContentType = ["0"];
+    let paramSearch = "";
     if (this.$route.params.contentType !== undefined) {
       this.contentType = this.$route.params.contentType;
       paramContentType = this.$route.params.contentType;
+    }
+    if (this.$route.params.search !== undefined) {
+      this.search = this.$route.params.search;
+      paramSearch = this.$route.params.search;
+
+      this.detailView(this.$route.params.attractionNo);
     }
     if (window.kakao && window.kakao.maps) {
       // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
@@ -204,7 +211,7 @@ export default {
       areaCode: 0,
       sigunguCode: 0,
       contentType: paramContentType,
-      search: "",
+      search: paramSearch,
     };
     // console.log("search : " + this.search);
     await this.getAttrs(item);
@@ -399,12 +406,15 @@ export default {
   padding-bottom: 20px;
   width: 400px;
   min-height: 400px;
+  max-height: 600px;
   top: 45px;
   left: 365px;
   position: absolute;
   z-index: 10;
   backdrop-filter: brightness(20%);
   border-radius: 5px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .map__detail__img {
   margin-top: 20px;

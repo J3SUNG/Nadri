@@ -3,7 +3,12 @@
     <h3 class="popular-place-rank__title">오늘의 인기 장소</h3>
     <hr class="popular-place-rank__hr" />
     <ol ckass="popular-place-rank__loc__box">
-      <li class="popular-place-rank__loc" v-for="(item, index) in popularPlace" :key="item.attrNo">
+      <li
+        class="popular-place-rank__loc"
+        v-for="(item, index) in popularPlace"
+        :key="item.attrNo"
+        @click="movePlaceDetail(index)"
+      >
         <p class="popular-place-rank__loc-rank popular-place-rank__loc-rank__nth">
           {{ index * 1 + 1 }}위
         </p>
@@ -27,6 +32,17 @@ export default {
       this.popularPlace = response.data;
       console.log(response);
     });
+  },
+  methods: {
+    movePlaceDetail(index) {
+      this.$router.push({
+        name: "AppMap",
+        params: {
+          search: `${this.popularPlace[index].title}`,
+          attractionNo: `${this.popularPlace[index].attractionNo}`,
+        },
+      });
+    },
   },
 };
 </script>

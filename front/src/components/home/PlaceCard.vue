@@ -28,9 +28,10 @@ export default {
   props: ["itemData"],
   methods: {
     movePlaceDetail() {
-      // if (!(event.target.classList[1] === "place__card__footer__icon-heart")) {
-      //   this.$router.push({ name: "AppPlaceDetail", params: { planNo: this.itemData.planNo } });
-      // }
+      this.$router.push({
+        name: "AppMap",
+        params: { search: `${this.itemData.title}`, attractionNo: `${this.itemData.attractionNo}` },
+      });
     },
   },
 };

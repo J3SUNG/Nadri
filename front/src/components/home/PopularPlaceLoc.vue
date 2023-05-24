@@ -2,29 +2,34 @@
   <div class="popular-place-loc">
     <div class="popular-place-loc__slideShow">
       <ul class="popular-place-loc__slides" :style="`left:${left}`">
-        <li v-for="(item, index) in items" :key="item.attrNo">
+        <li
+          class="popular-place-loc__li"
+          v-for="(item, index) in items"
+          :key="item.attractionNo"
+          @click="movePlaceDetail(index)"
+        >
           <!--  -->
           <div class="popular-place-loc__img__box">
-            <img class="popular-place-loc__img" :src="`${item.img}`" />
+            <img class="popular-place-loc__img" :src="`${item.image1}`" />
           </div>
           <div class="popular-place-loc__box" :style="`left:${section * index}px`">
             <div class="popular-place-loc__box__section">
               <div class="popular-place-loc__text__box">
                 <p class="line-through">ㅤㅤ</p>
                 <p class="popular-place-loc__text__box__text">오늘의</p>
-                <p class="popular-place-loc__text__box__sido">{{ item.sido }}</p>
+                <p class="popular-place-loc__text__box__sido">{{ sido[item.sidoCode] }}</p>
                 <p class="popular-place-loc__text__box__text">추천장소</p>
                 <p class="line-through">ㅤㅤ</p>
               </div>
               <div class="popular-place-loc__icon__box">
-                <img class="popular-place-loc__icon" :src="`${icons[item.type]}`" />
+                <img class="popular-place-loc__icon" :src="`${icons[item.contentType]}`" />
               </div>
               <div class="popular-place-loc__name__box">
-                <h1 class="popular-place-loc__name">{{ item.name }}</h1>
+                <h2 class="popular-place-loc__name">{{ item.title }}</h2>
               </div>
               <hr class="popular-place-loc__hr" />
               <div class="popular-place-loc__content__box">
-                <p class="popular-place-loc__content">{{ item.content }}</p>
+                <p class="popular-place-loc__content">{{ item.overview }}</p>
               </div>
             </div>
           </div>
@@ -40,6 +45,7 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "PopularPlaceLoc",
   data() {
@@ -47,89 +53,8 @@ export default {
       section: 800,
       left: 0,
       currentIdx: 0, //현재 슬라이드 index
-      slideCount: 8, // 슬라이드 개수
-      items: {
-        0: {
-          img: require("@/assets/dummy1.jpg"),
-          sido: "서울",
-          loc: "강남",
-          type: "12", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "강남 스시",
-          content:
-            "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
-          attrNo: 1,
-        },
-        1: {
-          img: require("@/assets/dummy2.jpg"),
-          sido: "대구",
-          loc: "달서구",
-          type: "14", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "대구 막창",
-          content:
-            "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
-          attrNo: 2,
-        },
-        2: {
-          img: require("@/assets/dummy1.jpg"),
-          sido: "서울",
-          loc: "강남",
-          type: "15", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "강남 스시",
-          content:
-            "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
-          attrNo: 3,
-        },
-        3: {
-          img: require("@/assets/dummy2.jpg"),
-          sido: "대구",
-          loc: "달서구",
-          type: "25", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "대구 막창",
-          content:
-            "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
-          attrNo: 4,
-        },
-        4: {
-          img: require("@/assets/dummy1.jpg"),
-          sido: "서울",
-          loc: "강남",
-          type: "28", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "강남 스시",
-          content:
-            "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
-          attrNo: 5,
-        },
-        5: {
-          img: require("@/assets/dummy2.jpg"),
-          sido: "대구",
-          loc: "달서구",
-          type: "32", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "대구 막창",
-          content:
-            "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
-          attrNo: 6,
-        },
-        6: {
-          img: require("@/assets/dummy1.jpg"),
-          sido: "서울",
-          loc: "강남",
-          type: "38", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "강남 스시",
-          content:
-            "싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠 싱싱한 스시가! 냠냠",
-          attrNo: 7,
-        },
-        7: {
-          img: require("@/assets/dummy2.jpg"),
-          sido: "대구",
-          loc: "달서구",
-          type: "39", // 관광지, 문화시설, 행사, 여행코스, 레포츠, 숙박, 쇼핑, 음식점
-          name: "대구 막창",
-          content:
-            "쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠 쫄깃한 막창이! 냠냠",
-          attrNo: 8,
-        },
-      },
+      slideCount: 17, // 슬라이드 개수
+      items: "",
       icons: {
         12: require("@/assets/type/type_trip.png"),
         14: require("@/assets/type/type_cultural.png"),
@@ -140,7 +65,31 @@ export default {
         38: require("@/assets/type/type_shopping.png"),
         39: require("@/assets/type/type_food.png"),
       },
+      sido: {
+        1: "서울",
+        2: "인천",
+        3: "대전",
+        4: "대구",
+        5: "광주",
+        6: "부산",
+        7: "울산",
+        8: "세종",
+        31: "경기도",
+        32: "강원도",
+        33: "충청북도",
+        34: "충청남도",
+        35: "경상북도",
+        36: "경상남도",
+        37: "전라북도",
+        38: "전라남도",
+        39: "제주도",
+      },
     };
+  },
+  created() {
+    http.get("attractionlike/sido").then((response) => {
+      this.items = response.data;
+    });
   },
   methods: {
     moveSlide(num) {
@@ -167,6 +116,15 @@ export default {
       }, 3000);
       return interval;
     },
+    movePlaceDetail(index) {
+      this.$router.push({
+        name: "AppMap",
+        params: {
+          search: `${this.items[index].title}`,
+          attractionNo: `${this.items[index].attractionNo}`,
+        },
+      });
+    },
   },
   mounted() {
     this.timerStart();
@@ -179,6 +137,10 @@ export default {
   width: 70%;
   height: 400px;
   position: relative;
+}
+.popular-place-loc__li {
+  width: 100%;
+  cursor: pointer;
 }
 .popular-place-loc__img {
   width: 100%;
