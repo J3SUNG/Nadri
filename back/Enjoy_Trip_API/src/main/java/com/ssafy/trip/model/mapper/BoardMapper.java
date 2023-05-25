@@ -20,7 +20,6 @@ public interface BoardMapper {
 	BoardDto getArticle(Map<String, Integer> map) throws SQLException;
 
 	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
-//	void updateHit(int articleNo) throws SQLException;
 
 	void modifyArticle(BoardDto boardDto) throws SQLException;
 
@@ -29,6 +28,4 @@ public interface BoardMapper {
 	void fileRegister(BoardDto boardDto);
 
 	List<FileInfoDto> fileInfoList(int boardNo);
-	
-//	void insertImage(int boardNo, int imgNo);
 }
