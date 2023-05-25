@@ -21,14 +21,15 @@ import com.ssafy.trip.service.AttractionLikeService;
 public class AttractionLikeController {
 	private final Logger logger = LoggerFactory.getLogger(AttractionLikeController.class);
 	AttractionLikeService attractionLikeService;
+
 	public AttractionLikeController(AttractionLikeService attractionLikeService) {
 		super();
 		this.attractionLikeService = attractionLikeService;
 	}
-	
+
 	@GetMapping("/{attrNo}/{userNo}")
-	public int get(@PathVariable("attrNo") int attrNo,@PathVariable("userNo") int userNo) throws Exception {
-		logger.debug("like board {} user {}", attrNo,userNo);
+	public int get(@PathVariable("attrNo") int attrNo, @PathVariable("userNo") int userNo) throws Exception {
+		logger.debug("like board {} user {}", attrNo, userNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
 		map.put("userNo", userNo);
@@ -36,9 +37,9 @@ public class AttractionLikeController {
 		int result = attractionLikeService.get(map);
 		return result;
 	}
-	
+
 	@PostMapping("/{attrNo}/{userNo}")
-	public String create(@PathVariable("attrNo") int attrNo,@PathVariable("userNo") int userNo) throws Exception {
+	public String create(@PathVariable("attrNo") int attrNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like board number of : {}", attrNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
@@ -46,9 +47,9 @@ public class AttractionLikeController {
 		attractionLikeService.create(map);
 		return "success";
 	}
-	
+
 	@DeleteMapping("/{attrNo}/{userNo}")
-	public String delete(@PathVariable("attrNo") int attrNo,@PathVariable("userNo") int userNo) throws Exception {
+	public String delete(@PathVariable("attrNo") int attrNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("unlike board number of : {}", attrNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
@@ -56,34 +57,34 @@ public class AttractionLikeController {
 		attractionLikeService.delete(map);
 		return "success";
 	}
-	
+
 	@GetMapping("/daily")
-	public List<AttractionDto> dailyTop10(){
+	public List<AttractionDto> dailyTop10() {
 		logger.debug("daily top 10");
 		return attractionLikeService.dailyTop10();
 	}
-	
+
 	@GetMapping("/weekly")
-	public List<AttractionDto> weeklyTop10(){
+	public List<AttractionDto> weeklyTop10() {
 		logger.debug("weekly top 10");
 		return attractionLikeService.weeklyTop10();
 	}
-	
+
 	@GetMapping("/monthly")
-	public List<AttractionDto> monthlyTop10(){
+	public List<AttractionDto> monthlyTop10() {
 		logger.debug("monthly top 10");
 		return attractionLikeService.monthlyTop10();
 	}
-	
+
 	@GetMapping("/sido")
-	public List<AttractionDto> sidoTop10(){
+	public List<AttractionDto> sidoTop10() {
 		logger.debug("sido top 10");
-		return attractionLikeService.sidoTop10(); 
+		return attractionLikeService.sidoTop10();
 	}
-	
+
 	@GetMapping("/day/{date}")
-	public List<LogDto> dayTop5(@PathVariable String date){
+	public List<LogDto> dayTop5(@PathVariable String date) {
 		logger.debug("day top 10");
-		return attractionLikeService.day(date); 
+		return attractionLikeService.day(date);
 	}
 }

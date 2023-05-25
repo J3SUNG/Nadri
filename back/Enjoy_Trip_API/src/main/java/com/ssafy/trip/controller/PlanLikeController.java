@@ -18,6 +18,7 @@ import com.ssafy.trip.service.PlanLikeService;
 public class PlanLikeController {
 	private final Logger logger = LoggerFactory.getLogger(BoardLikeController.class);
 	PlanLikeService planLikeService;
+
 	public PlanLikeController(PlanLikeService planLikeService) {
 		super();
 		this.planLikeService = planLikeService;
@@ -25,7 +26,7 @@ public class PlanLikeController {
 
 	@GetMapping("/{planNo}/{userNo}")
 	public int get(@PathVariable("planNo") int planNo, @PathVariable("userNo") int userNo) throws Exception {
-		logger.debug("like plan {} user {}", planNo,userNo);
+		logger.debug("like plan {} user {}", planNo, userNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("planNo", planNo);
 		map.put("userNo", userNo);
@@ -33,7 +34,7 @@ public class PlanLikeController {
 		int result = planLikeService.get(map);
 		return result;
 	}
-	
+
 	@PostMapping("/{planNo}/{userNo}")
 	public String create(@PathVariable("planNo") int planNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like plan number of : {}", planNo);
@@ -43,11 +44,10 @@ public class PlanLikeController {
 		planLikeService.create(map);
 		return "success";
 	}
-	
+
 	@DeleteMapping("/{planNo}/{userNo}")
 	public String delete(@PathVariable("planNo") int planNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("unlike plan number of : {}", planNo);
-//		int userNo = 2;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("planNo", planNo);
 		map.put("userNo", userNo);

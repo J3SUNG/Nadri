@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.model.dto.AttractionDto;
-import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.SearchDto;
 import com.ssafy.trip.service.MapService;
 
@@ -35,13 +32,10 @@ public class MapController {
 	@GetMapping("/{attrNo}/{userNo}")
 	public AttractionDto detail(@PathVariable int attrNo, @PathVariable int userNo) throws Exception {
 		logger.debug("attraction_no detail : {}", attrNo);
-		//UserDto userDto = (UserDto) session.getAttribute("userinfo"); //test시 주석
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("attrNo", attrNo);
-		map.put("userNo",userNo );//test userDto.getId()
-//		logger.debug(map.toString());	
+		map.put("userNo", userNo);
 		return mapService.getAttr(map);
-//		return null;
 	}
 
 	@PostMapping("")
@@ -50,7 +44,7 @@ public class MapController {
 		List<AttractionDto> attractionDto = mapService.search(searchDto);
 		return attractionDto;
 	}
-	
+
 	@GetMapping("/watch/{userNo}")
 	public List<AttractionDto> watchlist(@PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("get recently watched list of attraction");

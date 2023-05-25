@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.ssafy.trip.model.dto.AttractionDto;
 import com.ssafy.trip.model.dto.SearchDto;
 import com.ssafy.trip.model.mapper.AttractionLikeMapper;
-import com.ssafy.trip.model.mapper.BoardLikeMapper;
 import com.ssafy.trip.model.mapper.MapMapper;
 
 @Service

@@ -39,8 +39,8 @@ public class PlanController {
 		planService.updateHit(planNo);
 		PlanDto planDto = planService.get(planNo, userNo);
 		List<TripDto> trips = tripService.list(planDto.getPlanNo());
-		for(int i = 0;i<trips.size();i++) {
-			if("".equals(trips.get(i).getImage1())) {
+		for (int i = 0; i < trips.size(); i++) {
+			if ("".equals(trips.get(i).getImage1())) {
 				trips.get(i).setImage1("http://localhost:7777/image/showImage?saveFolder=image1&saveFile=no_img.jpg");
 			}
 		}
@@ -90,14 +90,14 @@ public class PlanController {
 	@PostMapping
 	public String write(@RequestBody PlanDto planDto) throws Exception {
 		logger.debug("**********write plan : {}", planDto);
-		if (!(planDto.getTrips()==null) && planDto.getTrips().size()!=0) {
-			logger.debug("트립이 있어요?{}",planDto.getTrips().size());
+		if (!(planDto.getTrips() == null) && planDto.getTrips().size() != 0) {
+			logger.debug("트립이 있어요?{}", planDto.getTrips().size());
 			String image = planDto.getTrips().get(0).getImage1();
-			logger.debug("img가 있어요?{}",image);
+			logger.debug("img가 있어요?{}", image);
 			planDto.setImg(image);
 		}
 		planService.write(planDto);
-		if (!(planDto.getTrips()==null)) {
+		if (!(planDto.getTrips() == null)) {
 			for (TripDto trip : planDto.getTrips()) {
 				tripService.write(trip, planDto.getPlanNo());
 			}

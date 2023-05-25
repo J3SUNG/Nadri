@@ -20,18 +20,15 @@ import com.ssafy.trip.service.BoardLikeService;
 public class BoardLikeController {
 	private final Logger logger = LoggerFactory.getLogger(BoardLikeController.class);
 	BoardLikeService boardLikeService;
+
 	public BoardLikeController(BoardLikeService boardLikeService) {
 		super();
 		this.boardLikeService = boardLikeService;
 	}
-	
+
 	@GetMapping("/{boardNo}")
 	public int get(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
-		/**
-		 * 세션??에서 사용자 번호를 가져와서 사용자가 boardNo에 해당하는 게시글에 좋아요를 눌렀다면 1 아니면 0 반환
-		 */
-//		int userNo = 1;//test
-		logger.debug("like board {} user {}", boardNo,userNo);
+		logger.debug("like board {} user {}", boardNo, userNo);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);
@@ -39,22 +36,20 @@ public class BoardLikeController {
 		int result = boardLikeService.get(map);
 		return result;
 	}
-	
+
 	@PostMapping("/{boardNo}/{userNo}")
 	public String create(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("like board number of : {}", boardNo);
-//		int userNo = 1;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);
 		boardLikeService.create(map);
 		return "success";
 	}
-	
+
 	@DeleteMapping("/{boardNo}/{userNo}")
 	public String delete(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("unlike board number of : {}", boardNo);
-//		int userNo = 1;//test
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);

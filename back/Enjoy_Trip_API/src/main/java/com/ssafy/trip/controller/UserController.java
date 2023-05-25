@@ -2,14 +2,11 @@ package com.ssafy.trip.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +16,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,14 +40,6 @@ public class UserController {
 		this.userService = userService;
 	}
 
-//	@GetMapping("/{id}")
-//	public UserDto getUser(@PathVariable("id") String id) throws Exception {//
-////		UserDto userDto = new UserDto(); // test code
-////		userDto.setId("ssafy");//
-//		logger.debug("**************get user****************");
-//		return userService.getUser(id); 
-//	}
-
 	@PostMapping()
 	public String join(@RequestBody UserDto userDto) {
 		/**
@@ -69,11 +56,11 @@ public class UserController {
 		}
 	}
 
-	@PostMapping(value = "/modify", consumes = {org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PostMapping(value = "/modify", consumes = { org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE })
 	public String ModifyUser(@RequestParam("img") MultipartFile img, UserDto userDto) throws Exception {
 		/**
-		 * 회원 정보 수정을 위한 userDto를 받아서 받은 내용 그대로 회원 정보를 수정한다. 수정된 내용으로
-		 * 정보를 재등록한다. 이메일, 닉네임만 변경 결과로 '회원 수정' 반환
+		 * 회원 정보 수정을 위한 userDto를 받아서 받은 내용 그대로 회원 정보를 수정한다. 수정된 내용으로 정보를 재등록한다. 이메일,
+		 * 닉네임만 변경 결과로 '회원 수정' 반환
 		 */
 		logger.debug("modify userDto info : {}", userDto);
 
@@ -113,9 +100,6 @@ public class UserController {
 	@GetMapping("/check")
 	public String dupulicateCheck(@RequestParam("field") String field, @RequestParam("val") String val)
 			throws Exception {
-		/**
-		 * col에 해당하는 항목의 val에 대해서 일치하는 데이터의 개수를 반환한다.
-		 */
 		logger.debug("check : {} || value : {}", field, val);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("field", field);
@@ -124,33 +108,17 @@ public class UserController {
 		return cnt == 0 ? "success" : "fail";
 	}
 
-	@GetMapping("/authEmail")
-	public String authEmail(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception {
-		if (email == null | id == null) {
+	@PostMapping("/change/{id}")
+	public String authEmail(@PathVariable("id") String id) throws Exception {
+		if (id == null) {
 			return "fail";
 		}
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("email", email);
-		map.put("id", id);
-		if (userService.authEmail(map)) {
-			// 일치하는 회원 확인됨.          ************************구현중**************************
-
-			// 인증번호 생성 : 랜덤한 4자리 숫자 생성, 세션?? 에 유효시간 3분으로 저장
-			// 메일 전송
-			// 사용자 입력 대기... 입력 들어옴
-			// 현재 유지하고 있는 인증번호와 동일한지 확인
-			// 동일하면 성공
-			// 아니면 실패 반환
-		} else {
-			return "fail";
-		}
+		userService.change(id);
 		return "success";
 	}
-	
+
 	@GetMapping("/like/{userNo}")
-	public List<PlanDto> getLikePlan(@PathVariable("userNo") int userNo) { //내가 찜한 플랜 3개
-		//내가 찜한 플랜 번호를 가져온다
-		// planService에서 해당 플랜을 가져온다. 최신순 3개
+	public List<PlanDto> getLikePlan(@PathVariable("userNo") int userNo) { // 내가 찜한 플랜 3개
 		List<PlanDto> list = userService.getLikePlan(userNo);
 		return list;
 	}

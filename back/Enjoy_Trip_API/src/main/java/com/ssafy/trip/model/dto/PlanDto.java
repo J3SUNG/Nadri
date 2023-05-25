@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 public class PlanDto {
 	private int planNo;
 	private String createTime;
-	private String subject;		 //
-	private String content; 	//
+	private String subject;
+	private String content;
 	private int readCount;
-	private int userNo; 			//
+	private int userNo;
 	private String nickname;
 	private int isLike;
 	private int likeCount;
-	private List<TripDto> trips; //
+	private List<TripDto> trips;
 	private String img;
 	private String imgSaveFolder;
 	private String imgSaveFile;
