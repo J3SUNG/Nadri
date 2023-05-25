@@ -1,6 +1,6 @@
 <template>
-  <div style="padding: 20px">
-    <Pie :opdtions="chartOptions" :data="chartData" style="max-height: 250px" />
+  <div class="chart-view__pie-type">
+    <Pie :opdtions="chartOptions" :data="chartData" style="max-height: 300px" />
   </div>
 </template>
 <script>
@@ -11,7 +11,7 @@ import http from "@/util/http-common";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 export default {
-  name: "PieChart",
+  name: "PieChartType",
   components: { Pie },
   props: {},
   data() {
@@ -88,8 +88,6 @@ export default {
             },
           ],
         };
-        console.log("age");
-        console.log(this.age);
         this.chartOptions = {
           responsive: true,
           maintainAspectRatio: false,
@@ -100,4 +98,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.chart-view__pie-type {
+  padding: 20px;
+}
+</style>
