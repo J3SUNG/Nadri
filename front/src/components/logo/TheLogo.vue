@@ -4,6 +4,7 @@
     <img class="logo__img" alt="page logo" src="@/assets/parasol.png" />
     <div class="logo__right">
       <h3 class="logo__text">나들이</h3>
+      <img class="logo__text__img" src="@/assets/dot.png" />
     </div>
   </div>
 </template>
@@ -42,11 +43,19 @@ export default {
 }
 .logo__right {
   margin-left: 10px;
+  position: relative;
 }
 .logo__text {
   display: inline-block;
   font-weight: bold;
   font-family: "Gamja Flower";
   font-size: 40px;
+}
+.logo__text__img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: -8px;
+  top: 0px;
 }
 </style>
