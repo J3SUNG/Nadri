@@ -30,7 +30,10 @@ export default {
     };
   },
   created() {
+    console.log("@@");
+    console.log(this.$route.params.boardNo);
     http.get(`board/${this.$route.params.boardNo}`).then((response) => {
+      console.log("!!!");
       this.board = response.data;
     });
   },
@@ -39,8 +42,10 @@ export default {
       http.put(`board`, JSON.stringify(this.board)).then(() => {
         console.log(this.board.boardType);
         if (this.board.boardType === 1) {
+          console.log("AppBoard");
           this.$router.push({ name: "AppBoard" });
         } else {
+          console.log("AppNotify");
           this.$router.push({ name: "AppNotify" });
         }
       });

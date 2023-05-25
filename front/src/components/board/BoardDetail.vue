@@ -1,5 +1,5 @@
 <template>
-  <div class="board-detail">
+  <div :class="{ 'board-detail': isNotify === 1, 'board-detail-notify': isNotify === 0 }">
     <div class="board-detail__header">
       <h3 class="board-detail__header-title">{{ title }}</h3>
       <div class="board-detail__header__right">
@@ -176,8 +176,6 @@ export default {
       //   });
     },
     loadImg() {
-      console.log("AA");
-      console.log(this.board);
       this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
       this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.board.imgSaveFolder}&saveFile=${this.board.imgSaveFile}`;
     },
@@ -189,6 +187,11 @@ export default {
 .board-detail {
   margin-top: 50px;
   width: 100%;
+}
+.board-detail-notify {
+  margin-top: 50px;
+  margin-left: 10%;
+  width: 80%;
 }
 .board-detail__header {
   display: flex;

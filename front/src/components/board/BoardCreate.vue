@@ -47,6 +47,7 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   mounted() {
+    console.log("XX");
     if (this.$route.path === "/notifyCreate") {
       this.type = 0;
     } else {
