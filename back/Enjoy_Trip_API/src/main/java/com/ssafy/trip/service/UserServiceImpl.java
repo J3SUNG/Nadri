@@ -6,13 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.trip.model.dto.FileInfoDto;
 import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.UserDto;
 import com.ssafy.trip.model.mapper.UserMapper;
 import com.ssafy.trip.util.HashAlgorithm;
-
-import lombok.extern.log4j.Log4j;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,7 +21,9 @@ public class UserServiceImpl implements UserService {
 		super();
 		this.userMapper = userMapper;
 	}
+
 	String SALT = "HelloSsafy";
+
 	@Override
 	public void joinUser(UserDto userDto) throws Exception {
 		byte[] pass = userDto.getPassword().getBytes();
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService {
 		System.out.println(hashedpass);
 		userDto.setPassword(hashedpass);
 		userMapper.joinUser(userDto);
-	}	
+	}
 
 	@Override
 	public void deleteUser(String id) throws Exception {
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean authEmail(Map<String, String> map) {
 		int count = userMapper.authEmail(map);
-		return count==1?true:false;
+		return count == 1 ? true : false;
 	}
 
 	@Override
@@ -67,9 +66,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void change(String id) throws Exception {
-		
+
 		byte[] pass = "123456".getBytes();
 		String hashedpass = HashAlgorithm.Hashing(pass, SALT);
-		userMapper.change(id,hashedpass);
+		userMapper.change(id, hashedpass);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.trip.model.dto.FileInfoDto;
@@ -20,6 +21,12 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	UserMapper userMapper;
 	
+//	@Value("${image.server.url}")
+	String serverUrl;
+	
+//	@Value("${file.path}")
+//	private String path;
+//	
 	String SALT = "HelloSsafy";
 
 	@Override
@@ -47,6 +54,7 @@ public class LoginServiceImpl implements LoginService {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("http://192.168.31.78");
+//		sb.append(path);
 //		sb.append("http://59.151.232.152");
 		sb.append(":7777/image/showImage?saveFolder=");
 		//"http://192.168.31.78:7777/image/showImage?saveFolder=230523&saveFile=6d0bd9e3-e8c1-4c22-a59f-e3aad226c281.jpg"

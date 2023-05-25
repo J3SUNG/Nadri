@@ -22,6 +22,7 @@ import com.ssafy.trip.util.PageNavigation;
 public class BoardServiceImpl implements BoardService {
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	BoardMapper boardMapper;
+
 	public BoardServiceImpl(BoardMapper boardMapper) {
 		super();
 		this.boardMapper = boardMapper;
@@ -37,7 +38,6 @@ public class BoardServiceImpl implements BoardService {
 		param.put("key", key == null ? "" : key);
 		param.put("word", boardParameterDto.getWord() == null ? "" : boardParameterDto.getWord());
 		int pgNo = boardParameterDto.getPg() == 0 ? 1 : boardParameterDto.getPg();
-//		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
 		int start = pgNo * boardParameterDto.getSpp() - boardParameterDto.getSpp();
 		param.put("start", start);
 		param.put("listsize", boardParameterDto.getSpp());
@@ -45,44 +45,44 @@ public class BoardServiceImpl implements BoardService {
 		param.put("userNo", boardParameterDto.getUserNo());
 		return boardMapper.listArticle(param);
 	}
-	
+
 	@Override
 	@Transactional
 	public void writeArticle(BoardDto boardDto) throws Exception {
 		boardMapper.writeArticle(boardDto);
 		System.out.println(boardDto.getBoardNo());
-		if(!"image1".equals(boardDto.getSaveFolder())) {
+		if (!"image1".equals(boardDto.getSaveFolder())) {
 			boardMapper.fileRegister(boardDto);
 		}
 	}
 
-		
 	@Override
 	public PageNavigation makePageNavigation(BoardParameterDto bParamDto) throws Exception {
 		PageNavigation pageNavigation = new PageNavigation();
 		int naviSize = 5;
 		int sizePerPage = bParamDto.getSpp();
 		int currentPage = bParamDto.getPg();
-		
+
 		pageNavigation.setCurrentPage(currentPage);
 		pageNavigation.setNaviSize(naviSize);
 		Map<String, Object> param = new HashMap<String, Object>();
 		String key = bParamDto.getKey();
-		if ("id".equals(key)) key = "id";
+		if ("id".equals(key))
+			key = "id";
 		param.put("key", key == null ? "" : key);
 		param.put("word", bParamDto.getWord() == null ? "" : bParamDto.getWord());
-		param.put("type",bParamDto.getType());
+		param.put("type", bParamDto.getType());
 		int totalCount = boardMapper.getTotalArticleCount(param);
-		logger.debug("total count : {}",totalCount);
+		logger.debug("total count : {}", totalCount);
 		pageNavigation.setTotalCount(totalCount);
 		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
 		pageNavigation.setTotalPageCount(totalPageCount);
-		boolean startRange = currentPage==1?false:true;
-		boolean startRange2 = currentPage==2?false:true;
+		boolean startRange = currentPage == 1 ? false : true;
+		boolean startRange2 = currentPage == 2 ? false : true;
 		pageNavigation.setStartRange(startRange);
 		pageNavigation.setStartRange2(startRange2);
-		boolean endRange = totalPageCount==currentPage?false:true;
-		boolean endRange2 = totalPageCount-1==currentPage?false:true;
+		boolean endRange = totalPageCount == currentPage ? false : true;
+		boolean endRange2 = totalPageCount - 1 == currentPage ? false : true;
 		pageNavigation.setEndRange(endRange);
 		pageNavigation.setEndRange2(endRange2);
 		pageNavigation.makeNavigator();
@@ -91,14 +91,14 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardDto getArticle(int boardNo, int userNo) throws Exception {
-		Map<String,Integer> map = new HashMap<String, Integer>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
 		map.put("userNo", userNo);
 		BoardDto boardDto = boardMapper.getArticle(map);
 		List<FileInfoDto> files = boardMapper.fileInfoList(boardDto.getBoardNo());
 		boardDto.setFileInfos(files);
 		List<String> filelist = new ArrayList<String>();
-		for(FileInfoDto file : files) {
+		for (FileInfoDto file : files) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("http://192.168.31.78");
 //			sb.append("http://59.151.232.152");
@@ -109,7 +109,7 @@ public class BoardServiceImpl implements BoardService {
 			filelist.add(sb.toString());
 		}
 		boardDto.setUrl(filelist);
-		//각 파일에 대해서 url 생성해서 보내줌
+		// 각 파일에 대해서 url 생성해서 보내줌
 		return boardDto;
 	}
 
@@ -123,7 +123,5 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteArticle(int articleNo) throws Exception {
 		boardMapper.deleteArticle(articleNo);
 	}
-
-
 
 }
