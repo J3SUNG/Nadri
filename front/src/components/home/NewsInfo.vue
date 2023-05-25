@@ -86,6 +86,7 @@ export default {
 }
 .news-info__title {
   color: var(--color-black);
+  margin-left: 20px;
 }
 .news-info__box {
   display: flex;

@@ -18,6 +18,7 @@ import AppPlanCreate from "@/views/AppPlanCreate.vue";
 import AppNotify from "@/views/AppNotify.vue";
 import AppMap from "@/views/AppMap.vue";
 import AppSignup from "@/views/AppSignup.vue";
+import AppChart from "@/views/AppChart.vue";
 import AppError from "@/views/AppError.vue";
 
 import store from "@/store";
@@ -142,6 +143,11 @@ const routes = [
     path: "/signup",
     name: "AppSignup",
     component: AppSignup,
+  },
+  {
+    path: "/chart",
+    name: "AppChart",
+    component: AppChart,
   },
   {
     path: "/*",

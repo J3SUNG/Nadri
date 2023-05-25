@@ -16,6 +16,9 @@
           <li class="header__nav__item">
             <router-link :to="{ name: 'AppNotify' }">공지사항</router-link>
           </li>
+          <li class="header__nav__item">
+            <router-link :to="{ name: 'AppChart' }">통계</router-link>
+          </li>
         </ul>
       </nav>
       <aside class="header__login">
