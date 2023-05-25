@@ -128,6 +128,8 @@ export default {
       this.pageNav = response.data.pageNavigation;
       this.loadImg();
 
+      console.log(this.boards);
+
       if (this.userInfo != null) {
         this.isUser = true;
       } else {
