@@ -1,17 +1,21 @@
 <template>
   <div class="chart-view">
+    <h2 class="chart-view__title">최근 인기 관광지 5개의 차트</h2>
     <Liness :chart-data="bests" v-if="loaded"></Liness>
+    <PieChart></PieChart>
   </div>
 </template>
 
 <script>
 // import BarChart from "@/components/chart/Bar2.vue";
 import Liness from "@/components/chart/Line.vue";
+import PieChart from "@/components/chart/PieChart.vue";
 import http from "@/util/http-common";
 
 export default {
   name: "ChartView",
   components: {
+    PieChart,
     Liness,
   },
   data() {
@@ -98,4 +102,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.chart-view__title {
+  color: var(--color-black);
+  margin-bottom: 20px;
+}
+</style>
