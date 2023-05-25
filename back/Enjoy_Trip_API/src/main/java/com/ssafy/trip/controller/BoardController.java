@@ -54,14 +54,15 @@ public class BoardController {
 	BoardLikeService boardLikeService;
 
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public String write(@RequestParam(value = "imgs", required = false) List<MultipartFile> imgs, BoardDto boardDto) throws Exception { //, BoardDto boardDto
-		
+	@PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public String write(@RequestParam(value = "imgs", required = false) List<MultipartFile> imgs, BoardDto boardDto)
+			throws Exception { // , BoardDto boardDto
+
 		logger.debug("게시판 글 작성 boardDto : {}", boardDto);
-		
-		if (!(imgs==null)) {
+
+		if (!(imgs == null)) {
 			logger.debug(imgs.get(0).getOriginalFilename());
-			
+
 			String realPath = new File("").getAbsolutePath() + "/resources/img";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
@@ -84,7 +85,7 @@ public class BoardController {
 				}
 				fileInfos.add(fileInfoDto);
 			}
-			
+
 			boardDto.setSaveFile(fileInfos.get(0).getSaveFile());
 			boardDto.setSaveFolder(fileInfos.get(0).getSaveFolder());
 			boardDto.setFileInfos(fileInfos);
@@ -93,9 +94,8 @@ public class BoardController {
 			boardDto.setSaveFolder("image1");
 			boardDto.setFileInfos(null);
 		}
-		
+
 		boardService.writeArticle(boardDto);
-		// paging
 		return "success";
 	}
 
@@ -123,7 +123,6 @@ public class BoardController {
 	public BoardDto view(@PathVariable("boardNo") int boardNo, @PathVariable("userNo") int userNo) throws Exception {
 		logger.debug("view boardNo : {}", boardNo);
 		BoardDto boardDto = boardService.getArticle(boardNo, userNo);
-		// paging 처리
 		return boardDto;
 	}
 
@@ -132,7 +131,6 @@ public class BoardController {
 	public String modify(@RequestBody BoardDto boardDto, RedirectAttributes redirectAttributes) throws Exception {
 		logger.debug("modify boardDto : {}", boardDto);
 		boardService.modifyArticle(boardDto);
-//		redirectAttributes.addAttribute("pgno", map.get("pgno")); //paging 처리
 		return "success";
 	}
 
@@ -141,7 +139,6 @@ public class BoardController {
 	public String delete(@PathVariable("boardNo") int boardNo) throws Exception {
 		logger.debug("delete articleNo : {}", boardNo);
 		boardService.deleteArticle(boardNo);
-		// paging 처리
 		return "success";
 	}
 }

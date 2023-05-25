@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.trip.model.dto.ReviewDto;
 import com.ssafy.trip.model.dto.TripDto;
 import com.ssafy.trip.service.TripService;
 
@@ -21,6 +20,7 @@ import com.ssafy.trip.service.TripService;
 public class TripController {
 	private final Logger logger = LoggerFactory.getLogger(PlanController.class);
 	TripService tripService;
+
 	public TripController(TripService tripService) {
 		super();
 		this.tripService = tripService;
@@ -32,17 +32,17 @@ public class TripController {
 		TripDto tripDto = tripService.get(tripNo);
 		return tripDto;
 	}
-	
+
 	@GetMapping("/list/{planNo}")
 	public List<TripDto> list(@PathVariable("planNo") int planNo) throws Exception {
 		logger.debug("list PlanNo : {}", planNo);
 		List<TripDto> list = tripService.list(planNo);
 		return list;
 	}
-	
+
 	@PostMapping
 	public String write(TripDto tripDto) throws Exception {
-		logger.debug("write PlanNo : {}",tripDto.getPlanNo());
+		logger.debug("write PlanNo : {}", tripDto.getPlanNo());
 		tripService.write(tripDto);
 		return "success";
 	}

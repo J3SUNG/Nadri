@@ -64,4 +64,12 @@ public class UserServiceImpl implements UserService {
 	public List<PlanDto> getLikePlan(int userNo) {
 		return userMapper.getLikePlan(userNo);
 	}
+
+	@Override
+	public void change(String id) throws Exception {
+		
+		byte[] pass = "123456".getBytes();
+		String hashedpass = HashAlgorithm.Hashing(pass, SALT);
+		userMapper.change(id,hashedpass);
+	}
 }

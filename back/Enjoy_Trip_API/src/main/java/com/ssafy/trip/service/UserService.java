@@ -15,4 +15,5 @@ public interface UserService {
 	int check(Map<String, String> map) throws Exception;
 	boolean authEmail(Map<String, String> map);
 	List<PlanDto> getLikePlan(int userNo);
+	void change(String id) throws Exception;
 }

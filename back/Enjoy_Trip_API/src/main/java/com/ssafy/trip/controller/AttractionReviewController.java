@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 public class AttractionReviewController {
 	private final Logger logger = LoggerFactory.getLogger(AttractionReviewController.class);
 	AttractionReviewService attractionReviewService;
+
 	public AttractionReviewController(AttractionReviewService attractionReviewService) {
 		super();
 		this.attractionReviewService = attractionReviewService;

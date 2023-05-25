@@ -36,14 +36,18 @@
 	</resultMap>
 
 	<select id="getUser" parameterType="String" resultMap="user">
-		select user_no, id, nickname, email, join_date, grade
-		from user where id = #{id}
+		select
+		user_no, id, nickname, email, join_date, grade
+		from user where id =
+		#{id}
 	</select>
 
 	<insert id="joinUser" parameterType="UserDto">
-		insert into user (user_no, id, password, nickname, email, join_date, grade)
+		insert into user (user_no,
+		id, password, nickname, email, join_date, grade)
 		values
-		(null, #{id}, #{password}, #{nickname}, #{email} ,now(),'U')
+		(null, #{id},
+		#{password}, #{nickname}, #{email} ,now(),'U')
 	</insert>
 
 	<delete id="deleteUser" parameterType="String">
@@ -54,7 +58,9 @@
 
 	<update id="modifyUser" parameterType="UserDto">
 		update user
-		set email = #{email}, nickname = #{nickname}, password = #{password}, save_folder = #{file.saveFolder}, save_file = #{file.saveFile}
+		set email =
+		#{email}, nickname = #{nickname}, password = #{password}, save_folder
+		= #{file.saveFolder}, save_file = #{file.saveFile}
 		where id = #{id}
 	</update>
 
@@ -65,7 +71,7 @@
 		(#{userNo}, #{file.saveFolder}, #{file.originalFile},
 		#{file.saveFile})
 	</insert>
-	
+
 	<delete id="deleteFile" parameterType="int">
 		delete from file_user
 		where user_no = #{userNo}
@@ -89,10 +95,12 @@
 		select
 		p.plan_no, create_time, subject, content, start_date, end_date,
 		read_count, p.user_no, nickname, pl.like_time,pll.like_count
-		from plan p
+		from plan
+		p
 		join user u using(user_no)
 		join plan_like pl on p.plan_no = pl.plan_no
-		join (select plan_no, count(*) like_count from plan_like group by plan_no)
+		join (select plan_no, count(*) like_count from plan_like group by
+		plan_no)
 		pll
 		on p.plan_no = pll.plan_no
 		where pl.user_no = #{userNo}
@@ -100,6 +108,11 @@
 	</select>
 
 	<select id="getFile" parameterType="int" resultMap="file">
-		select * from file_user where user_no = #{userNo};
+		select * from
+		file_user where user_no = #{userNo};
 	</select>
+
+	<update id="change" parameterType="string">
+		update user set password = #{hashedpass} where id = #{id}
+	</update>
 </mapper>
