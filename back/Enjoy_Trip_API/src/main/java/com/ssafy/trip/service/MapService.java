@@ -14,4 +14,6 @@ public interface MapService {
 
 	List<AttractionDto> watch(int userNo);
 
+	List<AttractionDto> chart();
+
 }

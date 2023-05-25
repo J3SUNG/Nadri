@@ -22,4 +22,5 @@ public class AttractionDto {
 	private String overview;
 	private int sidoCode;
 	private int gugunCode;
+	private int cnt;
 }

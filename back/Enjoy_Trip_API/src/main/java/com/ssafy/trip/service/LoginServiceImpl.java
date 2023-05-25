@@ -54,9 +54,9 @@ public class LoginServiceImpl implements LoginService {
 		System.out.println(path);
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("http://192.168.31.78");
+//		sb.append("http://192.168.31.78");
 //		sb.append(path);
-//		sb.append("http://59.151.232.152");
+		sb.append("http://59.151.232.152");
 		sb.append(":7777/image/showImage?saveFolder=");
 		//"http://192.168.31.78:7777/image/showImage?saveFolder=230523&saveFile=6d0bd9e3-e8c1-4c22-a59f-e3aad226c281.jpg"
 		sb.append(file.getSaveFolder());

@@ -19,6 +19,7 @@
 		<result column="overview" property="overview" />
 		<result column="gugun_no" property="gugunCode" />
 		<result column="sido_no" property="sidoCode" />
+		<result column="cnt" property="cnt" />
 	</resultMap>
 
 
@@ -78,11 +79,22 @@
 		select * from
 		attraction_info a
 		join
-		(select like_no, max(registration_date) time, attraction_no, user_no from
-		like_attraction where user_no = #{userNo} 
+		(select like_no, max(registration_date) time,
+		attraction_no, user_no from
+		like_attraction where user_no = #{userNo}
 		group by attraction_no) l
 		on a.attraction_no = l.attraction_no
-		order by time desc;
+		order by
+		time desc;
+	</select>
+
+	<select id="chart" resultMap="attraction">
+		select a.attraction_no, a.title,
+		a.content_type, a.image1, a.gugun_no, a.sido_no, cnt from
+		attraction_info a
+		join (select attraction_no, count(*) cnt from like_attraction group by
+		attraction_no) l
+		on a.attraction_no = l.attraction_no order by cnt desc;
 	</select>
 
 </mapper>

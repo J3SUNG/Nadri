@@ -40,4 +40,9 @@ public class MapServiceImpl implements MapService {
 		return mapMapper.watch(userNo);
 	}
 
+	@Override
+	public List<AttractionDto> chart() {
+		return mapMapper.chart();
+	}
+
 }

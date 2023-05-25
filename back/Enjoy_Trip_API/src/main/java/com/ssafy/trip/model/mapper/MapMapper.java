@@ -18,4 +18,6 @@ public interface MapMapper {
 
 	List<AttractionDto> watch(int userNo);
 
+	List<AttractionDto> chart();
+
 }

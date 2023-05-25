@@ -51,4 +51,10 @@ public class MapController {
 		List<AttractionDto> list = mapService.watch(userNo);
 		return list;
 	}
+	
+	@GetMapping("/chart")
+	public List<AttractionDto> chartlist() throws Exception{
+		List<AttractionDto> list = mapService.chart();
+		return list;
+	}
 }

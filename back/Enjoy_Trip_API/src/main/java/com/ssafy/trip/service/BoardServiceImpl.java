@@ -100,8 +100,8 @@ public class BoardServiceImpl implements BoardService {
 		List<String> filelist = new ArrayList<String>();
 		for (FileInfoDto file : files) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("http://192.168.31.78");
-//			sb.append("http://59.151.232.152");
+//			sb.append("http://192.168.31.78");
+			sb.append("http://59.151.232.152");
 			sb.append(":7777/image/showImage?saveFolder=");
 			sb.append(file.getSaveFolder());
 			sb.append("&saveFile=");
