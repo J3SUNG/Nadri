@@ -14,22 +14,23 @@
 		<result column="nickname" property="nickname" />
 		<result column="comment_cnt" property="commentCount" />
 		<result column="isLike" property="isLike" />
-		<result column="save_folder" property="saveFolder"/>
-		<result column="save_file" property="saveFile"/>
-		<result column="img_folder" property="imgSaveFolder"/>
-		<result column="img_file" property="imgSaveFile"/>
+		<result column="save_folder" property="saveFolder" />
+		<result column="save_file" property="saveFile" />
+		<result column="img_folder" property="imgSaveFolder" />
+		<result column="img_file" property="imgSaveFile" />
 	</resultMap>
-	
+
 	<resultMap type="BoardDto" id="viewboard" extends="board">
-		<collection property="fileInfos" column="board_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
+		<collection property="fileInfos" column="board_no"
+			javaType="list" ofType="fileInfoDto" select="fileInfoList" />
 	</resultMap>
-	
+
 	<resultMap type="fileInfoDto" id="file">
-		<result column="save_folder" property="saveFolder"/>
-		<result column="original_file" property="originalFile"/>
-		<result column="save_file" property="saveFile"/>
+		<result column="save_folder" property="saveFolder" />
+		<result column="original_file" property="originalFile" />
+		<result column="save_file" property="saveFile" />
 	</resultMap>
-	
+
 	<resultMap type="BoardListDto" id="boardlist">
 		<result column="board_no" property="boardNo" />
 		<result column="board_type" property="boardType" />
@@ -41,9 +42,9 @@
 		<result column="nickname" property="nickname" />
 		<result column="comment_cnt" property="commentCount" />
 		<result column="isLike" property="isLike" />
-		<result column="save_folder" property="saveFolder"/>
-		<result column="original_file" property="originalFile"/>
-		<result column="save_file" property="saveFile"/>
+		<result column="save_folder" property="saveFolder" />
+		<result column="original_file" property="originalFile" />
+		<result column="save_file" property="saveFile" />
 	</resultMap>
 
 	<sql id="search">
@@ -58,111 +59,140 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="board">
-	        select *
-from file_info f
-right outer join
-		(select b.board_no, b.board_type, b.subject subject, b.content content,
-		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
-		count(bl.like_no) like_count, b.user_no, b.save_folder, b.save_file, u.nickname, u.save_file img_file, u.save_folder img_folder,
-		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0) isLike
-        ,min(idx) idx
-		from
-		board b
-        left outer join file_info f
-        on b.board_no = f.board_no
+		select idx, mi.board_no, board_type, subject, content, create_time,
+		like_count, user_no, mi.nickname nickname, img_file, img_folder, comment_cnt,
+		isLike, mi.save_folder, mi.save_file
+		from file_info f
+		right outer join (
+
+		select b.board_no, b.board_type, b.subject subject, b.content content,
+		date_format(b.create_time, '%Y-%m-%d %H:%i')
+		create_time, count(bl.like_no) like_count, b.user_no, b.save_folder, b.save_file,
+		u.nickname, u.save_file img_file,
+		u.save_folder img_folder, ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0)
+		isLike ,min(idx) idx
+		from board b
+		left outer join file_info f on b.board_no = f.board_no
 		left join
-		(select board_no, count(*) isLike from board_like
-		where user_no = 1
+		(select board_no, count(*) isLike
+		from board_like
+		where user_no = #{userNo}
 		group by board_no) bll
 		on b.board_no = bll.board_no
-		left join board_like bl
-		on b.board_no = bl.board_no
-		join user u
-		on b.user_no = u.user_no
-		left join
-		(select board_no, count(*)
-		comment_cnt from
-		enjoy_trip.board_comment
-		group by board_no) c
-		on b.board_no = c.board_no
-		where b.board_type = #{boardType}
-        <include refid="search"></include>
-		group by b.board_no
-		order by b.board_no desc
-		limit #{start}, #{listsize}
-        ) mi using(idx)
+		left join board_like bl on b.board_no = bl.board_no
+		join user u on b.user_no = u.user_no
+		left join (select board_no, count(*) comment_cnt from
+		enjoy_trip.board_comment group by board_no) c on b.board_no =
+		c.board_no group by b.board_no order by b.board_no desc
+
+		) mi using(idx)
+		where mi.board_type = #{boardType}
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+		order by mi.board_no desc
+		limit #{start}, #{listsize};
 	</select>
-	
+
+
+
+
 	<select id="writelist" parameterType="int" resultMap="boardlist">
-	    select *
+		select *
 		from file_info f
 		right outer join
-		(select b.board_no, b.board_type, b.subject subject, b.content content,
-		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
-		count(bl.like_no) like_count, b.user_no, u.nickname, 
-		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0) isLike
-        ,min(idx) idx
+		(select b.board_no, b.board_type,
+		b.subject subject, b.content content,
+		date_format(b.create_time,
+		'%Y-%m-%d %H:%i') create_time,
+		count(bl.like_no) like_count, b.user_no,
+		u.nickname,
+		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0)
+		isLike
+		,min(idx) idx
 		from
 		board b
-        left outer join file_info f
-        on b.board_no = f.board_no
+		left outer join file_info f
+		on b.board_no
+		= f.board_no
 		left join
-		(select board_no, count(*) isLike from board_like
+		(select board_no, count(*) isLike
+		from board_like
 		where user_no = 1
 		group by board_no) bll
-		on b.board_no = bll.board_no
+		on b.board_no =
+		bll.board_no
 		left join board_like bl
 		on b.board_no = bl.board_no
-		join user u
-		on b.user_no = u.user_no
+		join
+		user u
+		on
+		b.user_no = u.user_no
 		left join
 		(select board_no, count(*)
-		comment_cnt from
+		comment_cnt
+		from
 		enjoy_trip.board_comment
 		group by board_no) c
-		on b.board_no = c.board_no
+		on
+		b.board_no =
+		c.board_no
 		group by b.board_no
 		order by b.board_no desc
-        ) mi using(idx)
-        where user_no = #{userNo};
+		) mi using(idx)
+		where user_no = #{userNo};
 	</select>
-	
-	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+
+	<select id="getTotalArticleCount" parameterType="map"
+		resultType="int">
 		select count(board_no)
 		from board
+        join user u
+        on board.user_no = u.user_no
 		where board_type = #{type}
-		<include refid="search"></include>
-	</select> <!--  ***************수정필요 -->
-	
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</select> <!-- ***************수정필요 -->
+
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board
 		(board_no, board_type, create_time, subject, content,
 		user_no, save_file, save_folder)
 		values
-		(null,#{boardType}, now(),#{subject}, #{content},
+		(null,#{boardType},
+		now(),#{subject}, #{content},
 		#{userNo},#{saveFile},#{saveFolder})
 		<selectKey resultType="int" keyProperty="boardNo"
 			order="AFTER">
 			select LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-	
-<!-- <update id="insertImage" parameterType="int">
-		update board set save_file = "dummy${imgNo}.jpg"
-		where board_type = 1 and board_no = #{boardNo}
-	</update> -->
+
 	<insert id="fileRegister" parameterType="boardDto">
 		insert into file_info(board_no, save_folder, original_file, save_file)
 		values
 		<foreach collection="fileInfos" item="fileinfo"
 			separator=" , ">
-			(#{boardNo}, #{fileinfo.saveFolder}, #{fileinfo.originalFile},
+			(#{boardNo}, #{fileinfo.saveFolder},
+			#{fileinfo.originalFile},
 			#{fileinfo.saveFile})
 		</foreach>
 	</insert>
-	
+
 	<select id="fileInfoList" resultMap="file">
-		select save_folder, original_file, save_file
+		select save_folder,
+		original_file, save_file
 		from file_info
 		where board_no = #{boardNo}
 	</select>
@@ -172,7 +202,8 @@ right outer join
 		b.board_no, b.board_type, b.subject subject, b.content content,
 		date_format(b.create_time, '%Y-%m-%d %H:%i') create_time,
 		count(bl.like_no) like_count,
-		b.user_no, u.nickname,b.save_folder, b.save_file, u.save_file img_file, u.save_folder img_folder,
+		b.user_no, u.nickname,b.save_folder,
+		b.save_file, u.save_file img_file, u.save_folder img_folder,
 		ifnull(c.comment_cnt, 0) comment_cnt, ifnull(isLike, 0)
 		isLike
 		from

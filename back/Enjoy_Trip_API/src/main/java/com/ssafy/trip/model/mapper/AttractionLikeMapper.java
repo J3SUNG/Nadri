@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.trip.model.dto.AttractionDto;
+import com.ssafy.trip.model.dto.LogDto;
 
 @Mapper
 public interface AttractionLikeMapper {
@@ -26,5 +27,7 @@ public interface AttractionLikeMapper {
 	List<AttractionDto> monthly();
 
 	List<AttractionDto> sido();
+
+	List<LogDto> day(String date);
 
 }

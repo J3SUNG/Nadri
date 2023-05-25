@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.ssafy.trip.model.dto.AttractionDto;
+import com.ssafy.trip.model.dto.LogDto;
 
 public interface AttractionLikeService {
 
@@ -20,6 +21,8 @@ public interface AttractionLikeService {
 	List<AttractionDto> monthlyTop10();
 
 	List<AttractionDto> sidoTop10();
+
+	List<LogDto> day(String date);
 
 
 }

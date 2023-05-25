@@ -10,6 +10,7 @@ import com.ssafy.trip.model.dto.FileInfoDto;
 import com.ssafy.trip.model.dto.PlanDto;
 import com.ssafy.trip.model.dto.UserDto;
 import com.ssafy.trip.model.mapper.UserMapper;
+import com.ssafy.trip.util.HashAlgorithm;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,23 +24,13 @@ public class UserServiceImpl implements UserService {
 		super();
 		this.userMapper = userMapper;
 	}
-
-//	@Override
-//	public UserDto getUser(String id) throws Exception {
-//		UserDto user = userMapper.getUser(id);
-//		System.out.println("user nick : "+user.getNickname());
-//		
-//		FileInfoDto file = userMapper.getFile(user.getUserNo());
-//		if(file==null) {
-//			file = userMapper.getFile(1);
-//		}
-//		user.setFile(file);
-//		System.out.println(user);
-//		return user;
-//	}
-	
+	String SALT = "HelloSsafy";
 	@Override
 	public void joinUser(UserDto userDto) throws Exception {
+		byte[] pass = userDto.getPassword().getBytes();
+		String hashedpass = HashAlgorithm.Hashing(pass, SALT);
+		System.out.println(hashedpass);
+		userDto.setPassword(hashedpass);
 		userMapper.joinUser(userDto);
 	}	
 
@@ -50,8 +41,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void modifyUser(UserDto userDto) throws Exception {
+		byte[] pass = userDto.getPassword().getBytes();
+		String hashedpass = HashAlgorithm.Hashing(pass, SALT);
+		userDto.setPassword(hashedpass);
 		userMapper.modifyUser(userDto);
-		System.out.println(userDto.getUserNo());
 		userMapper.deleteFile(userDto.getUserNo());
 		userMapper.fileRegister(userDto);
 	}

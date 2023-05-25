@@ -39,6 +39,11 @@ public class PlanController {
 		planService.updateHit(planNo);
 		PlanDto planDto = planService.get(planNo, userNo);
 		List<TripDto> trips = tripService.list(planDto.getPlanNo());
+		for(int i = 0;i<trips.size();i++) {
+			if("".equals(trips.get(i).getImage1())) {
+				trips.get(i).setImage1("http://localhost:7777/image/showImage?saveFolder=image1&saveFile=no_img.jpg");
+			}
+		}
 		planDto.setTrips(trips);
 		return planDto;
 	}

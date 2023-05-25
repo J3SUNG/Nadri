@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.model.dto.AttractionDto;
+import com.ssafy.trip.model.dto.LogDto;
 import com.ssafy.trip.service.AttractionLikeService;
 
 @RestController
@@ -78,5 +79,11 @@ public class AttractionLikeController {
 	public List<AttractionDto> sidoTop10(){
 		logger.debug("sido top 10");
 		return attractionLikeService.sidoTop10(); 
+	}
+	
+	@GetMapping("/day/{date}")
+	public List<LogDto> dayTop5(@PathVariable String date){
+		logger.debug("day top 10");
+		return attractionLikeService.day(date); 
 	}
 }
