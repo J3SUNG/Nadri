@@ -127,8 +127,8 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글수정", notes = "필수 : subject content boardNo || 수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("")
-	public String modify(@RequestBody BoardDto boardDto, RedirectAttributes redirectAttributes) throws Exception {
+	@PutMapping()
+	public String modify(BoardDto boardDto) throws Exception {
 		logger.debug("modify boardDto : {}", boardDto);
 		boardService.modifyArticle(boardDto);
 		return "success";
