@@ -63,7 +63,7 @@ textarea {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 120px;
+  padding-bottom: 200px;
   background-color: var(--color-white);
 }
 #main {

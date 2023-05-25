@@ -59,16 +59,16 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
-// import PlanCard from "@/components/plan/PlanCard.vue";
-// import PlaceCard from "../home/PlaceCard.vue";
+import PlanCard from "@/components/plan/PlanCard.vue";
+import PlaceCard from "../home/PlaceCard.vue";
 
 const memberStore = "memberStore";
 
 export default {
   name: "TheMypage",
   components: {
-    // PlanCard,
-    // PlaceCard,
+    PlanCard,
+    PlaceCard,
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
@@ -97,16 +97,16 @@ export default {
     if (this.userInfo !== null) {
       this.userNo = this.userInfo.userNo;
     }
-    // http.get(`map/watch/${this.userNo}`).then((response) => {
-    //   this.places = response.data;
-    //   console.log(this.places);
-    //   this.loadImg();
-    // });
-    // http.get(`plan/watch/${this.userNo}`).then((response) => {
-    //   this.plans = response.data;
-    //   console.log(this.plans);
-    //   this.loadImg();
-    // });
+    http.get(`map/watch/${this.userNo}`).then((response) => {
+      this.places = response.data;
+      console.log(this.places);
+      this.loadImg();
+    });
+    http.get(`plan/watch/${this.userNo}`).then((response) => {
+      this.plans = response.data;
+      console.log(this.plans);
+      this.loadImg();
+    });
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),

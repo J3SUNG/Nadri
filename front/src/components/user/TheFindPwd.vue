@@ -5,12 +5,12 @@
         <TheLogo />
       </div>
 
-      <label class="find-pwd__label find-pwd__label-nickname">닉네임</label>
+      <label class="find-pwd__label find-pwd__label-id">아이디</label>
       <input
-        v-model="userData.nickname"
+        v-model="userData.id"
         type="text"
-        class="find-pwd__input find-pwd__input-nickname"
-        placeholder="닉네임"
+        class="find-pwd__input find-pwd__input-id"
+        placeholder="아이디"
         maxlength="16"
         name="user_name"
       />
@@ -20,17 +20,43 @@
         v-model="userData.email"
         type="email"
         class="find-pwd__input find-pwd__input-email"
-        placeholder="Email"
+        placeholder="이메일"
         maxlength="30"
         name="user_email"
       />
 
-      <label class="find-pwd__label find-pwd__label-code">인증번호</label>
-      <input class="find-pwd__input" type="text" placeholder="인증번호 입력" />
-
-      <input class="find-pwd__input-send" type="submit" value="인증번호 전송" />
-
-      <!-- <input class="find-pwd__input-confirm" type="submit" value="비밀번호 초기화" /> -->
+      <label
+        :class="{
+          'find-pwd__label': true,
+          'find-pwd__label-code': true,
+          'find-pwd__hide': !isReceive,
+        }"
+        >인증번호</label
+      >
+      <input
+        :class="{
+          'find-pwd__input': true,
+          'find-pwd__input-code': true,
+          'find-pwd__hide': !isReceive,
+        }"
+        v-model="code"
+        type="text"
+        placeholder="인증번호 입력"
+      />
+      <input
+        class="find-pwd__input-send"
+        type="submit"
+        value="인증번호 전송"
+        @click="receiveEmail"
+      />
+      <div class="find-pwd__input-confirm__box">
+        <button
+          :class="{ 'find-pwd__input-confirm': true, 'find-pwd__input-confirm-hide': !isReceive }"
+          @click="initConfirm"
+        >
+          확인
+        </button>
+      </div>
 
       <hr class="find-pwd__hr" />
       <p class="find-pwd__login-text">계정이 있으신가요?</p>
@@ -41,7 +67,7 @@
 
 <script>
 import TheLogo from "../logo/TheLogo.vue";
-
+import http from "@/util/http-common";
 import emailjs from "@emailjs/browser";
 
 export default {
@@ -53,8 +79,9 @@ export default {
       userData: {
         id: "",
         email: "",
-        nickname: "",
       },
+      isReceive: false,
+      code: "",
     };
   },
   methods: {
@@ -76,10 +103,17 @@ export default {
     },
     initConfirm() {
       if (this.code === "061410") {
-        alert(`비밀번호가 "123456"으로 초기화 되었습니다. 다시 로그인 해주세요.`);
+        http.post(`user/change/${this.userData.id}`).then((response) => {
+          console.log(response);
+          alert(`비밀번호가 "123456"으로 초기화 되었습니다. 다시 로그인 해주세요.`);
+          this.$router.push({ name: "AppLogin" });
+        });
       } else {
         alert("인증번호가 일치하지 않습니다.");
       }
+    },
+    receiveEmail() {
+      this.isReceive = true;
     },
   },
   mounted() {
@@ -141,8 +175,11 @@ export default {
   padding: 10px 10px;
   margin: 0px 10px;
   cursor: pointer;
+  height: 55px;
 }
 .find-pwd__input-confirm {
+  text-align: center;
+  display: block;
   width: auto;
   background-color: var(--color-main);
   color: var(--color-white);
@@ -151,5 +188,22 @@ export default {
   padding: 10px 10px;
   margin: 10px 10px;
   cursor: pointer;
+  width: 80px;
+}
+.find-pwd__hide {
+  visibility: hidden;
+}
+.find-pwd__input-code {
+  margin-left: 10px;
+  width: 180px;
+}
+.find-pwd__input-confirm-hide {
+  visibility: hidden;
+}
+.find-pwd__input-confirm__box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%px;
 }
 </style>
