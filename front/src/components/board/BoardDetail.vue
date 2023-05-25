@@ -3,7 +3,7 @@
     <div class="board-detail__header">
       <h3 class="board-detail__header-title">{{ title }}</h3>
       <div class="board-detail__header__right">
-        <img class="board-detail__header-img" :src="userImg" />
+        <img class="board-detail__header-img" :src="imgUrl" />
         <p class="board-detail__header-nickname">{{ board.nickname }}</p>
         <p class="board-detail__header-createtime">{{ board.createTime }}</p>
       </div>
@@ -60,7 +60,6 @@ export default {
   name: "BoardDetail",
   data() {
     return {
-      userImg: require("@/assets/jetty.jpg"),
       imgArr: [],
       heart: require("@/assets/heartOff.png"),
       heartChk: false,
@@ -73,6 +72,7 @@ export default {
       userNo: 0,
       isWriter: true,
       commentInput: "",
+      imgUrl: "",
     };
   },
   computed: {
@@ -84,6 +84,7 @@ export default {
     }
     const response = await http.get(`board/${this.$route.params.boardNo}/${this.userNo}`);
     this.board = response.data;
+    this.loadImg();
     this.imgArr = this.board.url;
     console.log(this.board);
     console.log("-------");
@@ -173,6 +174,12 @@ export default {
       //   .then((response) => {
       //     console.log(response);
       //   });
+    },
+    loadImg() {
+      console.log("AA");
+      console.log(this.board);
+      this.baseUrl = `${process.env.VUE_APP_API_BASE_URL}`;
+      this.imgUrl = `${this.baseUrl}/image/showImage?saveFolder=${this.board.imgSaveFolder}&saveFile=${this.board.imgSaveFile}`;
     },
   },
 };

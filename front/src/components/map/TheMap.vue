@@ -518,10 +518,9 @@ export default {
       http.post(`plan`, JSON.stringify(planData)).then((response) => {
         console.log(response);
         if (response.data === "success") {
-          alert(`성공`);
           this.$router.push({ name: "AppPlan" });
         } else {
-          alert("실패");
+          alert("오류가 발생하였습니다.");
         }
       });
     },
@@ -532,7 +531,7 @@ export default {
 <style>
 .map__course__toggle {
   margin-top: 100px;
-  width: 30px;
+  width: 20px;
   padding: 20px;
   min-height: 100px;
   top: 45px;
@@ -554,7 +553,7 @@ export default {
   animation-fill-mode: forwards;
 }
 .map__course__toggle__text {
-  font-size: 24px;
+  font-size: 18px;
   color: var(--color-white);
 }
 .map__course-hide {
