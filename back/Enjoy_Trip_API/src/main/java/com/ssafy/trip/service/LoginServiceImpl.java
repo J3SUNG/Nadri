@@ -25,8 +25,8 @@ public class LoginServiceImpl implements LoginService {
 	String serverUrl;
 	
 //	@Value("${file.path}")
-//	private String path;
-//	
+	private String path;
+	
 	String SALT = "HelloSsafy";
 
 	@Override
@@ -51,6 +51,7 @@ public class LoginServiceImpl implements LoginService {
 		if(file == null) {
 			file = userMapper.getFile(1);
 		}
+		System.out.println(path);
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("http://192.168.31.78");
