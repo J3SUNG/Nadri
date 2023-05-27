@@ -35,7 +35,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/board")
 @Api("게시판 컨트롤러  API V1")

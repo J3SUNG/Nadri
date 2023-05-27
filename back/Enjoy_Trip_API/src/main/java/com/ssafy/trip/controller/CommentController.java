@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ import com.ssafy.trip.model.dto.CommentDto;
 import com.ssafy.trip.service.CommentService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
