@@ -295,10 +295,10 @@ export default {
 
       script.onload = () => {
         window.kakao.maps.load(() => {
-          setTimeout(function () {
-            th.loadMap();
-            th.loadInit();
-          }, 2000);
+          // setTimeout(function () {
+          th.loadMap();
+          th.loadInit();
+          // }, 2000);
         });
       }; // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
       document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가\
