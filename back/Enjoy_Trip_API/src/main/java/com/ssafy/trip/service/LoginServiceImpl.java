@@ -21,11 +21,13 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	UserMapper userMapper;
 	
-//	@Value("${image.server.url}")
-	String serverUrl;
+	@Value("${file.url}")
+	private String serverUrl;
 	
-//	@Value("${file.path}")
-	private String path;
+	@Value("${file.imgPath}")
+	private String uploadPath;
+	
+	
 	
 	String SALT = "HelloSsafy";
 
@@ -39,7 +41,6 @@ public class LoginServiceImpl implements LoginService {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id", userDto.getId());
 		map.put("password", hashedpass);
-		System.out.println(map.get("id"));
 		return loginMapper.login(map);
 	}
 
@@ -51,12 +52,10 @@ public class LoginServiceImpl implements LoginService {
 		if(file == null) {
 			file = userMapper.getFile(1);
 		}
-		System.out.println(path);
 		StringBuilder sb = new StringBuilder();
 		
-//		sb.append("http://192.168.31.78");
-//		sb.append(path);
-		sb.append("http://59.151.232.152");
+		sb.append(serverUrl);
+//		sb.append("http://59.151.232.152");
 		sb.append(":7777/image/showImage?saveFolder=");
 		//"http://192.168.31.78:7777/image/showImage?saveFolder=230523&saveFile=6d0bd9e3-e8c1-4c22-a59f-e3aad226c281.jpg"
 		sb.append(file.getSaveFolder());

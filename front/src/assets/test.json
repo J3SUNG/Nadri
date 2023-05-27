@@ -1,0 +1,11 @@
+[
+  {
+    "0": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1bb..png" },
+    "1": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1xx..png" }
+  },
+  {
+    "0": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1bb..png" },
+    "1": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1xx..png" },
+    "2": { "savefolder": "230521", "original_file": "test2.png", "save_file": "1xx..png" }
+  }
+]
