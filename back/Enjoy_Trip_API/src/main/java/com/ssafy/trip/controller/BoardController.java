@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.trip.model.dto.BoardDto;
 import com.ssafy.trip.model.dto.BoardListDto;
@@ -101,7 +99,7 @@ public class BoardController {
 
 	@ApiOperation(value = "게시판 글목록", notes = "필수 : type / 모든 게시글의 정보를 반환한다. ", response = List.class)
 	@GetMapping
-	public BoardPageDto list(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) BoardParameterDto boardParameterDto)
+	public BoardPageDto list(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true, example = "10") BoardParameterDto boardParameterDto)
 			throws Exception {
 		logger.debug("list parameter boardType : {}", boardParameterDto);
 		if ("0".equals(boardParameterDto.getType())) {

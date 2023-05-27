@@ -10,19 +10,44 @@
 		<result column="nickname" property="nickname" />
 		<result column="email" property="email" />
 		<result column="grade" property="grade" />
+		<result column="join_date" property="joinDate" />
+	</resultMap>
+
+	<resultMap type="fileInfoDto" id="file">
+		<result column="save_folder" property="saveFolder" />
+		<result column="original_file" property="originalFile" />
+		<result column="save_file" property="saveFile" />
+	</resultMap>
+
+	<resultMap type="PlanDto" id="plan">
+		<result column="plan_no" property="planNo" />
+		<result column="create_time" property="createTime" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="read_count" property="readCount" />
+		<result column="user_no" property="userNo" />
+		<result column="nickname" property="nickname" />
+		<result column="isLike" property="isLike" />
+		<result column="like_count" property="likeCount" />
+		<collection property="fileInfos" column="planNo"
+			javaType="list" ofType="FileInfoDto" select="fileInfoList" />
 	</resultMap>
 
 	<select id="getUser" parameterType="String" resultMap="user">
 		select
-		user_no, id, nickname, email, grade
-		from user
-		where id = #{id}
+		user_no, id, nickname, email, join_date, grade
+		from user where id =
+		#{id}
 	</select>
 
 	<insert id="joinUser" parameterType="UserDto">
-		insert into user
+		insert into user (user_no,
+		id, password, nickname, email, join_date, grade)
 		values
-		(null, #{id}, #{password}, #{nickname}, #{email} ,now(),'U')
+		(null, #{id},
+		#{password}, #{nickname}, #{email} ,now(),'U')
 	</insert>
 
 	<delete id="deleteUser" parameterType="String">
@@ -32,23 +57,62 @@
 	</delete>
 
 	<update id="modifyUser" parameterType="UserDto">
-		update user 
-		set email = #{email}, nickname = #{nickname}
+		update user
+		set email =
+		#{email}, nickname = #{nickname}, password = #{password}, save_folder
+		= #{file.saveFolder}, save_file = #{file.saveFile}
 		where id = #{id}
 	</update>
-	
+
+	<insert id="fileRegister" parameterType="UserDto">
+		insert into
+		file_user(user_no, save_folder, original_file, save_file)
+		values
+		(#{userNo}, #{file.saveFolder}, #{file.originalFile},
+		#{file.saveFile})
+	</insert>
+
+	<delete id="deleteFile" parameterType="int">
+		delete from file_user
+		where user_no = #{userNo}
+	</delete>
+
 	<select id="check" parameterType="map" resultType="int">
 		select
 		count(*)
 		from user
 		where ${field} = #{val}
 	</select>
-	
+
 	<select id="authEmail" parameterType="map" resultType="int">
 		select
 		count(*)
 		from user
-		where email = #{email} and id = #{id} 
+		where email = #{email} and id = #{id}
 	</select>
 
+	<select id="getLikePlan" parameterType="int" resultMap="plan">
+		select
+		p.plan_no, create_time, subject, content, start_date, end_date,
+		read_count, p.user_no, nickname, pl.like_time,pll.like_count
+		from plan
+		p
+		join user u using(user_no)
+		join plan_like pl on p.plan_no = pl.plan_no
+		join (select plan_no, count(*) like_count from plan_like group by
+		plan_no)
+		pll
+		on p.plan_no = pll.plan_no
+		where pl.user_no = #{userNo}
+		order by like_time desc
+	</select>
+
+	<select id="getFile" parameterType="int" resultMap="file">
+		select * from
+		file_user where user_no = #{userNo};
+	</select>
+
+	<update id="change" parameterType="string">
+		update user set password = #{hashedpass} where id = #{id}
+	</update>
 </mapper>

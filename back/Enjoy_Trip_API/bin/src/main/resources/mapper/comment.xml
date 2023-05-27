@@ -8,13 +8,19 @@
 		<result column="content" property="content"/>
 		<result column="create_time" property="createTime"/>
 		<result column="user_no" property="userNo"/>
+		<result column="nickname" property="nickname"/>		
 		<result column="board_no" property="boardNo"/>
+		<result column="img_folder" property="imgSaveFolder" />
+		<result column="img_file" property="imgSaveFile" />
 	</resultMap>
 	
 	<select id="list" parameterType="int" resultMap="comment">
-		select * 
-		from board_comment
-		where board_no = #{boardNo}
+		select comment_no, content, create_time, b.user_no, nickname, board_no,
+		u.save_file img_file, u.save_folder img_folder
+		from board_comment b
+		join user u
+		on b.user_no = u.user_no
+		where b.board_no = #{boardNo}
 	</select>
 
 	<insert id="write" parameterType="CommentDto">
