@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     const getHtml = async () => {
-      const html = await axios.get(this.url);
+      const html = await axios.get(this.url, { withCredentials: true });
       const $ = cheerio.load(html.data);
       const bodyList = $("#container > section > section > div.photo_list_area > ul > li");
       bodyList.map((i, element) => {
