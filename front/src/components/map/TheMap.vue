@@ -230,6 +230,7 @@ export default {
       content: "",
       isLogin: false,
       polyline: "",
+      loading: false,
     };
   },
   created() {
@@ -238,51 +239,72 @@ export default {
       this.isLogin = true;
     }
   },
-  async mounted() {
-    let paramContentType = ["0"];
-    let paramSearch = "";
-    if (this.$route.params.contentType !== undefined) {
-      this.contentType = this.$route.params.contentType;
-      paramContentType = this.$route.params.contentType;
-    }
-    if (this.$route.params.search !== undefined) {
-      this.search = this.$route.params.search;
-      paramSearch = this.$route.params.search;
-
-      this.detailView(this.$route.params.attractionNo);
-    }
+  mounted() {
     if (window.kakao && window.kakao.maps) {
       // 카카오 객체가 있고, 카카오 맵그릴 준비가 되어 있다면 맵 실행
       // console.log("loadmap");
-      await this.loadMap();
+      this.loadMap();
+      this.loadInit();
     } else {
       // 없다면 카카오 스크립트 추가 후 맵 실행
       // console.log("loadscript");
-      await this.loadScript();
+      this.loadScript();
     }
-
-    await http.get(`sidogugun`).then(({ data }) => {
-      this.sidos = data;
-    });
-    let item = {
-      //전국 좋아요 상위 200개? //현재는 테스트로 그냥 10개 가져옴
-      areaCode: 0,
-      sigunguCode: 0,
-      contentType: paramContentType,
-      search: paramSearch,
-    };
-    // console.log("search : " + this.search);
-    await this.getAttrs(item);
   },
   methods: {
+    loadInit() {
+      let paramContentType = ["0"];
+      let paramSearch = "";
+      if (this.$route.params.contentType !== undefined) {
+        this.contentType = this.$route.params.contentType;
+        paramContentType = this.$route.params.contentType;
+      }
+      if (this.$route.params.search !== undefined) {
+        this.search = this.$route.params.search;
+        paramSearch = this.$route.params.search;
+
+        this.detailView(this.$route.params.attractionNo);
+      }
+      http.get(`sidogugun`).then(({ data }) => {
+        this.sidos = data;
+      });
+      let item = {
+        //전국 좋아요 상위 200개? //현재는 테스트로 그냥 10개 가져옴
+        areaCode: 0,
+        sigunguCode: 0,
+        contentType: paramContentType,
+        search: paramSearch,
+      };
+      console.log(item);
+      // console.log("search : " + this.search);
+
+      if (window.kakao !== undefined && !this.loading) {
+        console.log("setMarkers!!!");
+        this.getAttrs(item);
+        this.loading = true;
+      } else {
+        console.log("loading중...");
+      }
+    },
     loadScript() {
+      let th = this;
+      console.log("A");
       const script = document.createElement("script");
       script.async = true;
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.VUE_APP_KAKAOMAP_KEY}&autoload=false`; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
-      document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가
-      script.onload = () => window.kakao.maps.load(this.loadMap); // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
+
+      script.onload = () => {
+        window.kakao.maps.load(() => {
+          setTimeout(function () {
+            th.loadMap();
+            th.loadInit();
+          }, 2000);
+        });
+      }; // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
+      document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가\
     },
     loadMap() {
+      console.log("B");
       const container = document.getElementById("map"); // 지도를 담을 DOM 영역
       const options = {
         // 지도를 생성할 때 필요한 기본 옵션
@@ -336,7 +358,6 @@ export default {
         item.contentType = ["0"];
       }
       item.search = this.search;
-      console.log(item);
       http.post(`/map`, JSON.stringify(item)).then(({ data }) => {
         // console.log("관광지 데이터 갱신");
         this.attractions = data;
@@ -349,6 +370,7 @@ export default {
       this.positions = [];
       this.removeMarkers(); //기존에 있던 마커들을 지운다.
       // console.log(data);
+      console.log(window.kakao.maps.LatLng);
       data.forEach((area) => {
         let markerInfo = {
           title: area.title, // 관광지 이름
@@ -443,6 +465,9 @@ export default {
         (bounds, position) => bounds.extend(position.latlng),
         new window.kakao.maps.LatLngBounds()
       );
+      console.log("!!!!!!!!!!!!!!!!!!!");
+      console.log(this.map);
+      console.log(this.map.setBounds);
       this.map.setBounds(bounds);
     },
     cancelTripNote() {

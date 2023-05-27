@@ -33,5 +33,6 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "vue-template-compiler": "^2.6.14"
-  }
+  },
+  "proxy": "http://59.151.232.152:7777"
 }
