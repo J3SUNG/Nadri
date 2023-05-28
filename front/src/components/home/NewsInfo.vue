@@ -30,6 +30,7 @@ export default {
       newsList: [],
 
       list: [],
+      proxyUrl: "https://proxy.cors.sh/",
       url: "https://www.joongang.co.kr/travel/domestic",
       title: "Hi",
       loading: false,
@@ -40,7 +41,15 @@ export default {
   },
   mounted() {
     const getHtml = async () => {
-      const html = await axios.get(this.url, { withCredentials: true });
+      const html = await axios.get(
+        this.proxyUrl + this.url,
+        { withCredentials: true },
+        {
+          headers: {
+            "x-cors-api-key": "temp_7a452964441c798f89fb31c95be0c353",
+          },
+        }
+      );
       const $ = cheerio.load(html.data);
       const bodyList = $("#container > section > section > div.photo_list_area > ul > li");
       bodyList.map((i, element) => {
