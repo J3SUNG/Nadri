@@ -6,7 +6,7 @@
 
    lombok
 
-   - pom.xml dependency 추가
+   - 현재 pom.xml에 이미 추가되어 있음 //pom.xml dependency 추가
    - lombok 설치(sts.exe)
    - STS에서 프로젝트 우클릭 -> maven -> update maven?
 
