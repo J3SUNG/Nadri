@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +42,10 @@ import io.swagger.annotations.ApiParam;
 @Api("게시판 컨트롤러  API V1")
 public class BoardController {
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
+	@Value("${file.imgPath}")
+	private String uploadPath;
+	
 	BoardService boardService;
 
 	public BoardController(BoardService boardService) {
@@ -61,7 +66,7 @@ public class BoardController {
 		if (!(imgs == null)) {
 			logger.debug(imgs.get(0).getOriginalFilename());
 
-			String realPath = new File("").getAbsolutePath() + "/resources/img";
+			String realPath = new File("").getAbsolutePath() + uploadPath;
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
 			logger.debug("저장 폴더 : {}", saveFolder);

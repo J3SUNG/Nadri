@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,10 @@ import com.ssafy.trip.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@Value("${file.imgPath}")
+	private String uploadPath;
+	
 	UserService userService;
 
 	@Autowired
@@ -65,7 +70,7 @@ public class UserController {
 		logger.debug("modify userDto info : {}", userDto);
 
 		if (!img.isEmpty()) {
-			String realPath = new File("").getAbsolutePath() + "/resources/img";
+			String realPath = new File("").getAbsolutePath() + uploadPath;
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
 			logger.debug("저장 폴더 : {}", saveFolder);

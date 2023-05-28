@@ -24,11 +24,6 @@ public class LoginServiceImpl implements LoginService {
 	@Value("${file.url}")
 	private String serverUrl;
 	
-	@Value("${file.imgPath}")
-	private String uploadPath;
-	
-	
-	
 	String SALT = "HelloSsafy";
 
 	@Override
@@ -56,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 		
 		sb.append(serverUrl);
 //		sb.append("http://59.151.232.152");
-		sb.append(":7777/image/showImage?saveFolder=");
+		sb.append("/image/showImage?saveFolder=");
 		//"http://192.168.31.78:7777/image/showImage?saveFolder=230523&saveFile=6d0bd9e3-e8c1-4c22-a59f-e3aad226c281.jpg"
 		sb.append(file.getSaveFolder());
 		sb.append("&saveFile=");
