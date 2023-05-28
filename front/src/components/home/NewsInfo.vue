@@ -1,5 +1,5 @@
 <template>
-  <div class="news-info">
+  <div class="news-info" v-if="!isFailed">
     <h2 class="news-info__title">국내여행 소식</h2>
     <div class="news-info__loading__box" v-if="loading">
       <div class="news-info__visited__slideShow">
@@ -30,42 +30,40 @@ export default {
       newsList: [],
 
       list: [],
-      proxyUrl: "https://proxy.cors.sh/",
       url: "https://www.joongang.co.kr/travel/domestic",
       title: "Hi",
       loading: false,
       left: 0,
       currentIdx: 0, //현재 슬라이드 index
       slideCount: 22, // 슬라이드 개수
+      isFailed: false,
     };
   },
   mounted() {
     const getHtml = async () => {
-      const html = await axios.get(
-        this.proxyUrl + this.url,
-        { withCredentials: true },
-        {
-          headers: {
-            "x-cors-api-key": "temp_7a452964441c798f89fb31c95be0c353",
-          },
-        }
-      );
-      const $ = cheerio.load(html.data);
-      const bodyList = $("#container > section > section > div.photo_list_area > ul > li");
-      bodyList.map((i, element) => {
-        var news = {
-          title: "",
-          img: "",
-          url: ",",
-        };
+      const html = await axios
+        .get(this.url)
+        .then(() => {
+          const $ = cheerio.load(html.data);
+          const bodyList = $("#container > section > section > div.photo_list_area > ul > li");
+          bodyList.map((i, element) => {
+            var news = {
+              title: "",
+              img: "",
+              url: ",",
+            };
 
-        news["title"] = $(element).find("h2.headline a").text();
-        news["img"] = $(element).find("figure.card_image img").attr("src");
-        news["url"] = $(element).find("figure.card_image a").attr("href");
+            news["title"] = $(element).find("h2.headline a").text();
+            news["img"] = $(element).find("figure.card_image img").attr("src");
+            news["url"] = $(element).find("figure.card_image a").attr("href");
 
-        this.newsList[i] = news;
-        this.loading = true;
-      });
+            this.newsList[i] = news;
+            this.loading = true;
+          });
+        })
+        .catch(() => {
+          this.isFailed = true;
+        });
     };
     getHtml();
   },
