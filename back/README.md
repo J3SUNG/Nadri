@@ -23,6 +23,7 @@
    - 마이페이지에서 최근본... 동작하는지 확인
    - 동작안하고 full group by 오류 발생시,
    - mysql client cmd 관리자권한으로 실행
+   
    ![image](https://github.com/J3SUNG/Nadri/assets/76690870/982ced21-7383-47c0-a9f3-ca9f1d10f5ba)
    
    - select @@sql_mode; 명령어 실행 -> ONLY_FULL... 포함되어있는지 확인
