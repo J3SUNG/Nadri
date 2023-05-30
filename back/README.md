@@ -22,7 +22,7 @@
    - DB dump 폴더(last 버전 0525)에 모든 sql 파일 실행
    - 마이페이지에서 최근본... 동작하는지 확인
    - 동작안하고 full group by 오류 발생시,
-   - mysql client cmd 관리자권한으로 실행
-   - select @@sql_mode 명령어 실행 -> ONLY_FULL... 포함되어있는지 확인
+   - mysql 8.0 command line client 관리자권한으로 실행
+   - select @@sql_mode; 명령어 실행 -> ONLY_FULL... 포함되어있는지 확인
    - 포함되어 있다면
      -> SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
