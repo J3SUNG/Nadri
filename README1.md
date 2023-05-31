@@ -66,8 +66,7 @@
 ### 메인화면
 
 - 메인화면
-
-    <img src="gifs/1_main.gif">
+  <img src="gifs/1_main.gif">
 
 - 메인 화면 베너
   <img src="gifs/5_moving_banner.gif">
