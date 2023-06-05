@@ -23,6 +23,8 @@ Spring Boot + Vue.js 2 + MySQL
 - Front
 
   - IDE : Visual Studio Code
+  - Framework : Vue.js 2.0
+  - Library : emailjs, cheerio, vue-chartjs
 
 - Back
   - IDE : STS 3.9.14
