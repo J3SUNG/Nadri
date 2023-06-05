@@ -30,7 +30,8 @@ export default {
       newsList: [],
 
       list: [],
-      url: "https://www.joongang.co.kr/travel/domestic",
+      // url: "https://www.joongang.co.kr/travel/domestic", // 프론트에서 크롤링
+      url: "http://192.168.0.6:7777/craw", // 백엔드에서 크롤링
       title: "Hi",
       loading: false,
       left: 0,
@@ -41,11 +42,12 @@ export default {
   },
   mounted() {
     const getHtml = async () => {
-      const html = await axios
+      await axios
         .get(this.url)
-        .then(() => {
-          const $ = cheerio.load(html.data);
-          const bodyList = $("#container > section > section > div.photo_list_area > ul > li");
+        .then((response) => {
+          const $ = cheerio.load(response.data);
+          // const bodyList = $("#container > section > section > div.photo_list_area > ul > li"); // 프론트에서 크롤링
+          const bodyList = $("li"); // 백엔드에서 크롤링
           bodyList.map((i, element) => {
             var news = {
               title: "",
