@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer__box">
-      <p class="footer__team">@ 나들이 Team. All rights reserved.</p>
+      <p class="footer__team">@ Team Nadri. All rights reserved.</p>
       <p class="footer__member">Member : JeSeong Lee / YuJeong Kim</p>
       <p class="footer__contact">Contact : wptjd6141@naver.com / kyj8441@gmail.com</p>
     </div>
