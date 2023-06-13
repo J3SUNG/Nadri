@@ -6,7 +6,7 @@ Spring Boot + Vue.js 2 + MySQL
 
 ## 프로젝트 소개
 
-여행 정보, 여행 계획, 커뮤니티, 통계 등의 기능을 제공하는 여행 정보 사이트입니다.
+여행 정보, 여행 계획, 커뮤니티, 통계 등의 기능을 제공하는 여행 정보 사이트입니다.<br/>
 프로젝트 설명 영상 : https://youtube.com/watch?v=uVQEhLR_w4M&feature=share
 <br/> <br/>
 
