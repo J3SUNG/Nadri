@@ -22,7 +22,6 @@ Spring Boot + Vue.js 2 + MySQL
 ### 개발환경
 
 - Front
-
   - IDE : Visual Studio Code
   - Framework : Vue.js 2.0
   - Library : emailjs, cheerio, vue-chartjs
