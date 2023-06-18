@@ -1,7 +1,6 @@
 # Nadri
 
 지역별 관광 데이터를 활용한 여행 정보 사이트
-Spring Boot + Vue.js 2 + MySQL
 <br/> <br/>
 
 ## 프로젝트 소개
