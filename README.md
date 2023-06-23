@@ -1,12 +1,12 @@
 # Nadri
 
 지역별 관광 데이터를 활용한 여행 정보 사이트
-Spring Boot + Vue.js 2 + MySQL
 <br/> <br/>
 
 ## 프로젝트 소개
 
-여행 정보, 여행 계획, 커뮤니티, 통계 등의 기능을 제공하는 여행 정보 사이트입니다.
+여행 정보, 여행 계획, 커뮤니티, 통계 등의 기능을 제공하는 여행 정보 사이트입니다.<br/>
+프로젝트 설명 영상 : https://youtube.com/watch?v=uVQEhLR_w4M&feature=share
 <br/> <br/>
 
 ### 개발 기간
@@ -21,7 +21,6 @@ Spring Boot + Vue.js 2 + MySQL
 ### 개발환경
 
 - Front
-
   - IDE : Visual Studio Code
   - Framework : Vue.js 2.0
   - Library : emailjs, cheerio, vue-chartjs
